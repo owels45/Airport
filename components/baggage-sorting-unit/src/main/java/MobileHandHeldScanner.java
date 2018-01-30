@@ -7,18 +7,11 @@ public class MobileHandHeldScanner {
     private BaggageSortingUnit baggageSortingUnit;
     private DestinationBox destinationBox;
     private ContainerType containerType;
+    // TODO: wird das Feld container gebraucht?
     private Container container;
     private ArrayList<BaggageIdentificationTag> baggageIdentificationTagList;
     private Roboter roboter;
 
-    public MobileHandHeldScanner(BaggageSortingUnit baggageSortingUnit, DestinationBox destinationBox, ContainerType containerType
-            , Container container ) {
-        this.baggageSortingUnit = baggageSortingUnit;
-        this.destinationBox = destinationBox;
-        this.containerType = containerType;
-        this.container = container;
-        this.roboter = new Roboter();
-    }
 
     public void register(DestinationBox destinationBox){
         this.destinationBox = destinationBox;
@@ -27,7 +20,25 @@ public class MobileHandHeldScanner {
     public ArrayList<BaggageIdentificationTag> select(ContainerCategory containerCategory) {
 
         //TODO: How to resolve BaggageIdentificationTag; Über DestinationBox -> Baggage -> BaggageId von Persistence?
-        return new ArrayList<BaggageIdentificationTag>();
+        ArrayList<BaggageIdentificationTag> returnList = new ArrayList<BaggageIdentificationTag>();
+        for (Baggage baggage: destinationBox.getBaggegeList()) {
+            BaggageIdentificationTag tag = this.resolveTag(baggage);
+            if(tag.getBoardingPass().getTicketClass().toString().toLowerCase() == containerCategory.toString().toLowerCase()){
+                returnList.add(tag);
+            }
+        }
+
+        return returnList;
+    }
+
+    private BaggageIdentificationTag resolveTag(Baggage baggage) {
+        // TODO How to resolve?
+        for (BaggageIdentificationTag tag : this.baggageIdentificationTagList) {
+            if(tag.getId() == baggage.getId()) {
+                return tag;
+            }
+        }
+        return null;
     }
 
     public void orderRoboterToLoad(ArrayList<BaggageIdentificationTag> baggageIdentificationTagList, Container container) {
@@ -35,8 +46,12 @@ public class MobileHandHeldScanner {
         this.roboter.load(baggageIdentificationTagList, container);
     }
 
-    public MobileHandHeldScanner(ContainerType containerType) {
+    // TODO: CTOR angepasst, möglich?
+    public MobileHandHeldScanner(ContainerType containerType, BaggageSortingUnit baggageSortingUnit, ArrayList<BaggageIdentificationTag> baggageIdentificationTagList) {
         this.containerType = containerType;
+        this.baggageSortingUnit = baggageSortingUnit;
+        this.roboter = new Roboter();
+        this.baggageIdentificationTagList = baggageIdentificationTagList;
     }
 
 }

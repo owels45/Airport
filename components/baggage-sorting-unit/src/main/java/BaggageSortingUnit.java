@@ -1,6 +1,7 @@
 import placeholder.*;
+import sun.security.krb5.internal.crypto.Des;
 
-import javax.print.attribute.standard.Destination;
+
 import java.util.ArrayList;
 
 public class BaggageSortingUnit {
@@ -14,20 +15,32 @@ public class BaggageSortingUnit {
     private ArrayList<Container> filledContainerList;
     private Roboter roboter;
     private ArrayList<BaggageVehicle> baggageVehicleList;
+    private ArrayList<BaggageIdentificationTag> baggageIdentificationTags;
+
+    public ArrayList<Baggage> getBaggageList() {
+        return baggageList;
+    }
+
+    public void setBaggageList(ArrayList<Baggage> baggageList) {
+        this.baggageList = baggageList;
+    }
+
     private ArrayList<Baggage> baggageList;
     private Destination destination;
 
 
     public Port port;
 
-    private BaggageSortingUnit() {
-        this.port = new Port();
-
-        this.setDefaultValues();
+    public void innerExecute() {
+        // TODO Add loading of data.
         // Load baggages
         this.baggageList = new ArrayList<Baggage>();
 
         // Load baggageVehicles
+        this.baggageVehicleList = new ArrayList<BaggageVehicle>();
+
+        // Load BaggageIdentificationTags
+        this.baggageIdentificationTags = new ArrayList<BaggageIdentificationTag>();
 
         // Call drop into luggageTub
         for (Baggage baggage : this.baggageList ) {
@@ -44,10 +57,14 @@ public class BaggageSortingUnit {
         BaggageSortingUnitReceipt receipt = this.loadDestinationBoxIntoContainers();
 
         this.port.notifyGroundOperation(receipt);
-
     }
 
-    private BaggageSortingUnitReceipt loadDestinationBoxIntoContainers() {
+    private BaggageSortingUnit() {
+        this.port = new Port();
+        this.setDefaultValues();
+    }
+
+    public BaggageSortingUnitReceipt loadDestinationBoxIntoContainers() {
 
         int numberOfBaggageFirstClass = 0;
         int numberOfBaggageBusinessClass = 0;
@@ -58,7 +75,7 @@ public class BaggageSortingUnit {
 
         for (ContainerCategory category : ContainerCategory.values()) {
             if ( category == ContainerCategory.SpecialGood) continue;;
-            MobileHandHeldScanner handHeld = new MobileHandHeldScanner(ContainerType.AKE);
+            MobileHandHeldScanner handHeld = new MobileHandHeldScanner(ContainerType.AKE, this, this.baggageIdentificationTags);
             handHeld.register(this.destinationBox);
             ArrayList<BaggageIdentificationTag> baggageTags = handHeld.select(category);
             switch (category){
@@ -107,9 +124,10 @@ public class BaggageSortingUnit {
 
     }
 
-    private void setDefaultValues() {
+    public void setDefaultValues() {
         this.position = "K20";
         this.luggageTubList = new ArrayList<LuggageTub>();
+        this.destination = Destination.CPT;
 
         this.destinationBox = new DestinationBox();
         this.emptyContainerList = new ArrayList<Container>();
@@ -118,12 +136,11 @@ public class BaggageSortingUnit {
         this.roboter = new Roboter();
 
         this.generateEmptyContainers();
-
     }
 
     private void generateEmptyContainers() {
         for (int i = 0; i < 100; i++){
-            ContainerProfile containerProfile = new ContainerProfile(this.destination.getName(), 0);
+            ContainerProfile containerProfile = new ContainerProfile(this.destination.toString(), 0);
             this.emptyContainerList.add(new Container(ContainerType.AKE,  "ContainerId: " + i, ContainerCategory.First ,containerProfile,
                     "BarcodeID: " + i,  "QRCode: " + i, 50));
         }
@@ -150,6 +167,11 @@ public class BaggageSortingUnit {
 
         public void notifyGroundOperation(BaggageSortingUnitReceipt baggageSortingUnitReceipt) {
             // TODO: Notify per event?
+        }
+
+        // TODO Acceptable?
+        public void execute() {
+            innerExecute();
         }
     }
 }
