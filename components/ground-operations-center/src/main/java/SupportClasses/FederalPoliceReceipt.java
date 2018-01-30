@@ -1,7 +1,11 @@
+<<<<<<< HEAD:components/federal-police/src/main/java/FederalPoliceReceipt.java
 import base.Baggage;
 import base.Passenger;
 
 import java.util.ArrayList;
+=======
+package SupportClasses;
+>>>>>>> origin/ground-operation-center-adi:components/ground-operations-center/src/main/java/SupportClasses/FederalPoliceReceipt.java
 
 public class FederalPoliceReceipt {
 
