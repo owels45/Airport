@@ -88,7 +88,7 @@ public class FederalPolice {
 
     void innerMethodNotifyGroundOperations(FederalPoliceReceipt federalPoliceReceipt) {
         Object componentPort;
-        componentPort = ComponentLoader.loadComponent("ground-operations-center","GroundOperationsCenter");
+        componentPort = ComponentLoader.loadComponent("ground-operations-center","GroundOperationsCenter", "federal-police");
         try {
             Method onMethod = componentPort.getClass().getDeclaredMethod("receive",FederalPoliceReceipt.class);
             onMethod.invoke(componentPort,federalPoliceReceipt);

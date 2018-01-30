@@ -56,14 +56,13 @@ public class FederalPoliceTest {
 
     @Test
     public void testInnerMethodNotifyGroundOperations() {
-        assertTrue(true);
-//        FederalPoliceReceipt receipt = new FederalPoliceReceipt(0,0, null,null);
-//        try{
-//            FederalPolice.getInstance().innerMethodNotifyGroundOperations(receipt);
-//            assertTrue(true);
-//        }catch (Exception e){
-//            e.printStackTrace();
-//            assertTrue(false);
-//        }
+        FederalPoliceReceipt receipt = new FederalPoliceReceipt(0,0, null,null);
+        try{
+            FederalPolice.getInstance().innerMethodNotifyGroundOperations(receipt);
+            assertTrue(true);
+        }catch (Exception e){
+            e.printStackTrace();
+            assertTrue(false);
+        }
     }
 }
