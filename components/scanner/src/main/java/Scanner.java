@@ -1,3 +1,6 @@
+import base.Baggage;
+import base.Passenger;
+
 public class Scanner {
     /**
      * The hash instance.
@@ -70,7 +73,7 @@ public class Scanner {
      */
     private boolean innerScan(Baggage baggage, String pattern) {
         //To lower case is used to find the pattern, independent of the casing in the id
-        return baggage.id.toLowerCase().contains(pattern.toLowerCase());
+        return baggage.getId().toLowerCase().contains(pattern.toLowerCase());
     }
 
     /**
@@ -81,10 +84,10 @@ public class Scanner {
      */
     private boolean innerScan(Passenger passenger, String pattern) {
         //To lower case is used to find the pattern, independent of the casing in the content
-        if(passenger.content.toLowerCase().contains(pattern.toLowerCase())) {
+        if(passenger.getContent().toLowerCase().contains(pattern.toLowerCase())) {
             return true;
         }
-        for(Baggage baggage : passenger.baggageList) {
+        for(Baggage baggage : passenger.getBaggageList()) {
             if(innerScan(baggage, pattern)) {
                 return true;
             }

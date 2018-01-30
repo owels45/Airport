@@ -1,7 +1,7 @@
 import base.Baggage;
 import base.Passenger;
 
-public class TestingScanner {
+public class MockScanner {
 
     public boolean scan(Baggage baggage, String pattern) {
         return baggage.getId().toLowerCase().contains(pattern.toLowerCase());

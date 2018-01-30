@@ -1,5 +1,10 @@
+import base.Baggage;
+import base.BaggageType;
+import base.Passenger;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.ArrayList;
 
 public class ScannerTest {
     @Test
@@ -7,7 +12,7 @@ public class ScannerTest {
         Scanner scanner = Scanner.getInstance();
         Scanner.Port port = scanner.port;
 
-        Baggage bag = new Baggage("TestStringGlockEnde");
+        Baggage bag = new Baggage("TestStringGlockEnde", 1, BaggageType.Normal);
 
         Assert.assertTrue("Scanner should find the pattern", port.scan(bag, "Glock"));
     }
@@ -17,7 +22,7 @@ public class ScannerTest {
         Scanner scanner = Scanner.getInstance();
         Scanner.Port port = scanner.port;
 
-        Baggage bag = new Baggage("TestStringEnde");
+        Baggage bag = new Baggage("TestStringEnde", 1, BaggageType.Normal);
 
         Assert.assertFalse("Scanner should find nothing", port.scan(bag, "Glock"));
     }
@@ -27,9 +32,10 @@ public class ScannerTest {
         Scanner scanner = Scanner.getInstance();
         Scanner.Port port = scanner.port;
 
-        Passenger passenger = new Passenger("Mario Glock");
-        passenger.baggageList.add(new Baggage("TestStringEnde"));
-        passenger.baggageList.add(new Baggage("StringTest"));
+        ArrayList<Baggage> baggages = new ArrayList<Baggage>();
+        baggages.add(new Baggage("TestStringEnde", 1, BaggageType.Normal));
+        baggages.add(new Baggage("StringTest", 1, BaggageType.Normal));
+        Passenger passenger = createTestPassenger("Mario Glock", baggages);
 
         Assert.assertTrue("Scanner should find nothing", port.scan(passenger, "Glock"));
     }
@@ -38,9 +44,10 @@ public class ScannerTest {
         Scanner scanner = Scanner.getInstance();
         Scanner.Port port = scanner.port;
 
-        Passenger passenger = new Passenger("Mario Test");
-        passenger.baggageList.add(new Baggage("TestStringEnde"));
-        passenger.baggageList.add(new Baggage("StringGLOCKTest"));
+        ArrayList<Baggage> baggages = new ArrayList<Baggage>();
+        baggages.add(new Baggage("TestStringEnde", 1, BaggageType.Normal));
+        baggages.add(new Baggage("StringGLOCKTest", 1, BaggageType.Normal));
+        Passenger passenger = createTestPassenger("Mario Test", baggages);
 
         Assert.assertTrue("Scanner should find nothing", port.scan(passenger, "Glock"));
     }
@@ -50,10 +57,16 @@ public class ScannerTest {
         Scanner scanner = Scanner.getInstance();
         Scanner.Port port = scanner.port;
 
-        Passenger passenger = new Passenger("Mario Test");
-        passenger.baggageList.add(new Baggage("TestStringEnde"));
-        passenger.baggageList.add(new Baggage("StringTest"));
+        ArrayList<Baggage> baggages = new ArrayList<Baggage>();
+        baggages.add(new Baggage("TestStringEnde", 1, BaggageType.Normal));
+        baggages.add(new Baggage("StringTest", 1, BaggageType.Normal));
+        Passenger passenger = createTestPassenger("Mario Test", baggages);
+
 
         Assert.assertFalse("Scanner should find nothing", port.scan(passenger, "Glock"));
+    }
+
+    private Passenger createTestPassenger(String content, ArrayList<Baggage> baggages) {
+        return new Passenger(null, content, null, null, null, null, null, null, null, baggages, null);
     }
 }

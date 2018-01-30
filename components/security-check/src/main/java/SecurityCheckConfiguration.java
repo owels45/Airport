@@ -1,5 +1,6 @@
-import java.io.FileInputStream;
-import java.util.Properties;
+import java.io.File;
+import java.net.URL;
+import java.net.URLClassLoader;
 
 public enum SecurityCheckConfiguration {
     instance;
@@ -12,9 +13,21 @@ public enum SecurityCheckConfiguration {
     public Class scannerClass;
 
     public void loadComponents() {
-        SecurityCheckComponentManagement baggageSystemComponentManagement = new SecurityCheckComponentManagement();
-        // scanner
-        Class scannerClass = baggageSystemComponentManagement.loadJavaArchive("search.jar","Search");
+        Class scannerClass = loadJavaArchive("search.jar","Search");
         this.scannerClass = scannerClass;
+    }
+
+    public Class loadJavaArchive(String componentName,String className) {
+        Class clazz = null;
+
+        try {
+            URL[] urls = {new File(SecurityCheckConfiguration.instance.commonPathToJavaArchives + componentName).toURI().toURL()};
+            URLClassLoader urlClassLoader = new URLClassLoader(urls,SecurityCheck.class.getClassLoader());
+            clazz = Class.forName(className,true,urlClassLoader);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return clazz;
     }
 }
