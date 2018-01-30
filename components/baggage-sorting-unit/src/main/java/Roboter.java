@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 public class Roboter {
 
+    public Roboter(){}
+
     public load(ArrayList<BaggageIdentificationTag> baggageIdentificationTagList, Container container){
 
     }
