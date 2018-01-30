@@ -18,7 +18,6 @@ public class GroundOperationsCenterFactory {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return componentPort;
     }
 }
