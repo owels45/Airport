@@ -1,4 +1,4 @@
-import dummies.*;
+import base.*;
 
 import java.util.ArrayList;
 
@@ -76,11 +76,11 @@ public class FederalPolice {
     }
 
     boolean innerMethodInspectWeapon(SpecialGood specialGood) {
-        return specialGood.specialGoodType.equals(SpecialGoodType.weapon);
+        return specialGood.getSpecialGoodType().equals(SpecialGoodType.Weapon);
     }
 
     boolean innerMethodInspectMunition(SpecialGood specialGood) {
-        return specialGood.specialGoodType.equals(SpecialGoodType.munition);
+        return specialGood.getSpecialGoodType().equals(SpecialGoodType.Munition);
     }
 
     void innerMethodKeepSafe(Baggage baggage) {

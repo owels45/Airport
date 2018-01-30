@@ -1,7 +1,7 @@
-import dummies.Baggage;
-import dummies.Passenger;
-import dummies.Passport;
-import dummies.SpecialGood;
+import base.Baggage;
+import base.Passenger;
+import base.Passport;
+import base.SpecialGood;
 
 public interface IFederalPolice {
 
