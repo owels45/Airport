@@ -6,6 +6,14 @@ public class BulkyBaggageDesk implements IBulkyBaggageDesk {
     private Employee employee;
     private int numberOfSpecialGoods;
 
+    public Port port = new Port();
+
+    private static BulkyBaggageDesk instance = new BulkyBaggageDesk();
+
+    public static BulkyBaggageDesk getInstance() {
+        return instance;
+    }
+
     public boolean scan(Passport passport) {
         return true;
     }
@@ -39,6 +47,28 @@ public class BulkyBaggageDesk implements IBulkyBaggageDesk {
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
             throw new RuntimeException("could not notify ground operations center", e);
+        }
+    }
+
+    public class Port implements IBulkyBaggageDesk {
+        @Override
+        public boolean scan(Passport passport) {
+            return BulkyBaggageDesk.this.scan(passport);
+        }
+
+        @Override
+        public boolean scan(BoardingPass boardingPass) {
+            return BulkyBaggageDesk.this.scan(boardingPass);
+        }
+
+        @Override
+        public BaggageIdentificationTag checkIn(BoardingPass boardingPass, SpecialGood specialGood) {
+            return BulkyBaggageDesk.this.checkIn(boardingPass, specialGood);
+        }
+
+        @Override
+        public void notifyGroundOperations(BulkyBaggageDeskReceipt bulkyBaggageDeskReceipt) {
+            BulkyBaggageDesk.this.notifyGroundOperations(bulkyBaggageDeskReceipt);
         }
     }
 }
