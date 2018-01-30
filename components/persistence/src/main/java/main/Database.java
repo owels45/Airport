@@ -1,4 +1,9 @@
+package main;
+
 import base.*;
+import engine.LogEngine;
+import sql.BaggageSQL;
+import sql.ContainerSQL;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -8,7 +13,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.UUID;
 
 public class Database {
@@ -156,6 +160,7 @@ public class Database {
     }
 
     private void innerMethodAddContainer(Container container) {
+        ContainerSQL sql = new ContainerSQL();
     }
 
     private BoardingPass innerMethodGetBoardingPass(Passenger passenger) {
@@ -241,63 +246,21 @@ public class Database {
         }
     }
 
-    //Baggage
-    public void dropTableBaggage() {
-        String sqlStatement = "DROP TABLE baggage IF EXISTS";
-        logEngine.write("Database", "dropTableBaggage", "-", sqlStatement);
-        update(sqlStatement);
-    }
 
-    public void createTableBaggage() {
-        StringBuilder sqlStringBuilder = new StringBuilder();
-        sqlStringBuilder.append("CREATE TABLE baggage").append(" ( ");
-        sqlStringBuilder.append("uuid VARCHAR(36) NOT NULL").append(",");
-        sqlStringBuilder.append("content VARCHAR(50000) NOT NULL").append(",");
-        sqlStringBuilder.append("weight INT NOT NULL").append(",");
-        sqlStringBuilder.append("PRIMARY KEY (uuid)");
-        sqlStringBuilder.append(" )");
-        logEngine.write("Database", "createTableBaggage", "-", sqlStringBuilder.toString());
-        update(sqlStringBuilder.toString());
-    }
-
-
-    public String buildInsertSQLStatement(Baggage baggage) {
-        StringBuilder sqlStringBuilder = new StringBuilder();
-        sqlStringBuilder.append("INSERT INTO baggage (uuid,content,weight) VALUES (");
-        sqlStringBuilder.append("'").append(baggage.getUUID()).append("'").append(",");
-        sqlStringBuilder.append("'").append(baggage.getContent()).append("'").append(",");
-        sqlStringBuilder.append(baggage.getWeight()).append(",");
-        sqlStringBuilder.append("'").append(baggage.getBaggageType()).append("'");
-        sqlStringBuilder.append(")");
-        return sqlStringBuilder.toString();
-    }
-
-    public void insert(Baggage baggage) {
-        System.out.println(baggage.hashCode());
-        logEngine.write("Database", "insert", "baggage = " + baggage.getUUID(), buildInsertSQLStatement(baggage));
-        update(buildInsertSQLStatement(baggage));
-    }
-
-    public String buildUpdateSQLStatement(Baggage baggage) {
-        StringBuilder sqlStringBuilder = new StringBuilder();
-        sqlStringBuilder.append("UPDATE baggage SET content = '").append(baggage.getContent()).append("'").append(",");
-        sqlStringBuilder.append("weight = ").append(baggage.getWeight()).append(",");
-        sqlStringBuilder.append("WHERE uuid = '").append(baggage.getUUID()).append("'");
-        return sqlStringBuilder.toString();
-    }
 
     public void innerSetLogEngine(LogEngine logEngine) {
         this.logEngine = logEngine;
     }
 
     public void innerMethodInitBaggage() {
+        BaggageSQL sql = new BaggageSQL();
 
         String csvFile = Configuration.instance.baggage_archive;
         BufferedReader br = null;
         String line = "";
         ArrayList<String> baggages = new ArrayList<String>();
-        dropTableBaggage();
-        createTableBaggage();
+        sql.dropTableBaggage(logEngine);
+        sql.createTableBaggage(logEngine);
 
 
         try {
@@ -315,7 +278,7 @@ public class Database {
             for (int j = 1; j < baggages.size(); j = +3) {
                 for (int k = 2; k < baggages.size(); k = +3) {
                     Baggage baggage = new Baggage(baggages.get(i), baggages.get(j), Double.parseDouble(baggages.get(k)), BaggageType.Normal);
-                    insert(baggage);
+                    sql.insert(baggage, logEngine);
                 }
             }
 
@@ -325,13 +288,15 @@ public class Database {
 
     public static void main(String... args) {
 
+        BaggageSQL sql = new BaggageSQL();
+
         Database.instance.innerSetLogEngine(new LogEngine(Configuration.instance.logFile));
         Database.instance.startup(Configuration.instance.dataPath);
-        Database.instance.dropTableBaggage();
-        Database.instance.createTableBaggage();
+        sql.dropTableBaggage(logEngine);
+        sql.createTableBaggage(logEngine);
 
         Baggage baggage = new Baggage(UUID.randomUUID().toString(), "aljslskfasluioulfjkj", 2, BaggageType.Normal);
-        Database.instance.insert(baggage);
+        sql.insert(baggage, logEngine);
 
         Database.instance.shutdown();
     }

@@ -1,4 +1,6 @@
-package base;public enum Configuration {
+package main;
+
+public enum Configuration {
     instance;
 
     public String lineSeparator = System.getProperty("line.separator");
