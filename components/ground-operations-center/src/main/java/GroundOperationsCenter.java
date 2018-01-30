@@ -38,36 +38,91 @@ public class GroundOperationsCenter {
         public String version() {
             return innerVersion();
         }
-
         public void receive(CheckInDeskReceipt checkInReceipt) { innerCheckInDeskReceipt(checkInReceipt); }
 
-        public void receive(BulkyBaggageDeskReceipt bulkyBaggageDeskReceipt) { bulkyBaggageDeskReceipts.add(bulkyBaggageDeskReceipt); }
+        public void receive(BulkyBaggageDeskReceipt bulkyBaggageDeskReceipt) { innerBulkyBaggageDeskReceipt(bulkyBaggageDeskReceipt);}
 
-        public void receive(BaggageSortingUnitReceipt baggageSortingUnitReceipt) { baggeSortingUnitReceipts.add(baggageSortingUnitReceipt); }
+        public void receive(BaggageSortingUnitReceipt baggageSortingUnitReceipt) {innerBaggageSortingUnitReceipt(baggageSortingUnitReceipt); }
 
-        public void receive(SecurityCheckReceipt securityCheckReceipt) { securityCheckReceipts.add(securityCheckReceipt); }
+        public void receive(SecurityCheckReceipt securityCheckReceipt) { innerSecurityCheckReceipt(securityCheckReceipt); }
 
-        public void receive(FederalPoliceReceipt federalPoliceReceipt) { federalPoliceReceipts.add(federalPoliceReceipt); }
+        public void receive(FederalPoliceReceipt federalPoliceReceipt) {innerFederalPoliceReceipt(federalPoliceReceipt); }
 
-        public void receive(CustomsReceipt customsReceipt) { customsReceipts.add(customsReceipt); }
+        public void receive(CustomsReceipt customsReceipt) { innnerCustomsReceipt(customsReceipt); }
 
-        public void receive(ServiceVehicleOilReceipt serviceVehicleOilReceipt) { serviceVehicleOilReceipts.add(serviceVehicleOilReceipt); }
+        public void receive(ServiceVehicleOilReceipt serviceVehicleOilReceipt) {innerServiceVehicleOilReceipt(serviceVehicleOilReceipt);}
 
-        public void receive(ServiceVehicleFreshWaterReceipt serviceVehicleFreshWaterReceipt) { serviceVehicleFreshWaterReceipts.add(serviceVehicleFreshWaterReceipt); }
+        public void receive(ServiceVehicleFreshWaterReceipt serviceVehicleFreshWaterReceipt) {innerServiceVehicleFreshWaterReceipt(serviceVehicleFreshWaterReceipt); }
 
-        public void receive(ServiceVehicleWasteWaterTankReceipt serviceVehicleWasteWaterTankReceipt) { serviceVehicleWasteWaterTankReceipts.add(serviceVehicleWasteWaterTankReceipt); }
+        public void receive(ServiceVehicleWasteWaterTankReceipt serviceVehicleWasteWaterTankReceipt) {innerServiceVehicleWasteWaterTankReceipt(serviceVehicleWasteWaterTankReceipt); }
 
-        public void receive(AirCargoPalletLifterReceipt airCargoPalletLifterReceipt) { airCargoPalletLifterReceipts.add(airCargoPalletLifterReceipt); }
+        public void receive(AirCargoPalletLifterReceipt airCargoPalletLifterReceipt) {innerAirCargoPalletLifterReceipt(airCargoPalletLifterReceipt);}
 
-        public void receive(ContainerLifterReceipt containerLifterReceipt) { containerLifterReceipts.add(containerLifterReceipt); }
+        public void receive(ContainerLifterReceipt containerLifterReceipt) {innerContainerLifterReceipt(containerLifterReceipt);}
 
-        public void receive(FuelReceipt fuelReceipt) { fuelReceipts.add(fuelReceipt); }
+        public void receive(FuelReceipt fuelReceipt) {innerFuelReceipt(fuelReceipt);}
 
-        public void receive(BoardingControlReceipt boardingControlReceipt) { boardingControlReceipts.add(boardingControlReceipt); }
+        public void receive(BoardingControlReceipt boardingControlReceipt) {innerBoardingControlReceipt(boardingControlReceipt);}
 
-        public void receive(PushBackVehicleReceipt pushBackVehicleReceipt) { pushBackVehicleReceipts.add(pushBackVehicleReceipt); }
+        public void receive(PushBackVehicleReceipt pushBackVehicleReceipt) {innerPushBackVehicleReceipt(pushBackVehicleReceipt);}
 
-        public void receive(ServiceVehicleNitrogenOxygenReceipt serviceVehicleNitrogenOxygenReceipt) { serviceVehicleNitrogenOxygenReceipts.add(serviceVehicleNitrogenOxygenReceipt); }
+        public void receive(ServiceVehicleNitrogenOxygenReceipt serviceVehicleNitrogenOxygenReceipt) {innerServiceVehicleNitrogenOxygenReceipt(serviceVehicleNitrogenOxygenReceipt); }
+    }
+
+    private void innerServiceVehicleNitrogenOxygenReceipt(ServiceVehicleNitrogenOxygenReceipt serviceVehicleNitrogenOxygenReceipt) {
+        serviceVehicleNitrogenOxygenReceipts.add(serviceVehicleNitrogenOxygenReceipt);
+    }
+
+    private void innerPushBackVehicleReceipt(PushBackVehicleReceipt pushBackVehicleReceipt) {
+        pushBackVehicleReceipts.add(pushBackVehicleReceipt);
+    }
+
+    private void innerBoardingControlReceipt(BoardingControlReceipt boardingControlReceipt) {
+        boardingControlReceipts.add(boardingControlReceipt);
+    }
+
+    private void innerFuelReceipt(FuelReceipt fuelReceipt) {
+        fuelReceipts.add(fuelReceipt);
+    }
+
+    private void innerContainerLifterReceipt(ContainerLifterReceipt containerLifterReceipt) {
+        containerLifterReceipts.add(containerLifterReceipt);
+    }
+
+    private void innerAirCargoPalletLifterReceipt(AirCargoPalletLifterReceipt airCargoPalletLifterReceipt) {
+        airCargoPalletLifterReceipts.add(airCargoPalletLifterReceipt);
+    }
+
+    private void innerServiceVehicleWasteWaterTankReceipt(ServiceVehicleWasteWaterTankReceipt serviceVehicleWasteWaterTankReceipt) {
+        serviceVehicleWasteWaterTankReceipts.add(serviceVehicleWasteWaterTankReceipt);
+    }
+
+    private void innerServiceVehicleFreshWaterReceipt(ServiceVehicleFreshWaterReceipt serviceVehicleFreshWaterReceipt) {
+        serviceVehicleFreshWaterReceipts.add(serviceVehicleFreshWaterReceipt);
+    }
+
+    private void innerServiceVehicleOilReceipt(ServiceVehicleOilReceipt serviceVehicleOilReceipt) {
+        serviceVehicleOilReceipts.add(serviceVehicleOilReceipt);
+    }
+
+    private void innnerCustomsReceipt(CustomsReceipt customsReceipt) {
+        customsReceipts.add(customsReceipt);
+    }
+
+    private void innerFederalPoliceReceipt(FederalPoliceReceipt federalPoliceReceipt) {
+        federalPoliceReceipts.add(federalPoliceReceipt);
+    }
+
+    private void innerSecurityCheckReceipt(SecurityCheckReceipt securityCheckReceipt) {
+        securityCheckReceipts.add(securityCheckReceipt);
+    }
+
+    private void innerBaggageSortingUnitReceipt(BaggageSortingUnitReceipt baggageSortingUnitReceipt) {
+        baggeSortingUnitReceipts.add(baggageSortingUnitReceipt);
+    }
+
+    private void innerBulkyBaggageDeskReceipt(BulkyBaggageDeskReceipt bulkyBaggageDeskReceipt) {
+        bulkyBaggageDeskReceipts.add(bulkyBaggageDeskReceipt);
     }
 
     private void innerCheckInDeskReceipt(CheckInDeskReceipt checkInReceipt) {

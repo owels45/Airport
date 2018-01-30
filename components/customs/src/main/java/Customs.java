@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import DummyFiles.*;
 
 public class Customs{
 
@@ -33,22 +32,27 @@ public class Customs{
 
         @Override
         public void notifyGroundOperations(CustomsReceipt customsReceipt) { innerMethodNotifyGroundOperations(customsReceipt); }
-        }
+
     }
-    public boolean innerMethodVerify(Passport passport, BoardingPass boardingPass, Invoice parameter)
+
+
+    boolean innerMethodVerify(Passport passport, BoardingPass boardingPass, Invoice parameter)
     {
-        if (passport.getPassanger() == boardingPass.getPassanger()) {
+        if (passport == null|| boardingPass == null || parameter == null){return false;}
+
+        if (passport.getPassenger().equals(boardingPass.getPassenger()) && passport.getPassenger().equals(parameter.getPassenger())) {
+            numberOfPassportsVerified++;
             return true;
         }
         return false;
     }
 
-    public boolean innerMethodScan(Baggage baggage) {
-
-        return false;
+    boolean innerMethodScan(Baggage baggage) {
+        numberOfBaggageScanned++;
+        return true;
     }
 
-    public void innerMethodNotifyGroundOperations(CustomsReceipt customsReceipt) {
+    void innerMethodNotifyGroundOperations(CustomsReceipt customsReceipt) {
 
     }
 }
