@@ -20,6 +20,22 @@ public class SecurityCheckReceipt {
         this.numberOfDangerousBaggage = numberOfDangerousBaggage;
     }
 
+    public void incrementNumberOfPassengerScannedByOne() {
+        this.numberOfPassengerScanned++;
+    }
+
+    public void incrementNumberOfPassengerScannedExplosivesTraceDetectorByOne() {
+        this.numberOfPassengerScannedExplosivesTraceDetector++;
+    }
+
+    public void incrementNumberOfBaggageScannedByOne() {
+        this.numberOfBaggageScanned++;
+    }
+
+    public void incrementNumberOfDangerousBaggageByOne() {
+        this.numberOfDangerousBaggage++;
+    }
+
     public Employee getEmployee() {
         return employee;
     }

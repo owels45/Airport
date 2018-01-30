@@ -1,6 +1,9 @@
 import base.Baggage;
+import base.CottonPad;
 import base.Employee;
 import base.Passenger;
+
+import java.util.ArrayList;
 
 public class SecurityCheck {
     /**
@@ -18,6 +21,7 @@ public class SecurityCheck {
         //this.innerId = id;
         //this.innerEmployee = employee;
         //this.innerFederalPolice = federalPolice;
+        this.securityCheckReceipt = new SecurityCheckReceipt(this.innerEmployee, new ArrayList<CottonPad>(), 0, 0, 0, 0);
         this.port = new Port();
     }
 
@@ -115,7 +119,6 @@ public class SecurityCheck {
             innerNotifyGroundOperations(securityCheckReceipt);
         }
     }
-
     /**
      * The id.
      */
@@ -133,6 +136,10 @@ public class SecurityCheck {
      */
     private String innerScanPattern = "glock7";
     /**
+     * The Security Check Receipt
+     */
+    private SecurityCheckReceipt securityCheckReceipt;
+    /**
      * Scans the passenger.
      * @param passenger The passenger.
      * @param scanner The scanner.
@@ -140,7 +147,15 @@ public class SecurityCheck {
      * @return True if found.
      */
     private boolean innerScan(Passenger passenger, Scanner scanner, String pattern) {
-        return scanner.scan(passenger, pattern);
+        boolean passengerScanned = scanner.scan(passenger, pattern);
+        this.securityCheckReceipt.incrementNumberOfPassengerScannedByOne();
+        for(Baggage baggage : passenger.getBaggageList()) {
+            if(scanner.scan(baggage, pattern)) {
+                this.securityCheckReceipt.incrementNumberOfDangerousBaggageByOne();
+            }
+            this.securityCheckReceipt.incrementNumberOfBaggageScannedByOne();
+        }
+        return passengerScanned;
     }
     /**
      * Scans the passenger.
@@ -149,6 +164,7 @@ public class SecurityCheck {
      * @return True if found.
      */
     private boolean innerScan(Passenger passenger, ExplosivesTraceDetection explosivesTraceDetection) {
+        this.securityCheckReceipt.incrementNumberOfPassengerScannedExplosivesTraceDetectorByOne();
         /**
          * Is not implemented and will always return false
          */
@@ -162,7 +178,13 @@ public class SecurityCheck {
      * @return True if found.
      */
     public boolean innerScan(Baggage baggage, Scanner scanner, String pattern) {
-        return scanner.scan(baggage, pattern);
+        if(scanner.scan(baggage, pattern)){
+            this.securityCheckReceipt.incrementNumberOfDangerousBaggageByOne();
+            this.securityCheckReceipt.incrementNumberOfBaggageScannedByOne();
+            return true;
+        }
+        this.securityCheckReceipt.incrementNumberOfBaggageScannedByOne();
+        return false;
     }
     /**
      * Notifies the ground operation
