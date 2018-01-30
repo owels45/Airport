@@ -3,9 +3,4 @@
  */
 public class GroundOperationCenterTest {
 
-    GroundOperationCenter groundOperationCenter
-
-    getGroundOperationCenter.port
-
-    assertEquals(port.receive)
 }
