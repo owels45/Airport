@@ -12,6 +12,8 @@ public class BoardingControl {
 
     private BoardingControl() {
         port = new Port();
+        checkInDesk = new CheckInDesk();
+        // boardedPassengerList = dbManager.getPassengerList();
     }
 
     public static BoardingControl getInstance() {
