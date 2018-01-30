@@ -1,5 +1,4 @@
-import base.Baggage;
-import base.Passenger;
+package SupportClasses;
 
 import java.util.ArrayList;
 
