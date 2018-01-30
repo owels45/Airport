@@ -1,3 +1,4 @@
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 public class Customs{
@@ -53,6 +54,15 @@ public class Customs{
     }
 
     void innerMethodNotifyGroundOperations(CustomsReceipt customsReceipt) {
+
+        Object componentPort;
+        componentPort = ComponentLoader.loadComponent("ground-operations-center","GroundOperationsCenter");
+        try {
+            Method onMethod = componentPort.getClass().getDeclaredMethod("receive",CustomsReceipt.class);
+            onMethod.invoke(componentPort,customsReceipt);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 }
