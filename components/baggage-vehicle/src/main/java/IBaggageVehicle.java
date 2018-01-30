@@ -1,4 +1,4 @@
 public interface IBaggageVehicle {
     int store(Container container);
-    void connect(ContainerLifter containerlifter);
+    void connect(Object containerlifterPort);
 }

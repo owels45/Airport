@@ -7,25 +7,26 @@ public class BaggageVehicle {
     public int innerStore(){
         return 1;
     }
-    public void innerConnect(ContainerLifter containerlifter){
+
+    public void innerConnect(Object containerlifter){
 
     }
 
-    public BaggageVehicle() {port =new Port();}
+    private BaggageVehicle() {port =new Port();}
 
-    public static BaggageVehicle getinstance() {return instance;}
+    public static BaggageVehicle getInstance() {return instance;}
 
     public class Port implements IBaggageVehicle {
         //private Container container = new Container();
-        private ContainerLifter containerLifter = new ContainerLifter();
+        private Object containerLifterPort;
 
 
         public int store(Container container){
-            return 1;
+            return innerStore();
         }
 
-        public void connect(ContainerLifter containerlifter){
-
+        public void connect(Object containerLifterPort){
+            innerConnect(containerLifterPort);
         }
 
     }
