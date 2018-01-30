@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import base.*;
 
 public class Customs{
 
@@ -39,6 +38,8 @@ public class Customs{
 
     boolean innerMethodVerify(Passport passport, BoardingPass boardingPass, Invoice parameter)
     {
+        if (passport == null|| boardingPass == null || parameter == null){return false;}
+
         if (passport.getPassenger().equals(boardingPass.getPassenger()) && passport.getPassenger().equals(parameter.getPassenger())) {
             numberOfPassportsVerified++;
             return true;

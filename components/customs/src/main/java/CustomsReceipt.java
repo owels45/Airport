@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import base.*;
 
 public class CustomsReceipt {
     private int numberOfPassportVerified;
