@@ -7,7 +7,7 @@
     <groupId>de.dhbw.mosbach.ai.se</groupId>
     <artifactId>ground-operations-center</artifactId>
     <version>1.0.0</version>
-    <!--dependencies>
+    <dependencies>
         <dependency>
             <groupId>de.dhbw.mosbach.ai.se</groupId>
             <artifactId>check-in-desk</artifactId>
@@ -78,16 +78,12 @@
             <artifactId>push-back-vehicle</artifactId>
             <version>1.0.0</version>
         </dependency>
-    </dependencies-->
-    <build>
-        <plugins>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+        <dependency>
+            <groupId>de.dhbw.mosbach.ai.se</groupId>
+            <artifactId>check-in-desk</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+    </dependencies>
+
+
 </project>
