@@ -39,64 +39,39 @@ public class GroundOperationsCenter {
             return innerVersion();
         }
 
-        public void receive(CheckInDeskReceipt checkInReceipt) {
-            checkInReceipts.add(checkInReceipt);
-        }
+        public void receive(CheckInDeskReceipt checkInReceipt) { innerCheckInDeskReceipt(checkInReceipt); }
 
-        public void receive(BulkyBaggageDeskReceipt bulkyBaggageDeskReceipt) {
-            bulkyBaggageDeskReceipts.add(bulkyBaggageDeskReceipt);
-        }
+        public void receive(BulkyBaggageDeskReceipt bulkyBaggageDeskReceipt) { bulkyBaggageDeskReceipts.add(bulkyBaggageDeskReceipt); }
 
-        public void receive(BaggageSortingUnitReceipt baggageSortingUnitReceipt) {
-            baggeSortingUnitReceipts.add(baggageSortingUnitReceipt);
-        }
+        public void receive(BaggageSortingUnitReceipt baggageSortingUnitReceipt) { baggeSortingUnitReceipts.add(baggageSortingUnitReceipt); }
 
-        public void receive(SecurityCheckReceipt securityCheckReceipt) {
-            securityCheckReceipts.add(securityCheckReceipt);
-        }
+        public void receive(SecurityCheckReceipt securityCheckReceipt) { securityCheckReceipts.add(securityCheckReceipt); }
 
-        public void receive(FederalPoliceReceipt federalPoliceReceipt) {
-            federalPoliceReceipts.add(federalPoliceReceipt);
-        }
+        public void receive(FederalPoliceReceipt federalPoliceReceipt) { federalPoliceReceipts.add(federalPoliceReceipt); }
 
-        public void receive(CustomsReceipt customsReceipt) {
-            customsReceipts.add(customsReceipt);
-        }
+        public void receive(CustomsReceipt customsReceipt) { customsReceipts.add(customsReceipt); }
 
-        public void receive(ServiceVehicleOilReceipt serviceVehicleOilReceipt) {
-            serviceVehicleOilReceipts.add(serviceVehicleOilReceipt);
-        }
+        public void receive(ServiceVehicleOilReceipt serviceVehicleOilReceipt) { serviceVehicleOilReceipts.add(serviceVehicleOilReceipt); }
 
-        public void receive(ServiceVehicleFreshWaterReceipt serviceVehicleFreshWaterReceipt) {
-            serviceVehicleFreshWaterReceipts.add(serviceVehicleFreshWaterReceipt);
-        }
+        public void receive(ServiceVehicleFreshWaterReceipt serviceVehicleFreshWaterReceipt) { serviceVehicleFreshWaterReceipts.add(serviceVehicleFreshWaterReceipt); }
 
-        public void receive(ServiceVehicleWasteWaterTankReceipt serviceVehicleWasteWaterTankReceipt) {
-            serviceVehicleWasteWaterTankReceipts.add(serviceVehicleWasteWaterTankReceipt);
-        }
+        public void receive(ServiceVehicleWasteWaterTankReceipt serviceVehicleWasteWaterTankReceipt) { serviceVehicleWasteWaterTankReceipts.add(serviceVehicleWasteWaterTankReceipt); }
 
-        public void receive(AirCargoPalletLifterReceipt airCargoPalletLifterReceipt) {
-            airCargoPalletLifterReceipts.add(airCargoPalletLifterReceipt);
-        }
+        public void receive(AirCargoPalletLifterReceipt airCargoPalletLifterReceipt) { airCargoPalletLifterReceipts.add(airCargoPalletLifterReceipt); }
 
-        public void receive(ContainerLifterReceipt containerLifterReceipt) {
-            containerLifterReceipts.add(containerLifterReceipt);
-        }
+        public void receive(ContainerLifterReceipt containerLifterReceipt) { containerLifterReceipts.add(containerLifterReceipt); }
 
-        public void receive(FuelReceipt fuelReceipt) {
-            fuelReceipts.add(fuelReceipt);
-        }
+        public void receive(FuelReceipt fuelReceipt) { fuelReceipts.add(fuelReceipt); }
 
-        public void receive(BoardingControlReceipt boardingControlReceipt) {
-            boardingControlReceipts.add(boardingControlReceipt);
-        }
+        public void receive(BoardingControlReceipt boardingControlReceipt) { boardingControlReceipts.add(boardingControlReceipt); }
 
-        public void receive(PushBackVehicleReceipt pushBackVehicleReceipt) {
-            pushBackVehicleReceipts.add(pushBackVehicleReceipt);
-        }
+        public void receive(PushBackVehicleReceipt pushBackVehicleReceipt) { pushBackVehicleReceipts.add(pushBackVehicleReceipt); }
 
-        public void receive(ServiceVehicleNitrogenOxygenReceipt serviceVehicleNitrogenOxygenReceipt) {
-            serviceVehicleNitrogenOxygenReceipts.add(serviceVehicleNitrogenOxygenReceipt);
-        }
+        public void receive(ServiceVehicleNitrogenOxygenReceipt serviceVehicleNitrogenOxygenReceipt) { serviceVehicleNitrogenOxygenReceipts.add(serviceVehicleNitrogenOxygenReceipt); }
+    }
+
+    private void innerCheckInDeskReceipt(CheckInDeskReceipt checkInReceipt) {
+        checkInReceipts.add(checkInReceipt);
+        //factory.persistence.build().insert(CheckInDeskReceipts, checkInReceipt);
     }
 }

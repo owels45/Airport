@@ -1,6 +1,3 @@
-/**
- * Created by User on 30.01.2018.
- */
 public interface IGroundOperationsCenter {
   void receive(CheckInDeskReceipt checkInReceipt);
   void receive(BulkyBaggageDeskReceipt bulkyBaggageDeskReceipt);
