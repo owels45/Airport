@@ -58,9 +58,8 @@ public class Customs{
         Object componentPort;
         componentPort = ComponentLoader.loadComponent("ground-operations-center","GroundOperationsCenter");
         try {
-            //Method onMethod = componentPort.getClass().getDeclaredMethod("receive", CustomsReceipt.class);
             Method onMethod = componentPort.getClass().getMethod("receive",CustomsReceipt.class);
-            onMethod.invoke(customsReceipt);
+            onMethod.invoke(componentPort,customsReceipt);
         } catch (Exception e) {
             e.printStackTrace();
         }
