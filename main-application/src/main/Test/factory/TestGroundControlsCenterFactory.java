@@ -12,3 +12,4 @@ public class TestGroundControlsCenterFactory {
         assertNotNull(componentPort);
     }
 }
+
