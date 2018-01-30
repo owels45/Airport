@@ -1,3 +1,5 @@
+import base.*;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.sql.Connection;
@@ -118,13 +120,14 @@ public class Database {
             return innerMethodGetPassport();
         }
 
+        public Storage getStorrage() {
+            return innerMethodGetStorage();
+        }
+
         public void setLogEngine(LogEngine logEngine) {
             innerSetLogEngine(logEngine);
         }
 
-        public Storage getStorage(){
-            return innerMethodGetStorage();
-        }
         public PassengerList getPassengerList(){
             return innerMethodGetPassengerList();
         }
