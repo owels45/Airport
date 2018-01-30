@@ -38,6 +38,7 @@ public class BulkyBaggageDesk implements IBulkyBaggageDesk {
             groundOperationsPort.getClass().getMethod("receive", BulkyBaggageDeskReceipt.class).invoke(groundOperationsPort, bulkyBaggageDeskReceipt);
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
+            throw new RuntimeException("could not notify ground operations center", e);
         }
     }
 }

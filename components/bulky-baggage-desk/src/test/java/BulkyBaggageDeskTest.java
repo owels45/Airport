@@ -84,5 +84,9 @@ public class BulkyBaggageDeskTest {
         assertEquals(true, bulkyBaggageDesk.scan(boardingPass));
     }
 
+    @Test
+    public void testNotify() {
+        bulkyBaggageDesk.notifyGroundOperations(new BulkyBaggageDeskReceipt(10));
+    }
 
 }

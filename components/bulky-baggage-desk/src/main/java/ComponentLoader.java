@@ -5,7 +5,7 @@ import java.net.URLClassLoader;
 public class ComponentLoader {
     public static Object loadComponent(String componentName, String className) {
         try {
-            URL[] urls = {new File("components/" + componentName + "target/" + componentName + "-1.0.0.jar").toURI().toURL()};
+            URL[] urls = {new File("../" + componentName + "/target/" + componentName + "-1.0.0.jar").toURI().toURL()};
             URLClassLoader urlClassLoader = new URLClassLoader(urls, ComponentLoader.class.getClassLoader());
             Class clazz = Class.forName(className, true, urlClassLoader);
             Object instance = clazz.getMethod("getInstance").invoke(null);
