@@ -10,7 +10,11 @@ public class SecurityCheck {
     /**
      * The SecurityCheck instance.
      */
-    private static SecurityCheck instance = new SecurityCheck();
+    private static SecurityCheck instance;
+    /**
+     * The Federal Police.
+     */
+    private Object innerFederalPolice;
     /**
      * The port instance.
      */
@@ -18,13 +22,14 @@ public class SecurityCheck {
     /**
      * The Security Check component.
      */
-    public SecurityCheck() {
+    public SecurityCheck(Object federalPolice) {
         /**
          * Hardcoded values because it is ok like this
          */
         this.innerId = 1;
         this.innerEmployee = new Employee(1, "Jeff", "Jeff1970");
-        //this.innerFederalPolice = federalPolice;
+
+        this.innerFederalPolice = federalPolice;
 
         this.securityCheckReceipt = new SecurityCheckReceipt(
                 this.innerEmployee,
@@ -44,14 +49,15 @@ public class SecurityCheck {
      * Returns the instance.
      * @return The instance of the component.
      */
-    public static SecurityCheck getInstance() {
+    public static SecurityCheck getInstance(Object federalPolice) {
+        instance = new SecurityCheck(federalPolice);
         return instance;
     }
     /**
      * Resets the instance.
      */
-    public static void resetInstance() {
-        instance = new SecurityCheck();
+    public static void resetInstance(Object federalPolice) {
+        instance = new SecurityCheck(federalPolice);
     }
     /**
      * Returns the version string.
@@ -89,7 +95,7 @@ public class SecurityCheck {
          * Get the Federal Police.
          * @return The Federal Police.
          */
-        public FederalPolice getFederalPolice() {
+        public Object getFederalPolice() {
             return innerFederalPolice;
         }
         /**
@@ -150,10 +156,6 @@ public class SecurityCheck {
      * The employee.
      */
     private Employee innerEmployee;
-    /**
-     * The Federal Police.
-     */
-    private FederalPolice innerFederalPolice;
     /**
      * The scan pattern;
      */
@@ -216,7 +218,7 @@ public class SecurityCheck {
      * @param securityCheckReceipt The security check receipt.
      */
     public void innerNotifyGroundOperations(SecurityCheckReceipt securityCheckReceipt) {
-        //TODO: Notify Ground Operations somehow
+        //TODO: Notify Ground Operations somehow, event is needed
     }
     /**
      * Calls the method scan(Baggage baggage, String pattern) from the Scanner Component.
