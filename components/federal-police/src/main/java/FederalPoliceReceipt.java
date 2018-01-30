@@ -48,3 +48,4 @@ public class FederalPoliceReceipt {
     public void setBaggageList(ArrayList<Baggage> baggageList) {
         this.baggageList = baggageList;
     }
+}
