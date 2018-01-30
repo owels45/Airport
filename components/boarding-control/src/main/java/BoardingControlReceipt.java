@@ -6,7 +6,7 @@ public class BoardingControlReceipt {
 
     public BoardingControlReceipt() {
         checkInDesk = new CheckInDesk();
-        boardedPassengerList = new PassengerList(new ArrayList<>());
+        boardedPassengerList = new PassengerList(new ArrayList<Passenger>());
     }
 
     public BoardingControlReceipt(CheckInDesk desk, PassengerList list) {

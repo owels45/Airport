@@ -1,3 +1,8 @@
+import factory.GroundOperationsCenterFactory;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 public class BoardingControl {
     private static BoardingControl instance = new BoardingControl();
     public Port port;
@@ -49,7 +54,14 @@ public class BoardingControl {
     }
 
     public void notifyGroundOperations(BoardingControlReceipt boardingControlReceipt) {
-
+        boardingControlReceipt.setBoardedPassengerList(boardedPassengerList);
+        Object groundControlPort = GroundOperationsCenterFactory.build();
+        try {
+            Method method = groundControlPort.getClass().getMethod("receive", BoardingControlReceipt.class);
+            method.invoke(groundControlPort, boardingControlReceipt);
+        } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException exc) {
+            exc.printStackTrace();
+        }
     }
 
     private void printPassengers(PassengerList passengers) {
