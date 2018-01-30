@@ -1,21 +1,22 @@
 import java.util.ArrayList;
 
 public class GroundOperationsCenter implements IGroundOperationsCenter {
-    ArrayList<CheckInDeskReceipt> checkInReceipts = new ArrayList<CheckInDeskReceipt>();
-    ArrayList<BulkyBaggageDeskReceipt> bulkyBaggageDeskReceipts = new ArrayList<BulkyBaggageDeskReceipt>();
-    ArrayList<BaggageSortingUnitReceipt> baggeSortingUnitReceipts = new ArrayList<BaggageSortingUnitReceipt>();
-    ArrayList<SecurityCheckReceipt> securityCheckReceipts = new ArrayList<SecurityCheckReceipt>();
-    ArrayList<FederalPoliceReceipt> federalPoliceReceipts = new ArrayList<FederalPoliceReceipt>();
-    ArrayList<CustomsReceipt> customsReceipts = new ArrayList<CustomsReceipt>();
-    ArrayList<ServiceVehicleOilReceipt> serviceVehicleOilReceipts = new ArrayList<ServiceVehicleOilReceipt>();
-    ArrayList<ServiceVehicleNitrogenOxygenReceipt> serviceVehicleNitrogenOxygenReceipts = new ArrayList<ServiceVehicleNitrogenOxygenReceipt>();
-    ArrayList<ServiceVehicleFreshWaterReceipt> serviceVehicleFreshWaterReceipts = new ArrayList<ServiceVehicleFreshWaterReceipt>();
-    ArrayList<ServiceVehicleWasteWaterTankReceipt> serviceVehicleWasteWaterTankReceipts = new ArrayList<ServiceVehicleWasteWaterTankReceipt>();
-    ArrayList<AirCargoPalletLifterReceipt> airCargoPalletLifterReceipts = new ArrayList<AirCargoPalletLifterReceipt>();
-    ArrayList<ContainerLifterReceipt> containerLifterReceipts = new ArrayList<ContainerLifterReceipt>();
-    ArrayList<FuelReceipt> fuelReceipts = new ArrayList<FuelReceipt>();
-    ArrayList<BoardingControlReceipt> boardingControlReceipts = new ArrayList<BoardingControlReceipt>();
-    ArrayList<PushBackVehicleReceipt> pushBackVehicleReceipts = new ArrayList<PushBackVehicleReceipt>();
+
+   private ArrayList<CheckInDeskReceipt> checkInReceipts = new ArrayList<CheckInDeskReceipt>();
+   private ArrayList<BulkyBaggageDeskReceipt> bulkyBaggageDeskReceipts = new ArrayList<BulkyBaggageDeskReceipt>();
+   private ArrayList<BaggageSortingUnitReceipt> baggeSortingUnitReceipts = new ArrayList<BaggageSortingUnitReceipt>();
+   private ArrayList<SecurityCheckReceipt> securityCheckReceipts = new ArrayList<SecurityCheckReceipt>();
+   private ArrayList<FederalPoliceReceipt> federalPoliceReceipts = new ArrayList<FederalPoliceReceipt>();
+   private ArrayList<CustomsReceipt> customsReceipts = new ArrayList<CustomsReceipt>();
+   private ArrayList<ServiceVehicleOilReceipt> serviceVehicleOilReceipts = new ArrayList<ServiceVehicleOilReceipt>();
+   private ArrayList<ServiceVehicleNitrogenOxygenReceipt> serviceVehicleNitrogenOxygenReceipts = new ArrayList<ServiceVehicleNitrogenOxygenReceipt>();
+   private ArrayList<ServiceVehicleFreshWaterReceipt> serviceVehicleFreshWaterReceipts = new ArrayList<ServiceVehicleFreshWaterReceipt>();
+   private ArrayList<ServiceVehicleWasteWaterTankReceipt> serviceVehicleWasteWaterTankReceipts = new ArrayList<ServiceVehicleWasteWaterTankReceipt>();
+   private ArrayList<AirCargoPalletLifterReceipt> airCargoPalletLifterReceipts = new ArrayList<AirCargoPalletLifterReceipt>();
+   private ArrayList<ContainerLifterReceipt> containerLifterReceipts = new ArrayList<ContainerLifterReceipt>();
+   private ArrayList<FuelReceipt> fuelReceipts = new ArrayList<FuelReceipt>();
+   private ArrayList<BoardingControlReceipt> boardingControlReceipts = new ArrayList<BoardingControlReceipt>();
+   private ArrayList<PushBackVehicleReceipt> pushBackVehicleReceipts = new ArrayList<PushBackVehicleReceipt>();
 
 
     public void receive(CheckInDeskReceipt checkInReceipt) {
@@ -44,5 +45,37 @@ public class GroundOperationsCenter implements IGroundOperationsCenter {
 
     public void receive(ServiceVehicleOilReceipt serviceVehicleOilReceipt) {
         serviceVehicleOilReceipts.add(serviceVehicleOilReceipt);
+    }
+
+    public void receive(ServiceVehicleFreshWaterReceipt serviceVehicleFreshWaterReceipt) {
+        serviceVehicleFreshWaterReceipts.add(serviceVehicleFreshWaterReceipt);
+    }
+
+    public void receive(ServiceVehicleWasteWaterTankReceipt serviceVehicleWasteWaterTankReceipt) {
+        serviceVehicleWasteWaterTankReceipts.add(serviceVehicleWasteWaterTankReceipt);
+    }
+
+    public void receive(AirCargoPalletLifterReceipt airCargoPalletLifterReceipt) {
+        airCargoPalletLifterReceipts.add(airCargoPalletLifterReceipt);
+    }
+
+    public void receive(ContainerLifterReceipt containerLifterReceipt) {
+        containerLifterReceipts.add(containerLifterReceipt);
+    }
+
+    public void receive(FuelReceipt fuelReceipt) {
+        fuelReceipts.add(fuelReceipt);
+    }
+
+    public void receive(BoardingControlReceipt boardingControlReceipt) {
+        boardingControlReceipts.add(boardingControlReceipt);
+    }
+
+    public void receive(PushBackVehicleReceipt pushBackVehicleReceipt) {
+        pushBackVehicleReceipts.add(pushBackVehicleReceipt);
+    }
+
+    public void receive(ServiceVehicleNitrogenOxygenReceipt serviceVehicleNitrogenOxygenReceipt) {
+        serviceVehicleNitrogenOxygenReceipts.add(serviceVehicleNitrogenOxygenReceipt);
     }
 }
