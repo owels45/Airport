@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.UUID;
 
 public class Database {
     private LogEngine logEngine;
@@ -18,7 +19,7 @@ public class Database {
     private static Database instance = new Database();
     public Port port;
 
-    private Database() {
+    public Database() {
         port = new Port();
     }
 
@@ -30,13 +31,20 @@ public class Database {
         public void initBaggage() {
             innerMethodInitBaggage();
         }
+        public void setLogEngine(LogEngine logEngine) {
+            innerSetLogEngine(logEngine);
+        }
+    }
+
+    public Connection getConnection() {
+        return connection;
     }
 
     public void startup(String dataPath) {
         try {
             Class.forName("org.hsqldb.jdbcDriver");
             String databaseURL = driverName + dataPath + "records.db";
-            connection = DriverManager.getConnection(databaseURL,username,password);
+            connection = DriverManager.getConnection(databaseURL, username, password);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -66,7 +74,7 @@ public class Database {
 
     public void dropTableBaggage() {
         String sqlStatement = "DROP TABLE baggage IF EXISTS";
-        logEngine.write("Database","dropTableBaggage","-",sqlStatement);
+        logEngine.write("Database", "dropTableBaggage", "-", sqlStatement);
         update(sqlStatement);
     }
 
@@ -78,7 +86,7 @@ public class Database {
         sqlStringBuilder.append("weight INT NOT NULL").append(",");
         sqlStringBuilder.append("PRIMARY KEY (uuid)");
         sqlStringBuilder.append(" )");
-        logEngine.write("Database","createTableBaggage","-",sqlStringBuilder.toString());
+        logEngine.write("Database", "createTableBaggage", "-", sqlStringBuilder.toString());
         update(sqlStringBuilder.toString());
     }
 
@@ -94,7 +102,8 @@ public class Database {
     }
 
     public void insert(Baggage baggage) {
-        logEngine.write("Database","insert","baggage = " + baggage.getUUID(),buildInsertSQLStatement(baggage));
+        System.out.println(baggage.hashCode());
+        logEngine.write("Database", "insert", "baggage = " + baggage.getUUID(), buildInsertSQLStatement(baggage));
         update(buildInsertSQLStatement(baggage));
     }
 
@@ -106,12 +115,16 @@ public class Database {
         return sqlStringBuilder.toString();
     }
 
+    public void innerSetLogEngine(LogEngine logEngine) {
+        this.logEngine = logEngine;
+    }
 
     public void innerMethodInitBaggage() {
+
         String csvFile = Configuration.instance.baggage_archive;
         BufferedReader br = null;
         String line = "";
-        ArrayList<String> baggages = new ArrayList<>();
+        ArrayList<String> baggages = new ArrayList<String>();
         dropTableBaggage();
         createTableBaggage();
 
@@ -127,15 +140,28 @@ public class Database {
             e.getStackTrace();
         }
 
-        for (int i = 0; i< baggages.size(); i=+3){
-            for(int j = 1; j<baggages.size(); j=+3){
-                for (int k= 2; k<baggages.size(); k=+3){
-                    Baggage baggage = new Baggage(baggages.get(i), baggages.get(j),Double.parseDouble(baggages.get(k)));
+        for (int i = 0; i < baggages.size(); i = +3) {
+            for (int j = 1; j < baggages.size(); j = +3) {
+                for (int k = 2; k < baggages.size(); k = +3) {
+                    Baggage baggage = new Baggage(baggages.get(i), baggages.get(j), Double.parseDouble(baggages.get(k)));
                     insert(baggage);
                 }
             }
 
 
         }
+    }
+
+    public static void main(String... args) {
+
+        Database.instance.innerSetLogEngine(new LogEngine(Configuration.instance.logFile));
+        Database.instance.startup(Configuration.instance.dataPath);
+        Database.instance.dropTableBaggage();
+        Database.instance.createTableBaggage();
+
+        Baggage baggage = new Baggage(UUID.randomUUID().toString(),"aljslskfasluioulfjkj",2);
+        Database.instance.insert(baggage);
+
+        Database.instance.shutdown();
     }
 }
