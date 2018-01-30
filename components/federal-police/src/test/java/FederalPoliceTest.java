@@ -1,66 +1,69 @@
 import base.Passport;
 import base.SpecialGood;
 import base.SpecialGoodType;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
-class FederalPoliceTest {
+
+public class FederalPoliceTest {
 
     @Test
-    void testGetInstanceNotNull() {
+    public void testGetInstanceNotNull() {
         assertNotNull(FederalPolice.getInstance());
     }
 
     @Test
-    void testInnerMethodVerifyNullPassport() {
+    public void testInnerMethodVerifyNullPassport() {
         assertFalse(FederalPolice.getInstance().innerMethodVerify(null));
     }
 
     @Test
-    void testInnerMethodVerifyNotNullPassport() {
+    public void testInnerMethodVerifyNotNullPassport() {
         assertTrue(FederalPolice.getInstance().innerMethodVerify(new Passport("id","picture","string", null)));
     }
 
     @Test
-    void testInnerMethodScanNullPassport() {
+    public void testInnerMethodScanNullPassport() {
         assertFalse(FederalPolice.getInstance().innerMethodScan(null));
     }
 
     @Test
-    void testInnerMethodArrestNotNullPassport() {
+    public void testInnerMethodArrestNotNullPassport() {
         assertTrue(FederalPolice.getInstance().innerMethodScan(new Passport("id","picture","string", null)));
     }
 
     @Test
-    void testInnerMethodInspectWeaponTrue() {
+    public void testInnerMethodInspectWeaponTrue() {
         SpecialGood specialGood = new SpecialGood(SpecialGoodType.Weapon);
         assertTrue(FederalPolice.getInstance().innerMethodInspectWeapon(specialGood));
     }
 
     @Test
-    void testInnerMethodInspectWeaponFalse() {
+    public void testInnerMethodInspectWeaponFalse() {
         SpecialGood specialGood = new SpecialGood(SpecialGoodType.Bike);
         assertFalse(FederalPolice.getInstance().innerMethodInspectWeapon(specialGood));
     }
 
     @Test
-    void testInnerMethodInspectMunitionTrue() {
+    public void testInnerMethodInspectMunitionTrue() {
         SpecialGood specialGood = new SpecialGood(SpecialGoodType.Munition);
         assertTrue(FederalPolice.getInstance().innerMethodInspectMunition(specialGood));
     }
 
     @Test
-    void testInnerMethodInspectMunitionFalse() {
+    public void testInnerMethodInspectMunitionFalse() {
         SpecialGood specialGood = new SpecialGood(SpecialGoodType.DangerousGoods);
         assertFalse(FederalPolice.getInstance().innerMethodInspectMunition(specialGood));
     }
 
     @Test
-    void testInnerMethodKeepSafe() {
+    public void testInnerMethodKeepSafe() {
     }
 
     @Test
-    void testInnerMethodNotifyGroundOperations() {
+    public void testInnerMethodNotifyGroundOperations() {
     }
 }
