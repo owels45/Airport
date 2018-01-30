@@ -71,11 +71,11 @@ public class GroundOperationsCenter {
 
         public void receive(ServiceVehicleNitrogenOxygenReceipt serviceVehicleNitrogenOxygenReceipt) {innerServiceVehicleNitrogenOxygenReceipt(serviceVehicleNitrogenOxygenReceipt); }
     }
-    private void insert(Class Receipt){
+    private void insert(Class receiptClass){
         Object componentPort;
-        componentPort = ComponentLoader.loadComponent("persistance","Database");
+        componentPort = ComponentLoader.loadComponent("persistence","Database");
         try {
-            Method onMethod = componentPort.getClass().getDeclaredMethod("insert",Receipt);
+            Method onMethod = componentPort.getClass().getDeclaredMethod("insert",receiptClass);
             onMethod.invoke(componentPort);
         } catch (Exception e) {
             e.printStackTrace();
