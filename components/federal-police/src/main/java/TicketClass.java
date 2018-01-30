@@ -1,5 +1,3 @@
-package base;
-
 public enum TicketClass {
     First,
     Business,

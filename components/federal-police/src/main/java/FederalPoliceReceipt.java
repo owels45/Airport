@@ -1,6 +1,3 @@
-import base.Baggage;
-import base.Passenger;
-
 import java.util.ArrayList;
 
 public class FederalPoliceReceipt {
