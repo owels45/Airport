@@ -32,24 +32,24 @@ public class ContainerSQL {
     public String buildInsertSQLStatement(Container container) {
         StringBuilder sqlStringBuilder = new StringBuilder();
         sqlStringBuilder.append("INSERT INTO baggage (uuid,content,weight) VALUES (");
-        sqlStringBuilder.append("'").append(baggage.getUUID()).append("'").append(",");
-        sqlStringBuilder.append("'").append(baggage.getContent()).append("'").append(",");
-        sqlStringBuilder.append(baggage.getWeight()).append(",");
-        sqlStringBuilder.append("'").append(baggage.getBaggageType()).append("'");
+        sqlStringBuilder.append("'").append(container.getId()).append("'").append(",");
+        sqlStringBuilder.append("'").append(container.getBarCodeIDCategory()).append("'").append(",");
+        sqlStringBuilder.append(container.getCategory()).append(",");
+        sqlStringBuilder.append("'").append(container.getProfile()).append("'");
         sqlStringBuilder.append(")");
         return sqlStringBuilder.toString();
     }
 
     public void insert(Container container, LogEngine logEngine) {
-        logEngine.write("main.Database", "insert", "baggage = " + baggage.getUUID(), buildInsertSQLStatement(baggage));
+        logEngine.write("main.Database", "insert", "baggage = " + container.getId(), buildInsertSQLStatement(container));
         instance.update(buildInsertSQLStatement(container));
     }
 
     public String buildUpdateSQLStatement(Container container) {
         StringBuilder sqlStringBuilder = new StringBuilder();
-        sqlStringBuilder.append("UPDATE baggage SET content = '").append(baggage.getContent()).append("'").append(",");
-        sqlStringBuilder.append("weight = ").append(baggage.getWeight()).append(",");
-        sqlStringBuilder.append("WHERE uuid = '").append(baggage.getUUID()).append("'");
+        sqlStringBuilder.append("UPDATE baggage SET content = '").append(container.getId()).append("'").append(",");
+        sqlStringBuilder.append("weight = ").append(container.getProfile()).append(",");
+        sqlStringBuilder.append("WHERE uuid = '").append(container.getBarCodeIDCategory()).append("'");
         return sqlStringBuilder.toString();
     }
 }

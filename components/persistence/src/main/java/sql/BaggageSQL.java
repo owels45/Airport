@@ -1,11 +1,22 @@
 package sql;
+
 import base.Baggage;
+import base.BaggageType;
 import engine.LogEngine;
 import main.Database;
 
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+
 public class BaggageSQL {
 
-    Database instance = new Database();
+    Database instance;
+
+    public BaggageSQL(Database instance) {
+
+        this.instance = instance;
+    }
 
     public void dropTableBaggage(LogEngine logEngine) {
         String sqlStatement = "DROP TABLE baggage IF EXISTS";
@@ -31,9 +42,7 @@ public class BaggageSQL {
         sqlStringBuilder.append("INSERT INTO baggage (uuid,content,weight) VALUES (");
         sqlStringBuilder.append("'").append(baggage.getUUID()).append("'").append(",");
         sqlStringBuilder.append("'").append(baggage.getContent()).append("'").append(",");
-        sqlStringBuilder.append(baggage.getWeight()).append(",");
-        sqlStringBuilder.append("'").append(baggage.getBaggageType()).append("'");
-        sqlStringBuilder.append(")");
+        sqlStringBuilder.append("'").append(baggage.getWeight()).append("'").append(")");
         return sqlStringBuilder.toString();
     }
 
@@ -49,5 +58,29 @@ public class BaggageSQL {
         sqlStringBuilder.append("weight = ").append(baggage.getWeight()).append(",");
         sqlStringBuilder.append("WHERE uuid = '").append(baggage.getUUID()).append("'");
         return sqlStringBuilder.toString();
+    }
+
+    public ArrayList<Baggage> buildSelectSQLStatement() {
+
+        ArrayList<Baggage> allbagages = new ArrayList<Baggage>();
+        StringBuilder sb = new StringBuilder();
+        sb.append("SELECT uuid,content,weight FROM baggage");
+        try {
+            Statement statement = instance.getConnection().createStatement();
+            ResultSet rs = statement.executeQuery(sb.toString());
+            while (rs.next()) {
+                String id = rs.getString("uuid");
+                String content = rs.getString("content");
+                int weight = rs.getInt("weight");
+                allbagages.add(new Baggage(id, content, weight, BaggageType.Normal));
+            }
+            statement.close();
+
+            return allbagages;
+        } catch (Exception e) {
+            e.getStackTrace();
+            return null;
+
+        }
     }
 }
