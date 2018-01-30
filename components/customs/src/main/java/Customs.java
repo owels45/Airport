@@ -56,10 +56,12 @@ public class Customs{
     void innerMethodNotifyGroundOperations(CustomsReceipt customsReceipt) {
 
         Object componentPort;
+        boolean result;
         componentPort = ComponentLoader.loadComponent("ground-operations-center","GroundOperationsCenter");
         try {
-            Method onMethod = componentPort.getClass().getDeclaredMethod("receive",CustomsReceipt.class);
-            onMethod.invoke(componentPort,customsReceipt);
+            //Method onMethod = componentPort.getClass().getDeclaredMethod("receive", CustomsReceipt.class);
+            Method onMethod = componentPort.getClass().getMethod("receive",CustomsReceipt.class);
+            onMethod.invoke(customsReceipt);
         } catch (Exception e) {
             e.printStackTrace();
         }
