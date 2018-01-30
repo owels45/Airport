@@ -64,11 +64,11 @@ public class FederalPolice {
     }
 
     boolean innerMethodVerify(Passport passport) {
-        return false;
+        return passport != null;
     }
 
     boolean innerMethodScan(Passport passport) {
-        return false;
+        return passport != null;
     }
 
     void innerMethodArrest(Passenger passenger) {

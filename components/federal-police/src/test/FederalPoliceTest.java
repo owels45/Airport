@@ -1,3 +1,4 @@
+import dummies.Passport;
 import dummies.SpecialGood;
 import dummies.SpecialGoodType;
 import org.junit.jupiter.api.Test;
@@ -12,15 +13,23 @@ class FederalPoliceTest {
     }
 
     @Test
-    void testInnerMethodVerify() {
+    void testInnerMethodVerifyNullPassport() {
+        assertFalse(FederalPolice.getInstance().innerMethodVerify(null));
     }
 
     @Test
-    void testInnerMethodScan() {
+    void testInnerMethodVerifyNotNullPassport() {
+        assertTrue(FederalPolice.getInstance().innerMethodVerify(new Passport()));
     }
 
     @Test
-    void testInnerMethodArrest() {
+    void testInnerMethodScanNullPassport() {
+        assertFalse(FederalPolice.getInstance().innerMethodScan(null));
+    }
+
+    @Test
+    void testInnerMethodArrestNotNullPassport() {
+        assertTrue(FederalPolice.getInstance().innerMethodScan(new Passport()));
     }
 
     @Test
