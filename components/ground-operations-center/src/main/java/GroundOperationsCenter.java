@@ -1,3 +1,4 @@
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import SupportClasses.*;
 
@@ -72,6 +73,15 @@ public class GroundOperationsCenter {
 
     private void innerServiceVehicleNitrogenOxygenReceipt(ServiceVehicleNitrogenOxygenReceipt serviceVehicleNitrogenOxygenReceipt) {
         serviceVehicleNitrogenOxygenReceipts.add(serviceVehicleNitrogenOxygenReceipt);
+
+        Object componentPort;
+        componentPort = ComponentLoader.loadComponent("persistance","Database");
+        try {
+            Method onMethod = componentPort.getClass().getDeclaredMethod("insert",ServiceVehicleNitrogenOxygenReceipt.class);
+            onMethod.invoke(componentPort);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void innerPushBackVehicleReceipt(PushBackVehicleReceipt pushBackVehicleReceipt) {
@@ -128,6 +138,5 @@ public class GroundOperationsCenter {
 
     private void innerCheckInDeskReceipt(CheckInDeskReceipt checkInReceipt) {
         checkInReceipts.add(checkInReceipt);
-        //factory.persistence.build().insert(CheckInDeskReceipts, checkInReceipt);
     }
 }
