@@ -1,9 +1,9 @@
 package event.service_vehicle;
 
-public class ServiceVehicleStart {
+public class ServiceVehicleApuOilIncreaseLevel {
     private String phase;
 
-    public ServiceVehicleStart(String phase) {
+    public ServiceVehicleOilApuIncreaseLevel(String phase) {
         this.phase = phase;
     }
 
@@ -12,6 +12,6 @@ public class ServiceVehicleStart {
     }
 
     public String toString() {
-        return "event - " + phase + " : ServiceVehicleStart";
+        return "event - " + phase + " : ServiceVehicleOilApuIncreaseLevel";
     }
 }
