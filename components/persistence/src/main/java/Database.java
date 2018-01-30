@@ -5,8 +5,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.UUID;
 
 public class Database {
     private LogEngine logEngine;
@@ -128,23 +126,25 @@ public class Database {
         dropTableBaggage();
         createTableBaggage();
 
-
         try {
 
             br = new BufferedReader(new FileReader(csvFile));
             while ((line = br.readLine()) != null) {
-
-                baggages.add(Arrays.toString(line.split(";")));
+                for (String value: line.split(";")){
+                    baggages.add(value);
+                }
             }
         } catch (Exception e) {
             e.getStackTrace();
         }
 
-        for (int i = 0; i < baggages.size(); i = +3) {
-            for (int j = 1; j < baggages.size(); j = +3) {
-                for (int k = 2; k < baggages.size(); k = +3) {
+        for (int i = 0; i < baggages.size();) {
+            for (int j = 1; j < baggages.size();) {
+                for (int k = 2; k < baggages.size(); k += 3) {
                     Baggage baggage = new Baggage(baggages.get(i), baggages.get(j), Double.parseDouble(baggages.get(k)));
                     insert(baggage);
+                    i += 3;
+                    j += 3;
                 }
             }
 
@@ -156,12 +156,7 @@ public class Database {
 
         Database.instance.innerSetLogEngine(new LogEngine(Configuration.instance.logFile));
         Database.instance.startup(Configuration.instance.dataPath);
-        Database.instance.dropTableBaggage();
-        Database.instance.createTableBaggage();
-
-        Baggage baggage = new Baggage(UUID.randomUUID().toString(),"aljslskfasluioulfjkj",2);
-        Database.instance.insert(baggage);
-
+        Database.instance.innerMethodInitBaggage();
         Database.instance.shutdown();
     }
 }
