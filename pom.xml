@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>de.dhbw.mosbach.ai.se</groupId>
+    <artifactId>airport</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>components/check-in-desk</module>
+        <module>components/bulky-baggage-desk</module>
+        <module>components/scanner</module>
+        <module>components/baggage-sorting-unit</module>
+        <module>components/security-check</module>
+        <module>components/federal-police</module>
+        <module>components/customs</module>
+        <module>components/service-vehicle-oil</module>
+        <module>components/service-vehicle-fresh-water</module>
+        <module>components/service-vehicle-waste-water-tank</module>
+        <module>components/air-cargo-pallet-lifter</module>
+        <module>components/baggage-vehicle</module>
+        <module>components/container-lifter</module>
+        <module>components/special-good-roboter</module>
+        <module>components/sky-tanking-vehicle</module>
+        <module>components/boarding-control</module>
+        <module>components/push-back-vehicle</module>
+        <module>components/ground-operations-center</module>
+    </modules>
+</project>
