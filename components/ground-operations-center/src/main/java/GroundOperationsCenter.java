@@ -1,4 +1,7 @@
 public class GroundOperationsCenter {
+    public GroundOperationsCenter(){
+
+    }
     ArrayList<CheckInDeskReceipt> checkInReceipts;
     ArrayList<BulkyBaggageDeskReceipt> bulkyBaggageDeskReceipts;
     ArrayList<BaggageSortingUnitReceipt> baggeSortingUnitReceipts;
