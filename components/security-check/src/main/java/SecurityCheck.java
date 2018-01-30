@@ -3,6 +3,7 @@ import base.CottonPad;
 import base.Employee;
 import base.Passenger;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 public class SecurityCheck {
@@ -18,19 +19,39 @@ public class SecurityCheck {
      * The Security Check component.
      */
     public SecurityCheck() {
-        //this.innerId = id;
-        //this.innerEmployee = employee;
+        /**
+         * Hardcoded values because it is ok like this
+         */
+        this.innerId = 1;
+        this.innerEmployee = new Employee(1, "Jeff", "Jeff1970");
         //this.innerFederalPolice = federalPolice;
-        this.securityCheckReceipt = new SecurityCheckReceipt(this.innerEmployee, new ArrayList<CottonPad>(), 0, 0, 0, 0);
-        this.port = new Port();
-    }
 
+        this.securityCheckReceipt = new SecurityCheckReceipt(
+                this.innerEmployee,
+                new ArrayList<CottonPad>(),
+                0,
+                0,
+                0,
+                0);
+
+        this.port = new Port();
+
+        //SecurityCheckComponentManagement securityCheckComponentManagement = new SecurityCheckComponentManagement();
+        //this.scannerClass = securityCheckComponentManagement.loadJavaArchive("search.jar","Search");
+    }
+    private Class scannerClass;
     /**
      * Returns the instance.
      * @return The instance of the component.
      */
     public static SecurityCheck getInstance() {
         return instance;
+    }
+    /**
+     * Resets the instance.
+     */
+    public static void resetInstance() {
+        instance = new SecurityCheck();
     }
     /**
      * Returns the version string.
@@ -50,7 +71,6 @@ public class SecurityCheck {
         public String getVersion() {
             return innerGetVersion();
         }
-
         /**
          * Get the id.
          * @return The id.
@@ -58,7 +78,6 @@ public class SecurityCheck {
         public int getId() {
             return innerId;
         }
-
         /**
          * Get the Employee.
          * @return The Employee.
@@ -66,7 +85,6 @@ public class SecurityCheck {
         public Employee getEmployee() {
             return innerEmployee;
         }
-
         /**
          * Get the Federal Police.
          * @return The Federal Police.
@@ -74,7 +92,6 @@ public class SecurityCheck {
         public FederalPolice getFederalPolice() {
             return innerFederalPolice;
         }
-
         /**
          * Get the Scan Pattern.
          * @return The Scan Pattern.
@@ -83,13 +100,19 @@ public class SecurityCheck {
             return innerScanPattern;
         }
         /**
+         * Get the Security Check Receipt
+         */
+        public SecurityCheckReceipt getSecurityCheckReceipt(){
+            return securityCheckReceipt;
+        }
+        /**
          * Scans the passenger.
          * @param passenger The passenger.
          * @param scanner The scanner.
          * @param pattern The scanning pattern.
          * @return True if found.
          */
-        public boolean scan(Passenger passenger, Scanner scanner, String pattern) {
+        public boolean scan(Passenger passenger, Object scanner, String pattern) {
             return innerScan(passenger, scanner, pattern);
         }
         /**
@@ -108,7 +131,7 @@ public class SecurityCheck {
          * @param pattern The scanning pattern.
          * @return True if found.
          */
-        public boolean scan(Baggage baggage, Scanner scanner, String pattern) {
+        public boolean scan(Baggage baggage, Object scanner, String pattern) {
             return innerScan(baggage, scanner, pattern);
         }
         /**
@@ -146,14 +169,16 @@ public class SecurityCheck {
      * @param pattern The scanning pattern.
      * @return True if found.
      */
-    private boolean innerScan(Passenger passenger, Scanner scanner, String pattern) {
-        boolean passengerScanned = scanner.scan(passenger, pattern);
+    private boolean innerScan(Passenger passenger, Object scanner, String pattern) {
+        boolean passengerScanned = this.callMethodScanPassengerFromScanner(scanner, passenger, pattern);
         this.securityCheckReceipt.incrementNumberOfPassengerScannedByOne();
-        for(Baggage baggage : passenger.getBaggageList()) {
-            if(scanner.scan(baggage, pattern)) {
-                this.securityCheckReceipt.incrementNumberOfDangerousBaggageByOne();
+        if(passenger.getBaggageList() != null) {
+            for (Baggage baggage : passenger.getBaggageList()) {
+                if (this.callMethodScanBaggageFromScanner(scanner, baggage, pattern)) {
+                    this.securityCheckReceipt.incrementNumberOfDangerousBaggageByOne();
+                }
+                this.securityCheckReceipt.incrementNumberOfBaggageScannedByOne();
             }
-            this.securityCheckReceipt.incrementNumberOfBaggageScannedByOne();
         }
         return passengerScanned;
     }
@@ -177,8 +202,8 @@ public class SecurityCheck {
      * @param pattern The scanning pattern.
      * @return True if found.
      */
-    public boolean innerScan(Baggage baggage, Scanner scanner, String pattern) {
-        if(scanner.scan(baggage, pattern)){
+    public boolean innerScan(Baggage baggage, Object scanner, String pattern) {
+        if(this.callMethodScanBaggageFromScanner(scanner, baggage, pattern)){
             this.securityCheckReceipt.incrementNumberOfDangerousBaggageByOne();
             this.securityCheckReceipt.incrementNumberOfBaggageScannedByOne();
             return true;
@@ -192,5 +217,39 @@ public class SecurityCheck {
      */
     public void innerNotifyGroundOperations(SecurityCheckReceipt securityCheckReceipt) {
         //TODO: Notify Ground Operations somehow
+    }
+    /**
+     * Calls the method scan(Baggage baggage, String pattern) from the Scanner Component.
+     * @param scanner The Scanned Component Object.
+     * @param baggage The Baggage.
+     * @param pattern The Pattern.
+     * @return True if found.
+     */
+    private boolean callMethodScanBaggageFromScanner(Object scanner, Baggage baggage, String pattern) {
+        boolean result = false;
+        try {
+            Method method = scanner.getClass().getMethod("scan", Baggage.class, String.class);
+            result = (Boolean) method.invoke(scanner, baggage, pattern);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return result;
+    }
+    /**
+     * Calls the method scan(Passenger passenger, String pattern) from the Scanner Component.
+     * @param scanner The Scanned Component Object.
+     * @param passenger The Passenger.
+     * @param pattern The Pattern.
+     * @return True if found.
+     */
+    private boolean callMethodScanPassengerFromScanner(Object scanner, Passenger passenger, String pattern) {
+        boolean result = false;
+        try {
+            Method method = scanner.getClass().getMethod("scan", Passenger.class, String.class);
+            result = (Boolean) method.invoke(scanner, passenger, pattern);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return result;
     }
 }
