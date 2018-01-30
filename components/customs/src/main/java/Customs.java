@@ -8,12 +8,14 @@ public class Customs implements ICustoms {
     private ArrayList<BoardingPass> boardingPassList;
     private ArrayList<Invoice> invoiceList;
     @Override
-    public boolean verify(Passport passport, BoardingPass boardingPass, Invoice parameter) {
+    public boolean verify(Passport passport, BoardingPass boardingPass, Invoice parameter)
+    {
         return false;
     }
 
     @Override
     public boolean scan(Baggage baggage) {
+
         return false;
     }
 
