@@ -1,5 +1,5 @@
-import dummies.Baggage;
-import dummies.Passenger;
+import base.Baggage;
+import base.Passenger;
 
 import java.util.ArrayList;
 
