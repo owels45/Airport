@@ -1,9 +1,8 @@
 import org.junit.Assert;
 import org.junit.Test;
-import placeholder.Baggage;
-import placeholder.BaggageType;
-import placeholder.DestinationBox;
-import placeholder.LuggageTub;
+import placeholder.*;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
@@ -50,17 +49,65 @@ public class BaggageSortingUnitTest {
         BaggageSortingUnit unit = BaggageSortingUnit.getInstance();
         unit.setDefaultValues();
 
-        unit.setBaggageList(this.getTestBaggageTestData());
+        ArrayList<Baggage> firstClassBaggages = this.getTestBaggageTestData(0, 45);
+        ArrayList<Baggage> businessClassBaggages = this.getTestBaggageTestData(96, 75);
+        ArrayList<Baggage> economyClassBaggages = this.getTestBaggageTestData(171, 51);
+        ArrayList<Baggage> premiumEconomyClassBaggages = this.getTestBaggageTestData(222, 55);
+
+
+        ArrayList<BaggageIdentificationTag> firstClassTags =  this.createBaggageTagsForBaggage(firstClassBaggages, TicketClass.First);
+        ArrayList<BaggageIdentificationTag> businessClassTags = this.createBaggageTagsForBaggage(businessClassBaggages, TicketClass.Business);
+        ArrayList<BaggageIdentificationTag> economyClassTags =  this.createBaggageTagsForBaggage(economyClassBaggages, TicketClass.Economy);
+        ArrayList<BaggageIdentificationTag> premiumEconomyClassTags = this.createBaggageTagsForBaggage(premiumEconomyClassBaggages, TicketClass.PremiumEconomy);
+
+        ArrayList<Baggage> combinedBaggage = new ArrayList<Baggage>();
+        combinedBaggage.addAll(firstClassBaggages);
+        combinedBaggage.addAll(economyClassBaggages);
+        combinedBaggage.addAll(businessClassBaggages);
+        combinedBaggage.addAll(premiumEconomyClassBaggages);
+
+        ArrayList<BaggageIdentificationTag> combinedTags = new ArrayList<BaggageIdentificationTag>();
+        combinedTags.addAll(firstClassTags);
+        combinedTags.addAll(economyClassTags);
+        combinedTags.addAll(businessClassTags);
+        combinedTags.addAll(premiumEconomyClassTags);
+
+        unit.setBaggageList(combinedBaggage);
+        unit.setBaggageIdentificationTags(combinedTags);
+
+        DestinationBox box = unit.getDestinationBox();
+        // This would happen in a previous step.
+        box.setBaggegeList(unit.getBaggageList());
 
         BaggageSortingUnitReceipt receipt =  BaggageSortingUnit.getInstance().loadDestinationBoxIntoContainers();
 
+        //First class:
+        Assert.assertEquals("Should contain one container for first class", 1 , receipt.getNumberOfContainerFirstClass());
+        Assert.assertEquals("Should contain first class baggage", 45 , receipt.getNumberOfBaggageFirstClass());
+
+        // Business:
+        Assert.assertEquals("Should contain two container for business class", 2 , receipt.getNumberOfContainerBusinessClass());
+        Assert.assertEquals("Should contain business class baggage", 75 , receipt.getNumberOfBaggageBusinessClass());
+
+        // Economy:
+        Assert.assertEquals("Should contain two container for economy class", 3 , receipt.getNumberOfContainerEconomyClass());
+        Assert.assertEquals("Should contain economy class baggage", 106 , receipt.getNumberOfBaggageEconomyClass());
     }
 
-    private ArrayList<Baggage> getTestBaggageTestData() {
+    private ArrayList<BaggageIdentificationTag> createBaggageTagsForBaggage(ArrayList<Baggage> baggageList, TicketClass ticketClass) {
+        ArrayList<BaggageIdentificationTag> tags = new ArrayList<BaggageIdentificationTag>();
+        for (Baggage bagggage : baggageList ) {
+            tags.add(new BaggageIdentificationTag(bagggage.getId(), new BoardingPass(bagggage.getId(),ticketClass)));
+        }
+        return tags;
+    }
+
+    private ArrayList<Baggage> getTestBaggageTestData(int offset, int count) {
         ArrayList<Baggage> list = new ArrayList<Baggage>();
 
-        list.add(new Baggage("1", 1.0, BaggageType.Normal));
-        list.add(new Baggage("2", 1.0, BaggageType.Normal));
+        for (int i = 0 + offset; i < count + offset; i++) {
+            list.add(new Baggage( "" + i, 1.0, BaggageType.Normal));
+        }
 
         return list;
     }

@@ -17,13 +17,33 @@ public class BaggageSortingUnit {
     private ArrayList<BaggageVehicle> baggageVehicleList;
     private ArrayList<BaggageIdentificationTag> baggageIdentificationTags;
 
+    public ArrayList<BaggageIdentificationTag> getBaggageIdentificationTags() {
+        return baggageIdentificationTags;
+    }
+
+    public void setBaggageIdentificationTags(ArrayList<BaggageIdentificationTag> baggageIdentificationTags) {
+        this.baggageIdentificationTags = baggageIdentificationTags;
+    }
+
+
+
+
     public ArrayList<Baggage> getBaggageList() {
         return baggageList;
     }
-
     public void setBaggageList(ArrayList<Baggage> baggageList) {
         this.baggageList = baggageList;
     }
+
+    public DestinationBox getDestinationBox() {
+        return destinationBox;
+    }
+
+    public void setDestinationBox(DestinationBox destinationBox) {
+        this.destinationBox = destinationBox;
+    }
+
+
 
     private ArrayList<Baggage> baggageList;
     private Destination destination;
@@ -80,13 +100,13 @@ public class BaggageSortingUnit {
             ArrayList<BaggageIdentificationTag> baggageTags = handHeld.select(category);
             switch (category){
                 case First:
-                    numberOfBaggageFirstClass = baggageTags.size();
+                    numberOfBaggageFirstClass += baggageTags.size();
                     break;
                 case Business:
-                    numberOfBaggageBusinessClass = baggageTags.size();
+                    numberOfBaggageBusinessClass += baggageTags.size();
                     break;
                 case Economy:
-                    numberOfBaggageEconomyClass = baggageTags.size();
+                    numberOfBaggageEconomyClass += baggageTags.size();
                     break;
             }
 
@@ -116,6 +136,17 @@ public class BaggageSortingUnit {
             if(currentContainerBaggages.size() > 0){
                 handHeld.orderRoboterToLoad(currentContainerBaggages, container);
                 this.filledContainerList.add(container);
+                switch (category){
+                    case First:
+                        numberOfContainerFirstClass++;
+                        break;
+                    case Business:
+                        numberOfContainerBusinessClass++;
+                        break;
+                    case Economy:
+                        numberOfContainerEconomyClass++;
+                        break;
+                }
             }
         }
         return new BaggageSortingUnitReceipt(this.destinationBox, this.filledContainerList

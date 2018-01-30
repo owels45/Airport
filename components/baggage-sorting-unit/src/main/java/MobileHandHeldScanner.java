@@ -23,9 +23,10 @@ public class MobileHandHeldScanner {
         ArrayList<BaggageIdentificationTag> returnList = new ArrayList<BaggageIdentificationTag>();
         for (Baggage baggage: destinationBox.getBaggegeList()) {
             BaggageIdentificationTag tag = this.resolveTag(baggage);
-            if(tag.getBoardingPass().getTicketClass().toString().toLowerCase() == containerCategory.toString().toLowerCase()){
+            if(tag.getBoardingPass().getTicketClass().toString().toLowerCase().contains(containerCategory.toString().toLowerCase())){
                 returnList.add(tag);
             }
+            // TODO: Container Category vs TicketClass
         }
 
         return returnList;
