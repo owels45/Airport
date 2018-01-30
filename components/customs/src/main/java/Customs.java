@@ -56,7 +56,6 @@ public class Customs{
     void innerMethodNotifyGroundOperations(CustomsReceipt customsReceipt) {
 
         Object componentPort;
-        boolean result;
         componentPort = ComponentLoader.loadComponent("ground-operations-center","GroundOperationsCenter");
         try {
             //Method onMethod = componentPort.getClass().getDeclaredMethod("receive", CustomsReceipt.class);
