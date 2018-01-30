@@ -108,7 +108,7 @@ public class Database {
 
 
     public void innerMethodInitBaggage() {
-        String csvFile = "/Airport/data/baggage.csv";
+        String csvFile = Configuration.instance.baggage_archive;
         BufferedReader br = null;
         String line = "";
         ArrayList<String> baggages = new ArrayList<>();
