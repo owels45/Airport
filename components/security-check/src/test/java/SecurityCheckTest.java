@@ -11,7 +11,7 @@ public class SecurityCheckTest {
 
         Baggage bag = new Baggage("TestStringGlockEnde", 1, BaggageType.Normal);
 
-        Assert.assertTrue("Scanner should find the pattern", port.scan(bag, new TestingScanner(), "Glock"));
+        Assert.assertTrue("Scanner should find the pattern", port.scan(bag, new MockScanner(), "Glock"));
         SecurityCheck.resetInstance(null);
     }
 
@@ -22,7 +22,7 @@ public class SecurityCheckTest {
 
         Passenger passenger = new Passenger(null, "TestStringGlockEnde", null, null, null, null, null, null, null, null, null);
 
-        Assert.assertTrue("Scanner should find the pattern", port.scan(passenger, new TestingScanner(), "Glock"));
+        Assert.assertTrue("Scanner should find the pattern", port.scan(passenger, new MockScanner(), "Glock"));
         SecurityCheck.resetInstance(null);
     }
 
@@ -43,7 +43,7 @@ public class SecurityCheckTest {
 
         Passenger passenger = createTestPassenger("ThereIsAWeaponInThisPassengersLuggage", baggages);
 
-        Assert.assertTrue("Scanner should find the pattern", port.scan(passenger, new TestingScanner(), "Glock"));
+        Assert.assertTrue("Scanner should find the pattern", port.scan(passenger, new MockScanner(), "Glock"));
 
         SecurityCheckReceipt receipt = port.getSecurityCheckReceipt();
 
@@ -77,10 +77,10 @@ public class SecurityCheckTest {
         baggages.add(new Baggage("dsfsdfsdfsdfascascas", 1, BaggageType.Normal));
         Passenger passenger4 = createTestPassenger("ThereIsNoWeaponInThisPassengersLuggage", baggages);
 
-        Assert.assertTrue("Scanner should find the pattern", port.scan(passenger1, new TestingScanner(), "Glock"));
-        Assert.assertTrue("Scanner should find the pattern", port.scan(passenger2, new TestingScanner(), "Glock"));
-        Assert.assertFalse("Scanner shouldn´t find the pattern", port.scan(passenger3, new TestingScanner(), "Glock"));
-        Assert.assertFalse("Scanner shouldn´t find the pattern", port.scan(passenger4, new TestingScanner(), "Glock"));
+        Assert.assertTrue("Scanner should find the pattern", port.scan(passenger1, new MockScanner(), "Glock"));
+        Assert.assertTrue("Scanner should find the pattern", port.scan(passenger2, new MockScanner(), "Glock"));
+        Assert.assertFalse("Scanner shouldn´t find the pattern", port.scan(passenger3, new MockScanner(), "Glock"));
+        Assert.assertFalse("Scanner shouldn´t find the pattern", port.scan(passenger4, new MockScanner(), "Glock"));
 
         SecurityCheckReceipt receipt = port.getSecurityCheckReceipt();
 
