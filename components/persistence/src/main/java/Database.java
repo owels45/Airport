@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 public class Database {
@@ -29,13 +30,178 @@ public class Database {
 
     public class Port implements IDatabase {
         public void initBaggage() {
+
             innerMethodInitBaggage();
         }
+        
+        public ArrayList<Baggage> getAllBaggages(){
+            return innerMethodGetAllBaggages();
+        }
+
+        public void addBaggageIdentificationTag(BaggageIdentificationTag baggageIdentificationTag) {
+            innerMethodAddBaggageIdentificationTag(baggageIdentificationTag);
+        }
+
+        public BaggageIdentificationTag getBaggageIdentificationTag(Baggage baggage) {
+            return innerMethodGetBaggageIdentificationTag(baggage);
+        }
+
+        public void addBoardingPass(BoardingPass boardingPass) {
+            innerMethodAddBoardingPass(boardingPass);
+        }
+
+        public BoardingPass getBoardingPass(Passenger passenger) {
+            return innerMethodGetBoardingPass(passenger);
+        }
+
+        public void addContainer(Container container) {
+            innerMethodAddContainer(container);
+        }
+
+        public Container getContainer() {
+            return innerMethodGetContainer();
+        }
+
+        public void addCottonPad(CottonPad cottonPad) {
+            innerMethodAddCottonPad(cottonPad);
+        }
+
+        public CottonPad getCottonPad() {
+            return innerMethodGetCottonPad();
+        }
+
+        public void addDestinationBox(DestinationBox destinationBox) {
+            innerMethodAddDestinationBox(destinationBox);
+        }
+
+        public DestinationBox getDestinationBox() {
+            return innerMethodGetDestinationBox();
+        }
+
+        public  void addEmployee(Employee employee) {
+            innerMethodAddEmployee(employee);
+        }
+
+        public Employee getEmployee() {
+            return innerMethodGetEmployee();
+        }
+
+        public void addFlight(Flight flight) {
+            innerMethodAddFlight(flight);
+        }
+
+        public Flight getFlight() {
+            return innerMethodGetFlight();
+        }
+
+        public void addInvoice(Invoice invoice) {
+            innerMethodAddInvoice(invoice);
+        }
+
+        public Invoice getInvoice() {
+            return innerMethodGetInvoice();
+        }
+
+        public void addPassenger(Passenger passenger) {
+            innerMethodAddPassenger(passenger);
+        }
+
+        public ArrayList<Passenger> getAllPassenger() {
+            return innerMethodGetAllPassenger();
+        }
+
+        public void addPassport(Passport passport) {
+            innerMethodAddPassport(passport);
+        }
+
+        public Passport getPassport() {
+            return innerMethodGetPassport();
+        }
+
         public void setLogEngine(LogEngine logEngine) {
             innerSetLogEngine(logEngine);
         }
+
+        public Storage getStorage(){
+            return innerMethodGetStorage();
+        }
+        public PassengerList getPassengerList(){
+            return innerMethodGetPassengerList();
+        }
     }
 
+    private PassengerList innerMethodGetPassengerList() {
+    }
+
+    private Storage innerMethodGetStorage() {
+    }
+
+    private ArrayList<Baggage> innerMethodGetAllBaggages() {
+    }
+
+
+    private Container innerMethodGetContainer() {
+    }
+
+    private void innerMethodAddCottonPad(CottonPad cottonPad) {
+    }
+
+    private CottonPad innerMethodGetCottonPad() {
+    }
+
+    private void innerMethodAddDestinationBox(DestinationBox destinationBox) {
+    }
+
+    private void innerMethodAddContainer(Container container) {
+    }
+
+    private BoardingPass innerMethodGetBoardingPass(Passenger passenger) {
+    }
+
+    private DestinationBox innerMethodGetDestinationBox() {
+    }
+
+    private void innerMethodAddEmployee(Employee employee) {
+    }
+
+    private Employee innerMethodGetEmployee() {
+    }
+
+    private void innerMethodAddFlight(Flight flight) {
+    }
+
+    private Flight innerMethodGetFlight() {
+    }
+
+    private void innerMethodAddInvoice(Invoice invoice) {
+    }
+
+    private Invoice innerMethodGetInvoice() {
+    }
+
+    private void innerMethodAddPassenger(Passenger passenger) {
+    }
+
+    private ArrayList<Passenger> innerMethodGetAllPassenger() {
+    }
+
+    private void innerMethodAddPassport(Passport passport) {
+    }
+
+    private Passport innerMethodGetPassport() {
+    }
+
+    private void innerMethodAddBoardingPass(BoardingPass boardingPass) {
+    }
+
+    private BaggageIdentificationTag innerMethodGetBaggageIdentificationTag(Baggage baggage) {
+        return
+    }
+
+    private void innerMethodAddBaggageIdentificationTag(BaggageIdentificationTag baggageIdentificationTag) {
+    }
+
+    //Essentials
     public Connection getConnection() {
         return connection;
     }
@@ -72,6 +238,7 @@ public class Database {
         }
     }
 
+    //Baggage
     public void dropTableBaggage() {
         String sqlStatement = "DROP TABLE baggage IF EXISTS";
         logEngine.write("Database", "dropTableBaggage", "-", sqlStatement);
@@ -96,7 +263,8 @@ public class Database {
         sqlStringBuilder.append("INSERT INTO baggage (uuid,content,weight) VALUES (");
         sqlStringBuilder.append("'").append(baggage.getUUID()).append("'").append(",");
         sqlStringBuilder.append("'").append(baggage.getContent()).append("'").append(",");
-        sqlStringBuilder.append(baggage.getWeight());
+        sqlStringBuilder.append(baggage.getWeight()).append(",");
+        sqlStringBuilder.append("'").append(baggage.getBaggageType()).append("'");
         sqlStringBuilder.append(")");
         return sqlStringBuilder.toString();
     }
@@ -143,7 +311,7 @@ public class Database {
         for (int i = 0; i < baggages.size(); i = +3) {
             for (int j = 1; j < baggages.size(); j = +3) {
                 for (int k = 2; k < baggages.size(); k = +3) {
-                    Baggage baggage = new Baggage(baggages.get(i), baggages.get(j), Double.parseDouble(baggages.get(k)));
+                    Baggage baggage = new Baggage(baggages.get(i), baggages.get(j), Double.parseDouble(baggages.get(k)), BaggageType.Normal);
                     insert(baggage);
                 }
             }
@@ -159,7 +327,7 @@ public class Database {
         Database.instance.dropTableBaggage();
         Database.instance.createTableBaggage();
 
-        Baggage baggage = new Baggage(UUID.randomUUID().toString(),"aljslskfasluioulfjkj",2);
+        Baggage baggage = new Baggage(UUID.randomUUID().toString(), "aljslskfasluioulfjkj", 2, BaggageType.Normal);
         Database.instance.insert(baggage);
 
         Database.instance.shutdown();
