@@ -2,7 +2,6 @@ import placeholder.*;
 
 import javax.print.attribute.standard.Destination;
 import java.util.ArrayList;
-import java.util.List;
 
 public class BaggageSortingUnit {
 
@@ -124,7 +123,7 @@ public class BaggageSortingUnit {
 
     private void generateEmptyContainers() {
         for (int i = 0; i < 100; i++){
-            ContainerProfile containerProfile = new ContainerProfile();
+            ContainerProfile containerProfile = new ContainerProfile(this.destination.getName(), 0);
             this.emptyContainerList.add(new Container(ContainerType.AKE,  "ContainerId: " + i, ContainerCategory.First ,containerProfile,
                     "BarcodeID: " + i,  "QRCode: " + i, 50));
         }
@@ -150,7 +149,7 @@ public class BaggageSortingUnit {
         }
 
         public void notifyGroundOperation(BaggageSortingUnitReceipt baggageSortingUnitReceipt) {
-            // Persist BaggageSortingUnitReceipt
+            // TODO: Notify per event?
         }
     }
 }
