@@ -1,7 +1,5 @@
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import SupportClasses.*;
-import com.sun.org.apache.bcel.internal.generic.PUSH;
 
 public class GroundOperationsCenter {
 
@@ -71,11 +69,11 @@ public class GroundOperationsCenter {
 
         public void receive(ServiceVehicleNitrogenOxygenReceipt serviceVehicleNitrogenOxygenReceipt) {innerServiceVehicleNitrogenOxygenReceipt(serviceVehicleNitrogenOxygenReceipt); }
     }
-    private void insert(Class Receipt){
+    private void insert(Class receiptClass){
         Object componentPort;
-        componentPort = ComponentLoader.loadComponent("persistance","Database");
+        componentPort = ComponentLoader.loadComponent("persistence","Database");
         try {
-            Method onMethod = componentPort.getClass().getDeclaredMethod("insert",Receipt);
+            Method onMethod = componentPort.getClass().getDeclaredMethod("insert",receiptClass);
             onMethod.invoke(componentPort);
         } catch (Exception e) {
             e.printStackTrace();
