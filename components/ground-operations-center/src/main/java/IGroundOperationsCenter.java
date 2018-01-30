@@ -17,6 +17,4 @@ public interface IGroundOperationsCenter {
   void receive(FuelReceipt fuelReceipt);
   void receive(BoardingControlReceipt boardingControlReceipt);
   void receive(PushBackVehicleReceipt pushBackVehicleReceipt);
-  void receive(ServiceVehicleNitrogenOxygenReceipt serviceVehicleNitrogenOxygenReceipt);
-
 }
