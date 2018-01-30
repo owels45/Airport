@@ -10,6 +10,7 @@ public class Customs implements ICustoms {
     @Override
     public boolean verify(Passport passport, BoardingPass boardingPass, Invoice parameter)
     {
+
         return false;
     }
 
