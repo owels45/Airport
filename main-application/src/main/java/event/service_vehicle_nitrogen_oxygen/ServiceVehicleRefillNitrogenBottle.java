@@ -1,4 +1,4 @@
-package event.service_vehicle;
+package event.service_vehicle_nitrogen_oxygen;
 
 public class ServiceVehicleRefillNitrogenBottle {
     private String phase;

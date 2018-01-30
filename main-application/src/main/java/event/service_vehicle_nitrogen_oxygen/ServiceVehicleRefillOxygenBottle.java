@@ -1,9 +1,9 @@
-package event.service_vehicle;
+package event.service_vehicle_nitrogen_oxygen;
 
-public class ServiceVehicleRefillFreshWater {
+public class ServiceVehicleRefillOxygenBottle {
     private String phase;
 
-    public ServiceVehicleRefillFreshWater(String phase) {
+    public ServiceVehicleRefillOxygenBottle(String phase) {
         this.phase = phase;
     }
 

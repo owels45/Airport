@@ -4,7 +4,7 @@ import logging.LogEngine;
 
 public class Application {
 
-    private EventBus eventBus;
+    //private EventBus eventBus;
 
 
     public Application() {

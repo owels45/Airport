@@ -18,9 +18,9 @@ public class Airport {
         //checkInDeskPort = CheckInDeskFactory.build();
         //...
     }
-
+/*
 //    @Subscribe
     public void receive(CheckIn event) {
         // Methodenaufruf
-    }
+    } */
 }

@@ -1,9 +1,9 @@
-package event.service_vehicle;
+package event.service_vehicle_fresh_water;
 
-public class ServiceVehicleApuOilIncreaseLevel {
+public class ServiceVehicleRefillFreshWater {
     private String phase;
 
-    public ServiceVehicleOilApuIncreaseLevel(String phase) {
+    public ServiceVehicleRefillFreshWater(String phase) {
         this.phase = phase;
     }
 

@@ -1,4 +1,4 @@
-package event.service_vehicle;
+package event.service_vehicle_waste_water;
 
 public class ServiceVehiclePumpOut {
     private String phase;

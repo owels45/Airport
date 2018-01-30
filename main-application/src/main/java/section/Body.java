@@ -78,7 +78,7 @@ public class Body extends Subscriber {
 
     //service vehicle
     private ArrayList<Object> serviceVehicleOilPort;
-
+/*
     public Body() {
         build();
         printStatus();
@@ -266,12 +266,14 @@ public class Body extends Subscriber {
             }
 
             for (int deIcingSystemsIndex = 0; deIcingSystemsIndex < deIcingSystems.size(); deIcingSystemsIndex++) {
-
+                Method changeFireExtinguisher = serviceVehicleOilPort.get(0).getClass().getDeclaredMethod("change", Object.class);
+                LogEngine.instance.write("changeFireExtinguisher = " + changeFireExtinguisher);
+                boolean isChange = changeFireExtinguisher.invoke(serviceVehicleOilPort.get(0), aPUOilTanks.get(fireExtinguishersIndex));
             }
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
-
+*/
 }

@@ -1,4 +1,4 @@
-package event.service_vehicle;
+package event.service_vehicle_oil;
 
 public class ServiceVehicleEngineOilTankIncreaseLevel {
     private String phase;

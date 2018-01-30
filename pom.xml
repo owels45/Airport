@@ -21,6 +21,7 @@
         <module>components/service-vehicle-oil</module>
         <module>components/service-vehicle-fresh-water</module>
         <module>components/service-vehicle-waste-water-tank</module>
+        <module>components/service-vehicle-nitrogen-oxygen</module>
         <module>components/air-cargo-pallet-lifter</module>
         <module>components/baggage-vehicle</module>
         <module>components/container-lifter</module>

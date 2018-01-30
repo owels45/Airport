@@ -5,15 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>de.dhbw.mosbach.ai.se</groupId>
-    <artifactId>service-vehicle-oil</artifactId>
+    <artifactId>service-vehicle-nitrogen-oxygen</artifactId>
     <version>1.0.0</version>
-    <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>RELEASE</version>
-        </dependency>
-    </dependencies>
 
-
+    
 </project>

@@ -45,7 +45,7 @@ public class Wing extends Subscriber {
 
     //service vehicle
     private ArrayList<Object> serviceVehicleOilPort;
-
+/*
     public Wing(int wingIndex) {
         this.wingIndex = wingIndex;
 
@@ -153,5 +153,5 @@ public class Wing extends Subscriber {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-    }
+    } */
 }

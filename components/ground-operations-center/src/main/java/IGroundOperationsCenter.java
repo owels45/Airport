@@ -2,6 +2,7 @@
  * Created by User on 30.01.2018.
  */
 public interface IGroundOperationsCenter {
+  /*
   void receive(CheckInDeskReceipt checkInReceipt);
   void receive(BulkyBaggageDeskReceipt bulkyBaggageDeskReceipt);
   void receive(BaggageSortingUnitReceipt baggageSortingUnitReceipt);
@@ -17,5 +18,5 @@ public interface IGroundOperationsCenter {
   void receive(FuelReceipt fuelReceipt);
   void receive(BoardingControlReceipt boardingControlReceipt);
   void receive(PushBackVehicleReceipt pushBackVehicleReceipt);
-
+*/
 }
