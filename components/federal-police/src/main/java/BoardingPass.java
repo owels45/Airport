@@ -1,5 +1,3 @@
-package base;
-
 public class BoardingPass {
 
     private String id;

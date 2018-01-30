@@ -1,5 +1,3 @@
-package base;
-
 public enum ContainerCategory {
     First,
     Business,

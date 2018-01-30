@@ -1,5 +1,3 @@
-package base;
-
 public class Container {
     private ContainerType type;
     private String id;

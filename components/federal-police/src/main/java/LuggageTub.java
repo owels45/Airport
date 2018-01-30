@@ -1,5 +1,3 @@
-package base;
-
 public class LuggageTub {
 
     private Baggage baggage;

@@ -3,13 +3,16 @@ import org.junit.jupiter.api.Test;
 
 import static junit.framework.TestCase.assertNotNull;
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.Test;
 
-class CustomsFactoryTest {
+import static org.junit.Assert.assertNotNull;
+
+public class CustomsFactoryTest {
 
     private Object componentPort;
 
     @Test
-    void build() {
+    public void build() {
         componentPort=CustomsFactory.build();
         assertNotNull(componentPort);
     }
