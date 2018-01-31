@@ -7,10 +7,7 @@ import sql.ContainerSQL;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.UUID;
@@ -137,23 +134,29 @@ public class Database {
         }
     }
 
+
     private PassengerList innerMethodGetPassengerList() {
+        return null;
     }
 
     private Storage innerMethodGetStorage() {
+        return null;
     }
 
     private ArrayList<Baggage> innerMethodGetAllBaggages() {
+        return null;
     }
 
 
     private Container innerMethodGetContainer() {
+        return null;
     }
 
     private void innerMethodAddCottonPad(CottonPad cottonPad) {
     }
 
     private CottonPad innerMethodGetCottonPad() {
+        return null;
     }
 
     private void innerMethodAddDestinationBox(DestinationBox destinationBox) {
@@ -164,46 +167,54 @@ public class Database {
     }
 
     private BoardingPass innerMethodGetBoardingPass(Passenger passenger) {
+        return null;
     }
 
+
     private DestinationBox innerMethodGetDestinationBox() {
+        return null;
     }
 
     private void innerMethodAddEmployee(Employee employee) {
     }
 
     private Employee innerMethodGetEmployee() {
+        return null;
     }
 
     private void innerMethodAddFlight(Flight flight) {
     }
 
     private Flight innerMethodGetFlight() {
+        return null;
     }
 
     private void innerMethodAddInvoice(Invoice invoice) {
     }
 
     private Invoice innerMethodGetInvoice() {
+        return null;
     }
 
     private void innerMethodAddPassenger(Passenger passenger) {
     }
 
     private ArrayList<Passenger> innerMethodGetAllPassenger() {
+        return null;
     }
 
     private void innerMethodAddPassport(Passport passport) {
     }
 
     private Passport innerMethodGetPassport() {
+        return null;
     }
 
     private void innerMethodAddBoardingPass(BoardingPass boardingPass) {
     }
 
     private BaggageIdentificationTag innerMethodGetBaggageIdentificationTag(Baggage baggage) {
-        return
+        return null;
     }
 
     private void innerMethodAddBaggageIdentificationTag(BaggageIdentificationTag baggageIdentificationTag) {
@@ -253,7 +264,7 @@ public class Database {
     }
 
     public void innerMethodInitBaggage() {
-        BaggageSQL sql = new BaggageSQL();
+        BaggageSQL sql = new BaggageSQL(Database.instance);
 
         String csvFile = Configuration.instance.baggage_archive;
         BufferedReader br = null;
@@ -267,18 +278,21 @@ public class Database {
 
             br = new BufferedReader(new FileReader(csvFile));
             while ((line = br.readLine()) != null) {
-
-                baggages.add(Arrays.toString(line.split(";")));
+                for (String value: line.split(";")){
+                    baggages.add(value);
+                }
             }
         } catch (Exception e) {
             e.getStackTrace();
         }
 
-        for (int i = 0; i < baggages.size(); i = +3) {
-            for (int j = 1; j < baggages.size(); j = +3) {
-                for (int k = 2; k < baggages.size(); k = +3) {
+        for (int i = 0; i < baggages.size();) {
+            for (int j = 1; j < baggages.size();) {
+                for (int k = 2; k < baggages.size(); k += 3) {
                     Baggage baggage = new Baggage(baggages.get(i), baggages.get(j), Double.parseDouble(baggages.get(k)), BaggageType.Normal);
                     sql.insert(baggage, logEngine);
+                    i+= 3;
+                    j += 3;
                 }
             }
 
@@ -288,16 +302,22 @@ public class Database {
 
     public static void main(String... args) {
 
-        BaggageSQL sql = new BaggageSQL();
+        BaggageSQL sql = new BaggageSQL(Database.instance);
+        LogEngine log = new LogEngine(Configuration.instance.logFile);
 
-        Database.instance.innerSetLogEngine(new LogEngine(Configuration.instance.logFile));
+
+        Database.instance.innerSetLogEngine(log);
         Database.instance.startup(Configuration.instance.dataPath);
-        sql.dropTableBaggage(logEngine);
-        sql.createTableBaggage(logEngine);
+        Database.instance.innerMethodInitBaggage();
+        /*
+        ArrayList<Baggage> bag = sql.buildSelectSQLStatement();
+        for (int i = 0; i < bag.size(); i++)
+        {
+            System.out.println(bag.get(i));
+        }
 
-        Baggage baggage = new Baggage(UUID.randomUUID().toString(), "aljslskfasluioulfjkj", 2, BaggageType.Normal);
-        sql.insert(baggage, logEngine);
-
+        */
         Database.instance.shutdown();
+
     }
 }
