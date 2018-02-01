@@ -6,29 +6,29 @@ import java.util.ArrayList;
 public class SecurityCheckTest {
     @Test
     public void SecurityCheck_BaggageFound() {
-        SecurityCheck securityCheck = SecurityCheck.getInstance(null);
+        SecurityCheck securityCheck = SecurityCheck.getInstance();
         SecurityCheck.Port port = securityCheck.port;
 
         Baggage bag = new Baggage("TestStringGlockEnde", 1, BaggageType.Normal);
 
         Assert.assertTrue("Scanner should find the pattern", port.scan(bag, new MockScanner(), "Glock"));
-        SecurityCheck.resetInstance(null);
+        SecurityCheck.resetInstance();
     }
 
     @Test
     public void SecurityCheck_PassengerFound() {
-        SecurityCheck securityCheck = SecurityCheck.getInstance(null);
+        SecurityCheck securityCheck = SecurityCheck.getInstance();
         SecurityCheck.Port port = securityCheck.port;
 
         Passenger passenger = new Passenger(null, "TestStringGlockEnde", null, null, null, null, null, null, null, null, null);
 
         Assert.assertTrue("Scanner should find the pattern", port.scan(passenger, new MockScanner(), "Glock"));
-        SecurityCheck.resetInstance(null);
+        SecurityCheck.resetInstance();
     }
 
     @Test
     public void SecurityCheck_RecipeCreatedForOnePassanger() {
-        SecurityCheck securityCheck = SecurityCheck.getInstance(null);
+        SecurityCheck securityCheck = SecurityCheck.getInstance();
         SecurityCheck.Port port = securityCheck.port;
 
         ArrayList<Baggage> baggages = new ArrayList<Baggage>();
@@ -50,12 +50,12 @@ public class SecurityCheckTest {
         Assert.assertEquals("Should have 7 scanned bags",7, receipt.getNumberOfBaggageScanned());
         Assert.assertEquals("Should have 2 dangerous bags",2, receipt.getNumberOfDangerousBaggage());
         Assert.assertEquals("Should have 1 scanned passenger",1, receipt.getNumberOfPassengerScanned());
-        SecurityCheck.resetInstance(null);
+        SecurityCheck.resetInstance();
     }
 
     @Test
     public void SecurityCheck_RecipeCreatedForMorePassangers() {
-        SecurityCheck securityCheck = SecurityCheck.getInstance(null);
+        SecurityCheck securityCheck = SecurityCheck.getInstance();
         SecurityCheck.Port port = securityCheck.port;
 
         ArrayList<Baggage> baggages = new ArrayList<Baggage>();
@@ -87,7 +87,7 @@ public class SecurityCheckTest {
         Assert.assertEquals("Should have 7 scanned bags",7, receipt.getNumberOfBaggageScanned());
         Assert.assertEquals("Should have 2 dangerous bags",2, receipt.getNumberOfDangerousBaggage());
         Assert.assertEquals("Should have 4 scanned passenger",4, receipt.getNumberOfPassengerScanned());
-        SecurityCheck.resetInstance(null);
+        SecurityCheck.resetInstance();
     }
 
     private Passenger createTestPassenger(String content, ArrayList<Baggage> baggages) {

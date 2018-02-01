@@ -10,7 +10,7 @@ public class SecurityCheck {
     /**
      * The SecurityCheck instance.
      */
-    private static SecurityCheck instance;
+    private static SecurityCheck instance = new SecurityCheck();
     /**
      * The Federal Police.
      */
@@ -22,14 +22,12 @@ public class SecurityCheck {
     /**
      * The Security Check component.
      */
-    public SecurityCheck(Object federalPolice) {
+    public SecurityCheck() {
         /**
          * Hardcoded values because it is ok like this
          */
         this.innerId = 1;
         this.innerEmployee = new Employee(1, "Jeff", "Jeff1970");
-
-        this.innerFederalPolice = federalPolice;
 
         this.securityCheckReceipt = new SecurityCheckReceipt(
                 this.innerEmployee,
@@ -41,23 +39,20 @@ public class SecurityCheck {
 
         this.port = new Port();
 
-        //SecurityCheckComponentManagement securityCheckComponentManagement = new SecurityCheckComponentManagement();
-        //this.scannerClass = securityCheckComponentManagement.loadJavaArchive("search.jar","Search");
     }
     private Class scannerClass;
     /**
      * Returns the instance.
      * @return The instance of the component.
      */
-    public static SecurityCheck getInstance(Object federalPolice) {
-        instance = new SecurityCheck(federalPolice);
+    public static SecurityCheck getInstance() {
         return instance;
     }
     /**
      * Resets the instance.
      */
-    public static void resetInstance(Object federalPolice) {
-        instance = new SecurityCheck(federalPolice);
+    public static void resetInstance() {
+        instance = new SecurityCheck();
     }
     /**
      * Returns the version string.
@@ -110,6 +105,12 @@ public class SecurityCheck {
          */
         public SecurityCheckReceipt getSecurityCheckReceipt(){
             return securityCheckReceipt;
+        }
+        /**
+         * Set the Federal Police.
+         */
+        public void setFederalPolice(Object federalPolice) {
+            innerFederalPolice = federalPolice;
         }
         /**
          * Scans the passenger.
