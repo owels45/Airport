@@ -20,35 +20,6 @@ public class BaggageSortingUnit {
     private Roboter roboter;
     private ArrayList<BaggageVehicle> baggageVehicleList;
     private ArrayList<BaggageIdentificationTag> baggageIdentificationTags;
-
-    public ArrayList<BaggageIdentificationTag> getBaggageIdentificationTags() {
-        return baggageIdentificationTags;
-    }
-
-    public void setBaggageIdentificationTags(ArrayList<BaggageIdentificationTag> baggageIdentificationTags) {
-        this.baggageIdentificationTags = baggageIdentificationTags;
-    }
-
-
-
-
-    public ArrayList<Baggage> getBaggageList() {
-        return baggageList;
-    }
-    public void setBaggageList(ArrayList<Baggage> baggageList) {
-        this.baggageList = baggageList;
-    }
-
-    public DestinationBox getDestinationBox() {
-        return destinationBox;
-    }
-
-    public void setDestinationBox(DestinationBox destinationBox) {
-        this.destinationBox = destinationBox;
-    }
-
-
-
     private ArrayList<Baggage> baggageList;
     private Destination destination;
 
@@ -69,8 +40,6 @@ public class BaggageSortingUnit {
 
         // Handhelds select into container (Sotiert nach Klasse, Destinationbox für Klassen, Fristclass zuerst)
         return this.loadDestinationBoxIntoContainers();
-
-
     }
 
     private void initialize(String position, Destination destination, ArrayList<Baggage> baggage, ArrayList<BaggageVehicle> baggageVehicles, ArrayList<BaggageIdentificationTag> baggageIdentificationTags) {
@@ -138,13 +107,15 @@ public class BaggageSortingUnit {
             this.updateBaggageSortingUnitReceiptNumberOfBaggage(receipt, category, baggageTags.size());
 
             // Get a new container:
-            Container container = this.emptyContainerList.remove(0);
+            Container container = this.getContainerForCategory(category);
+
             ArrayList<BaggageIdentificationTag> currentContainerBaggages = new ArrayList<BaggageIdentificationTag>();
             for (int i = 0; i < baggageTags.size(); i++ ){
                 if(currentContainerBaggages.size() == 50) {
+                    // TODO Check for available vehicle
                     handHeld.orderRoboterToLoad(currentContainerBaggages, container, this.baggageVehicleList.remove(0));
                     this.filledContainerList.add(container);
-                    container = this.emptyContainerList.remove(0);
+                    container = this.getContainerForCategory(category);
                     currentContainerBaggages = new ArrayList<BaggageIdentificationTag>();
                     this.increaseBaggageSortingUnitReceiptNumberOfContainers(receipt, category);
 
@@ -152,17 +123,22 @@ public class BaggageSortingUnit {
                 currentContainerBaggages.add(baggageTags.get(i));
             }
             if(currentContainerBaggages.size() > 0){
+                // TODO Check for available vehicle
                 handHeld.orderRoboterToLoad(currentContainerBaggages, container,this.baggageVehicleList.remove(0));
                 this.filledContainerList.add(container);
                 this.increaseBaggageSortingUnitReceiptNumberOfContainers(receipt, category);
             }
         }
-        // TODO Update Containetlist
         receipt.setContainerList(this.filledContainerList);
         return receipt;
     }
 
-
+    private Container getContainerForCategory(ContainerCategory category) {
+        // TODO Check for available Container
+        Container container = this.emptyContainerList.remove(0);
+        container.setCategory(category);
+        return container;
+    }
 
 
     private void generateEmptyContainers() {

@@ -4,6 +4,7 @@ import placeholder.*;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class BaggageSortingUnitTest {
@@ -48,10 +49,6 @@ public class BaggageSortingUnitTest {
 
         BaggageSortingUnit.Port port = BaggageSortingUnit.getInstance().port;
 
-        
-
-        BaggageSortingUnitReceipt receipt = port.execute();
-
         ArrayList<Baggage> firstClassBaggages = this.getTestBaggageTestData(0, 45);
         ArrayList<Baggage> businessClassBaggages = this.getTestBaggageTestData(96, 75);
         ArrayList<Baggage> economyClassBaggages = this.getTestBaggageTestData(171, 51);
@@ -69,20 +66,18 @@ public class BaggageSortingUnitTest {
         combinedBaggage.addAll(businessClassBaggages);
         combinedBaggage.addAll(premiumEconomyClassBaggages);
 
+        ArrayList<BaggageVehicle> vehicles = this.generateBaggageVehicles(6);
+
         ArrayList<BaggageIdentificationTag> combinedTags = new ArrayList<BaggageIdentificationTag>();
         combinedTags.addAll(firstClassTags);
         combinedTags.addAll(economyClassTags);
         combinedTags.addAll(businessClassTags);
         combinedTags.addAll(premiumEconomyClassTags);
 
-        unit.setBaggageList(combinedBaggage);
-        unit.setBaggageIdentificationTags(combinedTags);
 
-        DestinationBox box = unit.getDestinationBox();
-        // This would happen in a previous step.
-        box.setBaggegeList(unit.getBaggageList());
+        BaggageSortingUnitReceipt receipt = port.execute("K20", Destination.CPT, combinedBaggage
+                ,vehicles, combinedTags);
 
-        BaggageSortingUnitReceipt receipt =  BaggageSortingUnit.getInstance().loadDestinationBoxIntoContainers();
 
         //First class:
         Assert.assertEquals("Should contain one container for first class", 1 , receipt.getNumberOfContainerFirstClass());
@@ -95,6 +90,37 @@ public class BaggageSortingUnitTest {
         // Economy:
         Assert.assertEquals("Should contain two container for economy class", 3 , receipt.getNumberOfContainerEconomyClass());
         Assert.assertEquals("Should contain economy class baggage", 106 , receipt.getNumberOfBaggageEconomyClass());
+
+        Assert.assertTrue("Containers should be correct" ,this.AssertContainers(receipt));
+    }
+
+    private boolean AssertContainers(BaggageSortingUnitReceipt receipt) {
+        ArrayList<Container> containers = receipt.getContainerList();
+
+        int firstClassContainerCount  = this.getContainerCountForCategory(containers, ContainerCategory.First);
+        int businessClassContainerCount  = this.getContainerCountForCategory(containers, ContainerCategory.Business);
+        int economyClassContainerCount  = this.getContainerCountForCategory(containers, ContainerCategory.Economy);
+
+        Assert.assertEquals("Correct number of containers should be in the receipt", 6, containers.size());
+        Assert.assertEquals("Correct number of first class containers should be in the receipt", 1, firstClassContainerCount);
+        Assert.assertEquals("Correct number of business class containers should be in the receipt", 2, businessClassContainerCount);
+        Assert.assertEquals("Correct number of economy class containers should be in the receipt", 3, economyClassContainerCount);
+        return true;
+    }
+
+    private int getContainerCountForCategory(ArrayList<Container> containers, ContainerCategory category) {
+        int counter = 0;
+        for (Container container : containers ) {
+            if (container.getCategory() == category) { counter++; }
+        }
+        return counter;
+    }
+
+    private ArrayList<BaggageVehicle> generateBaggageVehicles(int size) {
+        ArrayList<BaggageVehicle> vehicles = new ArrayList<BaggageVehicle>();
+        for (int i = 0; i < size; i++) vehicles.add(new BaggageVehicle());
+
+         return vehicles;
     }
 
     private ArrayList<BaggageIdentificationTag> createBaggageTagsForBaggage(ArrayList<Baggage> baggageList, TicketClass ticketClass) {
