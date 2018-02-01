@@ -1,6 +1,4 @@
 import placeholder.*;
-import sun.security.krb5.internal.crypto.Des;
-
 
 import java.util.ArrayList;
 
@@ -100,7 +98,7 @@ public class BaggageSortingUnit {
         ,0, 0);
 
         for (ContainerCategory category : ContainerCategory.values()) {
-            if ( category == ContainerCategory.SpecialGood) continue;;
+            if ( category == ContainerCategory.SpecialGood) continue;
             MobileHandHeldScanner handHeld = new MobileHandHeldScanner(ContainerType.AKE, this, this.baggageIdentificationTags);
             handHeld.register(this.destinationBox);
             ArrayList<BaggageIdentificationTag> baggageTags = handHeld.select(category);

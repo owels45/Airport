@@ -1,4 +1,7 @@
-import placeholder.*;
+import placeholder.Baggage;
+import placeholder.BaggageIdentificationTag;
+import placeholder.BaggageVehicle;
+import placeholder.Destination;
 
 import java.util.ArrayList;
 
