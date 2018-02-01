@@ -112,4 +112,5 @@ public class SecurityCheckReceipt {
     public int getNumberOfDangerousBaggage() {
         return numberOfDangerousBaggage;
     }
+
 }
