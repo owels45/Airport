@@ -1,6 +1,7 @@
 import com.google.common.eventbus.Subscribe;
+
 import event.service_vehicle_oil.ServiceVehicleAPUOilTankIncreaseLevel;
-import factory.SkyTankingVehicleFactory;
+import factory.ServiceVehicleOilFactory;
 
 public class Airport {
 
@@ -26,12 +27,12 @@ public class Airport {
 //        securityCheckPort = .build();
 //        federalPolicePort = .build();
 //        customsPort = .build();
-//        serviceVehicleOilPort = ServiceVehicleOilFactory.build();
+        serviceVehicleOilPort = ServiceVehicleOilFactory.build();
 //        serviceVehicleNitrogenOxygenPort = .build();
 //        serviceVehicleFreshWaterPort = .build();
 //        serviceVehicleWasteWaterTankPort = .build();
 //        airCargoPalletLifterPort = .build();
-        skyTankingVehiclePort = skyTankingVehicleFactory.build();
+//        skyTankingVehiclePort = SkyTankingVehicleFactory.build();
 //        boardingControlPort = .build();
 //        pushBackVehiclePort = .build();
     }
