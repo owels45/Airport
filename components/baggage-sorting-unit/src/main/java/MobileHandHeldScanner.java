@@ -18,15 +18,12 @@ public class MobileHandHeldScanner {
     }
 
     public ArrayList<BaggageIdentificationTag> select(ContainerCategory containerCategory) {
-
-        //TODO: How to resolve BaggageIdentificationTag; Über DestinationBox -> Baggage -> BaggageId von Persistence?
         ArrayList<BaggageIdentificationTag> returnList = new ArrayList<BaggageIdentificationTag>();
         for (Baggage baggage: destinationBox.getBaggegeList()) {
             BaggageIdentificationTag tag = this.resolveTag(baggage);
             if(tag.getBoardingPass().getTicketClass().toString().toLowerCase().contains(containerCategory.toString().toLowerCase())){
                 returnList.add(tag);
             }
-            // TODO: Container Category vs TicketClass
         }
 
         return returnList;
@@ -42,9 +39,11 @@ public class MobileHandHeldScanner {
         return null;
     }
 
-    public void orderRoboterToLoad(ArrayList<BaggageIdentificationTag> baggageIdentificationTagList, Container container) {
+    public void orderRoboterToLoad(ArrayList<BaggageIdentificationTag> baggageIdentificationTagList, Container container, BaggageVehicle vehicle) {
         container.getProfile().setNumberOfBaggages(baggageIdentificationTagList.size());
         this.roboter.load(baggageIdentificationTagList, container);
+        this.roboter.load(container, vehicle);
+        this.roboter.orderBaggageVehicleMove(vehicle, this.baggageSortingUnit.getPosition());
     }
 
     // TODO: CTOR angepasst, möglich?

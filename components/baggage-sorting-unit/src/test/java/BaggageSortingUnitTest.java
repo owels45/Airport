@@ -10,18 +10,18 @@ public class BaggageSortingUnitTest {
 
     @Test
     public void BaggageSortingUnitTest_Drop_BaggageIsInLuggage() {
-        BaggageSortingUnit.Port port = BaggageSortingUnit.getInstance().port;
+        BaggageSortingUnit unit = BaggageSortingUnit.getInstance();
 
         Baggage baggage = new Baggage("1", 1.0, BaggageType.Normal);
         LuggageTub luggageTub = new LuggageTub(null, placeholder.Destination.CPT);
-        port.drop(luggageTub, baggage);
+        unit.drop(luggageTub, baggage);
 
         Assert.assertEquals("LuggageTub should contain baggage", baggage, luggageTub.getBaggage());
     }
 
     @Test
     public void BaggageSortingUnitTest_throwOff_BaggageIsInBox() {
-        BaggageSortingUnit.Port port = BaggageSortingUnit.getInstance().port;
+        BaggageSortingUnit unit = BaggageSortingUnit.getInstance();
         DestinationBox box = new DestinationBox();
 
         Baggage firstBaggage = new Baggage("1", 1.0, BaggageType.Normal);
@@ -29,11 +29,11 @@ public class BaggageSortingUnitTest {
 
         LuggageTub luggageTub = new LuggageTub(null, placeholder.Destination.CPT);
         luggageTub.setBaggage(firstBaggage);
-        port.throwOff(luggageTub, box);
+        unit.throwOff(luggageTub, box);
 
         LuggageTub secondTub = new LuggageTub(null, placeholder.Destination.CPT);
         secondTub.setBaggage(secondBaggage);
-        port.throwOff(secondTub, box);
+        unit.throwOff(secondTub, box);
 
         ArrayList<Baggage> baggage = box.getBaggegeList();
 
@@ -46,8 +46,11 @@ public class BaggageSortingUnitTest {
     @Test
     public void BaggageSortingUnitTest_loadDestinationBoxIntoContainers() {
 
-        BaggageSortingUnit unit = BaggageSortingUnit.getInstance();
-        unit.setDefaultValues();
+        BaggageSortingUnit.Port port = BaggageSortingUnit.getInstance().port;
+
+        
+
+        BaggageSortingUnitReceipt receipt = port.execute();
 
         ArrayList<Baggage> firstClassBaggages = this.getTestBaggageTestData(0, 45);
         ArrayList<Baggage> businessClassBaggages = this.getTestBaggageTestData(96, 75);

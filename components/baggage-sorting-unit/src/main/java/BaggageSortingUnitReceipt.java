@@ -6,10 +6,40 @@ import java.util.ArrayList;
 public class BaggageSortingUnitReceipt {
 
     private DestinationBox destinationBox;
+
+    public void setContainerList(ArrayList<Container> containerList) {
+        this.containerList = containerList;
+    }
+
     private ArrayList<Container> containerList;
     private int numberOfBaggageFirstClass;
     private int numberOfBaggageBusinessClass;
     private int numberOfBaggageEconomyClass;
+
+    public void setNumberOfBaggageFirstClass(int numberOfBaggageFirstClass) {
+        this.numberOfBaggageFirstClass = numberOfBaggageFirstClass;
+    }
+
+    public void setNumberOfBaggageBusinessClass(int numberOfBaggageBusinessClass) {
+        this.numberOfBaggageBusinessClass = numberOfBaggageBusinessClass;
+    }
+
+    public void setNumberOfBaggageEconomyClass(int numberOfBaggageEconomyClass) {
+        this.numberOfBaggageEconomyClass = numberOfBaggageEconomyClass;
+    }
+
+    public void setNumberOfContainerFirstClass(int numberOfContainerFirstClass) {
+        this.numberOfContainerFirstClass = numberOfContainerFirstClass;
+    }
+
+    public void setNumberOfContainerBusinessClass(int numberOfContainerBusinessClass) {
+        this.numberOfContainerBusinessClass = numberOfContainerBusinessClass;
+    }
+
+    public void setNumberOfContainerEconomyClass(int numberOfContainerEconomyClass) {
+        this.numberOfContainerEconomyClass = numberOfContainerEconomyClass;
+    }
+
     private int numberOfContainerFirstClass;
     private int numberOfContainerBusinessClass;
     private int numberOfContainerEconomyClass;
@@ -56,6 +86,18 @@ public class BaggageSortingUnitReceipt {
 
     public int getNumberOfContainerEconomyClass() {
         return numberOfContainerEconomyClass;
+    }
+
+    public void increaseNumberOfContainerFirstClass() {
+         numberOfContainerFirstClass++;
+    }
+
+    public void increaseNumberOfContainerBusinessClass() {
+         numberOfContainerBusinessClass++;
+    }
+
+    public void increaseNumberOfContainerEconomyClass() {
+         numberOfContainerEconomyClass++;
     }
 
 

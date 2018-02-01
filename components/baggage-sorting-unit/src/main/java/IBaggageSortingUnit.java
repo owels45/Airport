@@ -1,9 +1,7 @@
-import placeholder.Baggage;
-import placeholder.DestinationBox;
-import placeholder.LuggageTub;
+import placeholder.*;
+
+import java.util.ArrayList;
 
 public interface IBaggageSortingUnit {
-    LuggageTub drop(LuggageTub luggageTub, Baggage baggage);
-    void throwOff(LuggageTub luggageTub, DestinationBox destinationBox);
-    void notifyGroundOperation(BaggageSortingUnitReceipt baggageSortingUnitReceipt);
+    BaggageSortingUnitReceipt execute(String position, Destination destination, ArrayList<Baggage> baggage, ArrayList<BaggageVehicle> baggageVehicles, ArrayList<BaggageIdentificationTag> baggageIdentificationTags);
 }
