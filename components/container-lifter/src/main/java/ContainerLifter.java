@@ -9,7 +9,9 @@ public class ContainerLifter {
 
     public ContainerLifter() {port =new Port();}
 
-    public static ContainerLifter getinstance() {return instance;}
+    public static ContainerLifter getinstance() {
+        return instance;
+    }
 
 
     public boolean innerUp() {
@@ -21,6 +23,11 @@ public class ContainerLifter {
     }
 
     public int innerLift(ArrayList<Container> containerList, Stowage stowage) {
+        if (!isDown){
+            innerDown();
+        }
+        stowage.setContainerList(containerList);
+
         return 1;
     }
 
@@ -32,24 +39,19 @@ public class ContainerLifter {
     public class Port implements IContainerLifter{
 
         public boolean up() {
-            return !isDown;
+            return innerUp();
         }
 
         public boolean down() {
-            return isDown;
+            return innerDown();
         }
 
         public int lift(ArrayList<Container> containerList, Stowage stowage) {
-            if(up()){
-                down();
-            }
-
-
-            return 1;
+            return innerLift(containerList, stowage);
         }
 
         public void notifyGroundOperations(ContainerLifterReceipt containerLifterReceipt) {
-
+            innerNotifyGroundOperations(containerLifterReceipt);
         }
     }
 }
