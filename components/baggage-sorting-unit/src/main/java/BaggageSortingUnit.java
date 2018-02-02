@@ -32,7 +32,7 @@ public class BaggageSortingUnit {
      *
      * @return The receipt for the sorted baggage.
      */
-    public BaggageSortingUnitReceipt innerExecute() {
+    public BaggageSortingUnitReceipt innerExecute() throws Exception {
         // Call drop into luggageTub
         for (Baggage baggage : this.baggageList ) {
             LuggageTub luggageTub = new LuggageTub(baggage, this.destination );
@@ -130,7 +130,7 @@ public class BaggageSortingUnit {
      *
      * @return The receipt of the loading.
      */
-    public BaggageSortingUnitReceipt loadDestinationBoxIntoContainers() {
+    public BaggageSortingUnitReceipt loadDestinationBoxIntoContainers() throws Exception {
 
         BaggageSortingUnitReceipt receipt = new BaggageSortingUnitReceipt(this.destinationBox, new ArrayList<Container>()
         ,0, 0, 0, 0
@@ -149,8 +149,7 @@ public class BaggageSortingUnit {
             ArrayList<BaggageIdentificationTag> currentContainerBaggages = new ArrayList<BaggageIdentificationTag>();
             for (int i = 0; i < baggageTags.size(); i++ ){
                 if(currentContainerBaggages.size() == 50) {
-                    // TODO Check for available vehicle
-                    handHeld.orderRoboterToLoad(currentContainerBaggages, container, this.baggageVehicleList.remove(0));
+                    handHeld.orderRoboterToLoad(currentContainerBaggages, container, getEmptyBaggageVehicle());
                     this.filledContainerList.add(container);
                     container = this.getContainerForCategory(category);
                     currentContainerBaggages = new ArrayList<BaggageIdentificationTag>();
@@ -160,14 +159,21 @@ public class BaggageSortingUnit {
                 currentContainerBaggages.add(baggageTags.get(i));
             }
             if(currentContainerBaggages.size() > 0){
-                // TODO Check for available vehicle
-                handHeld.orderRoboterToLoad(currentContainerBaggages, container,this.baggageVehicleList.remove(0));
+                handHeld.orderRoboterToLoad(currentContainerBaggages, container, getEmptyBaggageVehicle());
                 this.filledContainerList.add(container);
                 this.increaseBaggageSortingUnitReceiptNumberOfContainers(receipt, category);
             }
         }
         receipt.setContainerList(this.filledContainerList);
         return receipt;
+    }
+
+    private BaggageVehicle getEmptyBaggageVehicle() throws Exception {
+        // TODO Check for available vehicle
+        if(this.baggageVehicleList.size() == 0) {
+            throw new Exception("Not enough Baggage Vehicles!");
+        }
+        return this.baggageVehicleList.remove(0);
     }
 
     /**
@@ -177,7 +183,9 @@ public class BaggageSortingUnit {
      * @return A container for the category.
      */
     private Container getContainerForCategory(ContainerCategory category) {
-        // TODO Check for available Container
+        if(this.emptyContainerList.size() == 0) {
+            this.generateEmptyContainers();
+        }
         Container container = this.emptyContainerList.remove(0);
         container.setCategory(category);
         return container;
@@ -239,7 +247,7 @@ public class BaggageSortingUnit {
      * Port for the baggage sorting unit.
      */
     public class Port implements IBaggageSortingUnit {
-        public BaggageSortingUnitReceipt execute(String position, Destination destination, ArrayList<Baggage> baggage, ArrayList<BaggageVehicle> baggageVehicles, ArrayList<BaggageIdentificationTag> baggageIdentificationTags) {
+        public BaggageSortingUnitReceipt execute(String position, Destination destination, ArrayList<Baggage> baggage, ArrayList<BaggageVehicle> baggageVehicles, ArrayList<BaggageIdentificationTag> baggageIdentificationTags) throws Exception {
             initialize(position, destination, baggage, baggageVehicles, baggageIdentificationTags);
             return innerExecute();
         }

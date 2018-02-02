@@ -73,8 +73,13 @@ public class BaggageSortingUnitTest {
         combinedTags.addAll(premiumEconomyClassTags);
 
 
-        BaggageSortingUnitReceipt receipt = port.execute("K20", Destination.CPT, combinedBaggage
-                ,vehicles, combinedTags);
+        BaggageSortingUnitReceipt receipt = null;
+        try {
+            receipt = port.execute("K20", Destination.CPT, combinedBaggage
+                    ,vehicles, combinedTags);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
         //First class:
