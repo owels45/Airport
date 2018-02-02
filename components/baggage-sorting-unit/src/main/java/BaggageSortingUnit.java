@@ -2,6 +2,9 @@ import placeholder.*;
 
 import java.util.ArrayList;
 
+/**
+ * The baggage sorting unit.
+ */
 public class BaggageSortingUnit {
 
     private static BaggageSortingUnit instance = new BaggageSortingUnit();
@@ -24,6 +27,11 @@ public class BaggageSortingUnit {
 
     public Port port;
 
+    /**
+     * Execute the sorting of the baggage.
+     *
+     * @return The receipt for the sorted baggage.
+     */
     public BaggageSortingUnitReceipt innerExecute() {
         // Call drop into luggageTub
         for (Baggage baggage : this.baggageList ) {
@@ -40,6 +48,15 @@ public class BaggageSortingUnit {
         return this.loadDestinationBoxIntoContainers();
     }
 
+    /**
+     * Initialize the baggage sorting unit.
+     *
+     * @param position The position to send the container to.
+     * @param destination The destination of the baggage.
+     * @param baggage The baggage which should be sorted.
+     * @param baggageVehicles The baggage vehicles to load the containers.
+     * @param baggageIdentificationTags The tags for the baggage.
+     */
     private void initialize(String position, Destination destination, ArrayList<Baggage> baggage, ArrayList<BaggageVehicle> baggageVehicles, ArrayList<BaggageIdentificationTag> baggageIdentificationTags) {
 
         this.position = position;
@@ -59,10 +76,20 @@ public class BaggageSortingUnit {
         this.baggageIdentificationTags = baggageIdentificationTags;
     }
 
+    /**
+     * Constructor for the baggage sorting unit.
+     */
     private BaggageSortingUnit() {
         this.port = new Port();
     }
 
+    /**
+     * Update the number of baggages in the receipt.
+     *
+     * @param receipt The receipt which should be updated.
+     * @param category The category which should be updated.
+     * @param value The value to set.
+     */
     private void updateBaggageSortingUnitReceiptNumberOfBaggage(BaggageSortingUnitReceipt receipt, ContainerCategory category, int value) {
 
         switch (category){
@@ -77,6 +104,13 @@ public class BaggageSortingUnit {
                 break;
         }
     }
+
+    /**
+     * Increase the number on containers for a given container in the receipt.
+     *
+     * @param receipt The receipt which should be updated
+     * @param category The category which should be updated.
+     */
     private void increaseBaggageSortingUnitReceiptNumberOfContainers(BaggageSortingUnitReceipt receipt, ContainerCategory category) {
         switch (category){
             case First:
@@ -91,6 +125,11 @@ public class BaggageSortingUnit {
         }
     }
 
+    /**
+     * Load the destination box into the containers.
+     *
+     * @return The receipt of the loading.
+     */
     public BaggageSortingUnitReceipt loadDestinationBoxIntoContainers() {
 
         BaggageSortingUnitReceipt receipt = new BaggageSortingUnitReceipt(this.destinationBox, new ArrayList<Container>()
@@ -131,6 +170,12 @@ public class BaggageSortingUnit {
         return receipt;
     }
 
+    /**
+     * Get a new container for a category.
+     *
+     * @param category The category for which the container should be.
+     * @return A container for the category.
+     */
     private Container getContainerForCategory(ContainerCategory category) {
         // TODO Check for available Container
         Container container = this.emptyContainerList.remove(0);
@@ -139,6 +184,9 @@ public class BaggageSortingUnit {
     }
 
 
+    /**
+     * Generates empty containers.
+     */
     private void generateEmptyContainers() {
         for (int i = 0; i < 100; i++){
             ContainerProfile containerProfile = new ContainerProfile(this.destination.toString(), 0);
@@ -147,25 +195,50 @@ public class BaggageSortingUnit {
         }
     }
 
+    /**
+     * Get the version.
+     *
+     * @return The version string.
+     */
     public String innerGetVersion() {
         return "BaggageSortingUnit - Version 1.0";
     }
 
+    /**
+     * Gets the instance of the baggage sorting unit.
+     *
+     * @return The instance for the baggage unit.
+     */
     public static BaggageSortingUnit getInstance() {
         return instance;
     }
 
+    /**
+     * Drop the baggage in the luggage tub.
+     *
+     * @param luggageTub The luggage tub.
+     * @param baggage The baggage to drop.
+     * @return The filled luggage tub.
+     */
     public LuggageTub drop(LuggageTub luggageTub, Baggage baggage) {
         luggageTub.setBaggage(baggage);
         return luggageTub;
     }
 
+    /**
+     * Throw the baggage from the luggage tub into the destination box.
+     *
+     * @param luggageTub The luggage tub.
+     * @param destinationBox The destination box.
+     */
     public void throwOff(LuggageTub luggageTub, DestinationBox destinationBox) {
         destinationBox.getBaggegeList().add(luggageTub.getBaggage());
     }
 
+    /**
+     * Port for the baggage sorting unit.
+     */
     public class Port implements IBaggageSortingUnit {
-        // TODO Acceptable?
         public BaggageSortingUnitReceipt execute(String position, Destination destination, ArrayList<Baggage> baggage, ArrayList<BaggageVehicle> baggageVehicles, ArrayList<BaggageIdentificationTag> baggageIdentificationTags) {
             initialize(position, destination, baggage, baggageVehicles, baggageIdentificationTags);
             return innerExecute();
