@@ -45,7 +45,6 @@ public class MobileHandHeldScanner {
         this.roboter.orderBaggageVehicleMove(vehicle, this.baggageSortingUnit.getPosition());
     }
 
-    // TODO: CTOR angepasst, möglich?
     public MobileHandHeldScanner(ContainerType containerType, BaggageSortingUnit baggageSortingUnit, ArrayList<BaggageIdentificationTag> baggageIdentificationTagList) {
         this.containerType = containerType;
         this.baggageSortingUnit = baggageSortingUnit;

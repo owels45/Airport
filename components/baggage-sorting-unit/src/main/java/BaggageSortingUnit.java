@@ -169,7 +169,6 @@ public class BaggageSortingUnit {
     }
 
     private BaggageVehicle getEmptyBaggageVehicle() throws Exception {
-        // TODO Check for available vehicle
         if(this.baggageVehicleList.size() == 0) {
             throw new Exception("Not enough Baggage Vehicles!");
         }
