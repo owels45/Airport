@@ -9,7 +9,9 @@ public class ContainerLifter {
 
     public ContainerLifter() {port =new Port();}
 
-    public static ContainerLifter getinstance() {return instance;}
+    public static ContainerLifter getinstance() {
+        return instance;
+    }
 
 
     public boolean innerUp() {
