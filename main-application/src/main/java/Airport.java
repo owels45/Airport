@@ -27,7 +27,7 @@ public class Airport {
 //        securityCheckPort = .build();
 //        federalPolicePort = .build();
 //        customsPort = .build();
-        serviceVehicleOilPort = ServiceVehicleOilFactory.build();
+        //serviceVehicleOilPort = ServiceVehicleOilFactory.build();
 //        serviceVehicleNitrogenOxygenPort = .build();
 //        serviceVehicleFreshWaterPort = .build();
 //        serviceVehicleWasteWaterTankPort = .build();
