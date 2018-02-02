@@ -7,13 +7,12 @@ public class Container {
     private String qrCodeIDCategory;
     private int maximumNumberOfBaggages = 50;
 
-    public Container(ContainerType type, String id, ContainerCategory category, ContainerProfile profile, String barCodeIDCategory, String qrCodeIDECategory, int maximumNumberOfBaggages) {
+    public Container() {
         this.type = type;
         this.id = id;
         this.category = category;
         this.profile = profile;
         this.barCodeIDCategory = barCodeIDCategory;
-        this.qrCodeIDCategory = qrCodeIDECategory;
         this.maximumNumberOfBaggages = maximumNumberOfBaggages;
     }
 
