@@ -1,10 +1,14 @@
 import base.Airplane;
 import com.google.common.eventbus.EventBus;
 import event.Subscriber;
+import event.service_vehicle_fresh_water.ServiceVehicleRefillFreshWater;
+import event.service_vehicle_nitrogen_oxygen.ServiceVehicleRefillNitrogenBottle;
+import event.service_vehicle_nitrogen_oxygen.ServiceVehicleRefillOxygenBottle;
 import event.service_vehicle_oil.ServiceVehicleAPUOilTankIncreaseLevel;
 import event.service_vehicle_oil.ServiceVehicleChangeFireExtinguisher;
 import event.service_vehicle_oil.ServiceVehicleEngineOilTankIncreaseLevel;
 import event.service_vehicle_oil.ServiceVehicleRefillDeIcingSystem;
+import event.service_vehicle_waster_water.ServiceVehiclePumpOut;
 import logging.LogEngine;
 
 public class Application {
@@ -46,7 +50,13 @@ public class Application {
         eventBus.post(new ServiceVehicleEngineOilTankIncreaseLevel(phase, airplane));
         eventBus.post(new ServiceVehicleChangeFireExtinguisher(phase, airplane));
         eventBus.post(new ServiceVehicleRefillDeIcingSystem(phase, airplane));
-        //eventBus.post()
+
+        eventBus.post(new ServiceVehicleRefillFreshWater(phase, airplane));
+
+        eventBus.post(new ServiceVehicleRefillNitrogenBottle(phase, airplane));
+        eventBus.post(new ServiceVehicleRefillOxygenBottle(phase, airplane));
+
+        eventBus.post(new ServiceVehiclePumpOut(phase, airplane));
     }
     //    ...?
     public void tanking() {

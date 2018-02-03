@@ -1,12 +1,12 @@
-package event.service_vehicle_waster_water;
+package event.service_vehicle_fresh_water;
 
 import base.Airplane;
 
-public class ServiceVehiclePumpOut {
+public class ServiceVehicleRefillFreshWater {
     private String phase;
     private Airplane airplane;
 
-    public ServiceVehiclePumpOut(String phase, Airplane airplane) {
+    public ServiceVehicleRefillFreshWater(String phase, Airplane airplane) {
         this.phase = phase;
         this.airplane = airplane;
     }
@@ -18,6 +18,6 @@ public class ServiceVehiclePumpOut {
     }
 
     public String toString() {
-        return "event - " + phase + " : ServiceVehiclePumpOut";
+        return "event - " + phase + " : ServiceVehicleRefillFreshWater";
     }
 }
