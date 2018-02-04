@@ -1,12 +1,12 @@
-package event.service_vehicle_oil;
+package event.service_vehicle_fresh_water;
 
 import base.Airplane;
 
-public class ServiceVehicleEngineOilTankIncreaseLevel {
+public class ServiceVehicleRefillFreshWater {
     private String phase;
     private Airplane airplane;
 
-    public ServiceVehicleEngineOilTankIncreaseLevel(String phase, Airplane airplane) {
+    public ServiceVehicleRefillFreshWater(String phase, Airplane airplane) {
         this.phase = phase;
         this.airplane = airplane;
     }
@@ -18,6 +18,6 @@ public class ServiceVehicleEngineOilTankIncreaseLevel {
     }
 
     public String toString() {
-        return "event - " + phase + " : ServiceVehicleEngineOilTankIncreaseLevel";
+        return "event - " + phase + " : ServiceVehicleRefillFreshWater";
     }
 }
