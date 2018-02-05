@@ -77,4 +77,4 @@ public class BaggageIdentificationTagSQL {
         return sqlStringBuilder.toString();
     }
 }
-}
+

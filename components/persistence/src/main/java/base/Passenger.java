@@ -1,6 +1,7 @@
 package base;import java.util.ArrayList;
 
 public class Passenger {
+    private String id;
     private String name;
     private String content;
     private String birthDate;
@@ -13,7 +14,8 @@ public class Passenger {
     private ArrayList<Baggage> baggageList;
     private BoardingPass boardingPass;
 
-    public Passenger(String name, String content, String birthDate, String street, String postCode, String city, CitizenshipCode citizenshipCode, Gender gender, Passport passport, ArrayList<Baggage> baggageList, BoardingPass boardingPass) {
+    public Passenger(String id, String name, String content, String birthDate, String street, String postCode, String city, CitizenshipCode citizenshipCode, Gender gender, Passport passport, ArrayList<Baggage> baggageList, BoardingPass boardingPass) {
+        this.id = id;
         this.name = name;
         this.content = content;
         this.birthDate = birthDate;
@@ -25,6 +27,10 @@ public class Passenger {
         this.passport = passport;
         this.baggageList = baggageList;
         this.boardingPass = boardingPass;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getName() {

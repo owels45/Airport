@@ -2,12 +2,17 @@ package sql;
 
 
 import base.Container;
+import base.ContainerProfile;
 import engine.LogEngine;
 import main.Database;
 
 public class ContainerSQL {
 
-    Database instance = new Database();
+    private Database instance;
+
+    public ContainerSQL(Database instance){
+        this.instance = instance;
+    }
 
     public void dropTableContainer(LogEngine logEngine) {
         String sqlStatement = "DROP TABLE container IF EXISTS";
@@ -18,12 +23,12 @@ public class ContainerSQL {
     public void createTableContainer(LogEngine logEngine) {
         StringBuilder sqlStringBuilder = new StringBuilder();
         sqlStringBuilder.append("CREATE TABLE container").append(" ( ");
-        sqlStringBuilder.append("type VARCHAR(50000) NOT NULL").append(",");
         sqlStringBuilder.append("id VARCHAR(36) NOT NULL").append(",");
-        sqlStringBuilder.append("category VARCHAR(50000) NOT NULL").append(",");
-        sqlStringBuilder.append("profile VARCHAR(50000) NOT NULL").append(",");
-        sqlStringBuilder.append("barCode VARCHAR(50000) NOT NULL").append(",");
-        sqlStringBuilder.append("qrCode VARCHAR(50000) NOT NULL").append(",");
+        sqlStringBuilder.append("type TEXT NOT NULL").append(",");
+        sqlStringBuilder.append("category TEXT NOT NULL").append(",");
+        sqlStringBuilder.append("profile VARCHAR(36) NOT NULL").append(",");
+        sqlStringBuilder.append("barCode TEXT NOT NULL").append(",");
+        sqlStringBuilder.append("qrCode TEXT NOT NULL").append(",");
         sqlStringBuilder.append("maxLugage INT NOT NULL").append(",");
         sqlStringBuilder.append("PRIMARY KEY (id)");
         sqlStringBuilder.append(" )");
@@ -32,13 +37,13 @@ public class ContainerSQL {
     }
 
 
-    public String buildInsertSQLStatement(Container container) {
+    public String buildInsertSQLStatement(Container container, ContainerProfile containerProfile) {
         StringBuilder sqlStringBuilder = new StringBuilder();
-        sqlStringBuilder.append("INSERT INTO container (type,id,category,profile,barCode,qrCode,maxLugage) VALUES (");
-        sqlStringBuilder.append("'").append(container.getType().toString()).append("'").append(",");
+        sqlStringBuilder.append("INSERT INTO container (id,type,category,profile,barCode,qrCode,maxLugage) VALUES (");
         sqlStringBuilder.append("'").append(container.getId()).append("'").append(",");
+        sqlStringBuilder.append("'").append(container.getType().toString()).append("'").append(",");
         sqlStringBuilder.append("'").append(container.getCategory().toString()).append("'").append(",");
-        sqlStringBuilder.append("'").append(container.getProfile().toString()).append("'").append(",");
+        sqlStringBuilder.append("'").append(containerProfile.getId()).append("'").append(",");
         sqlStringBuilder.append("'").append(container.getBarCodeIDCategory()).append("'").append(",");
         sqlStringBuilder.append("'").append(container.getQrCodeIDECategory()).append("'").append(",");
         sqlStringBuilder.append(container.getMaximumNumberOfBaggages());
@@ -46,9 +51,9 @@ public class ContainerSQL {
         return sqlStringBuilder.toString();
     }
 
-    public void insert(Container container, LogEngine logEngine) {
-        logEngine.write("main.Database", "insert", "container = " + container.getId(), buildInsertSQLStatement(container));
-        instance.update(buildInsertSQLStatement(container));
+    public void insert(Container container, ContainerProfile containerProfile, LogEngine logEngine) {
+        logEngine.write("main.Database", "insert", "container = " + container.getId(), buildInsertSQLStatement(container ,containerProfile));
+        instance.update(buildInsertSQLStatement(container,containerProfile));
     }
 
     public String buildUpdateSQLStatement(Container container) {

@@ -44,7 +44,7 @@ public class Database {
             return innerMethodGetAllBaggages();
         }
 
-        public void addBaggageIdentificationTag(BaggageIdentificationTag baggageIdentificationTag) {
+        public void addBaggageIdentificationTag(BaggageIdentificationTag baggageIdentificationTag) {    //Done
             innerMethodAddBaggageIdentificationTag(baggageIdentificationTag);
         }
 
@@ -52,15 +52,15 @@ public class Database {
             return innerMethodGetBaggageIdentificationTag(baggage);
         }
 
-        public void addBoardingPass(BoardingPass boardingPass) {
-            innerMethodAddBoardingPass(boardingPass);
+        public void addBoardingPass(BoardingPass boardingPass, Passenger passenger) {                                        //Done
+            innerMethodAddBoardingPass(boardingPass,passenger);
         }
 
         public BoardingPass getBoardingPass(Passenger passenger) {
             return innerMethodGetBoardingPass(passenger);
         }
 
-        public void addContainer(Container container) {
+        public void addContainer(Container container) {                                                                     //Done
             innerMethodAddContainer(container);
         }
 
@@ -199,7 +199,7 @@ public class Database {
     private Passport innerMethodGetPassport() {
     }
 
-    private void innerMethodAddBoardingPass(BoardingPass boardingPass) {
+    private void innerMethodAddBoardingPass(BoardingPass boardingPass, Passenger passenger) {
     }
 
     private BaggageIdentificationTag innerMethodGetBaggageIdentificationTag(Baggage baggage) {
