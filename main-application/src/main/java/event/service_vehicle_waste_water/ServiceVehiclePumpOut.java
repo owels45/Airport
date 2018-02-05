@@ -1,4 +1,4 @@
-package event.service_vehicle_waster_water;
+package event.service_vehicle_waste_water;
 
 import base.Airplane;
 
