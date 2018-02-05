@@ -1,14 +1,14 @@
 import base.Airplane;
 import com.google.common.eventbus.EventBus;
 import event.Subscriber;
+import event.service_vehicle_fresh_water.ServiceVehicleFreshWaterNotifyGroundOperations;
 import event.service_vehicle_fresh_water.ServiceVehicleRefillFreshWater;
+import event.service_vehicle_nitrogen_oxygen.ServiceVehicleNitrogenOxygenNotifyGroundOperations;
 import event.service_vehicle_nitrogen_oxygen.ServiceVehicleRefillNitrogenBottle;
 import event.service_vehicle_nitrogen_oxygen.ServiceVehicleRefillOxygenBottle;
-import event.service_vehicle_oil.ServiceVehicleAPUOilTankIncreaseLevel;
-import event.service_vehicle_oil.ServiceVehicleChangeFireExtinguisher;
-import event.service_vehicle_oil.ServiceVehicleEngineOilTankIncreaseLevel;
-import event.service_vehicle_oil.ServiceVehicleRefillDeIcingSystem;
-import event.service_vehicle_waster_water.ServiceVehiclePumpOut;
+import event.service_vehicle_oil.*;
+import event.service_vehicle_waste_water.ServiceVehiclePumpOut;
+import event.service_vehicle_waste_water.ServiceVehicleWasteWaterNotifyGroundOperations;
 import logging.LogEngine;
 
 public class Application {
@@ -44,21 +44,25 @@ public class Application {
 
     }
 
-    public void serviceVehicleTasks(Airplane airplane) {
+    public void serviceVehicleTasks(Airplane airplane, Object groundOperationCenterPort) {
         String phase = "Service Vehicle";
         eventBus.post(new ServiceVehicleAPUOilTankIncreaseLevel(phase, airplane));
         eventBus.post(new ServiceVehicleEngineOilTankIncreaseLevel(phase, airplane));
         eventBus.post(new ServiceVehicleChangeFireExtinguisher(phase, airplane));
         eventBus.post(new ServiceVehicleRefillDeIcingSystem(phase, airplane));
+        eventBus.post(new ServiceVehicleOilNotifyGroundOperations(phase, groundOperationCenterPort));
 
         eventBus.post(new ServiceVehicleRefillFreshWater(phase, airplane));
+        eventBus.post(new ServiceVehicleFreshWaterNotifyGroundOperations(phase, groundOperationCenterPort));
 
         eventBus.post(new ServiceVehicleRefillNitrogenBottle(phase, airplane));
         eventBus.post(new ServiceVehicleRefillOxygenBottle(phase, airplane));
+        eventBus.post(new ServiceVehicleNitrogenOxygenNotifyGroundOperations(phase, groundOperationCenterPort));
 
         eventBus.post(new ServiceVehiclePumpOut(phase, airplane));
+        eventBus.post(new ServiceVehicleWasteWaterNotifyGroundOperations(phase, groundOperationCenterPort));
     }
-    //    ...?
+
     public void tanking() {
 
     }
