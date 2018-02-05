@@ -10,6 +10,8 @@ public class ServiceVehicleNitrogenOxygen {
 
     private int amountNitrogen = 1000;
     private int amountOxygen = 1000;
+    private int lastRefillNitrogenAmount;
+    private int lastRefillOxygenAmount;
 
     public Port port;
 
@@ -31,8 +33,8 @@ public class ServiceVehicleNitrogenOxygen {
             return innerMethodRefillOxygenBottle(oxygenBottlePort);
         }
 
-        public void notifyGroundOperations (ServiceVehicleNitrogenOxygenReceipt serviceVehicleNitrogenOxygenReceipt){
-            innerMethodNotifyGroundOperations(serviceVehicleNitrogenOxygenReceipt);
+        public void notifyGroundOperations(Object groundOperationCenterPort) {
+            innerMethodNotifyGroundOperations(groundOperationCenterPort);
         }
 
     }
@@ -42,6 +44,7 @@ public class ServiceVehicleNitrogenOxygen {
             Method refillNitrogen = nitrogenBottlePort.getClass().getDeclaredMethod("refill");
             int currentValue = (Integer) refillNitrogen.invoke(nitrogenBottlePort);
             amountNitrogen -= currentValue;
+            lastRefillNitrogenAmount = currentValue;
             return currentValue;
         } catch (Exception e) {
             e.printStackTrace();
@@ -49,11 +52,12 @@ public class ServiceVehicleNitrogenOxygen {
         return -1;
     }
 
-    public int innerMethodRefillOxygenBottle(Object oxygenBottlePort) {
+    private int innerMethodRefillOxygenBottle(Object oxygenBottlePort) {
         try {
             Method refillOxygen = oxygenBottlePort.getClass().getDeclaredMethod("refill");
             int currentValue = (Integer) refillOxygen.invoke(oxygenBottlePort);
             amountOxygen -= currentValue;
+            lastRefillOxygenAmount = currentValue;
             return currentValue;
         } catch (Exception e) {
             e.printStackTrace();
@@ -61,8 +65,13 @@ public class ServiceVehicleNitrogenOxygen {
         return -1;
     }
 
-    public void innerMethodNotifyGroundOperations (ServiceVehicleNitrogenOxygenReceipt serviceVehicleNitrogenOxygenReceipt){
-
+    private void innerMethodNotifyGroundOperations(Object groundOperationCenterPort) {
+        try {
+            Method notifyGroundOperations = groundOperationCenterPort.getClass().getDeclaredMethod("receive", ServiceVehicleNitrogenOxygenReceipt.class);
+            notifyGroundOperations.invoke(groundOperationCenterPort, new ServiceVehicleNitrogenOxygenReceipt(lastRefillNitrogenAmount, lastRefillOxygenAmount));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

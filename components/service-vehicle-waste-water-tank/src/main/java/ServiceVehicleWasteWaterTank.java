@@ -9,11 +9,11 @@ public class ServiceVehicleWasteWaterTank {
     }
 
     private int amountWasteWater = 0;
+    private int lastWasteWaterAmount;
 
     public Port port;
 
     private ServiceVehicleWasteWaterTank(){
-
         port = new Port();
     }
 
@@ -27,8 +27,8 @@ public class ServiceVehicleWasteWaterTank {
             return innerMethodPumpOut(wasteWaterTankPort);
         }
 
-        public void notifyGroundOperations(ServiceVehicleWasteWaterTankReceipt serviceVehicleWasteWaterTankReceipt){
-            innerMethodNotifyGroundOperations(serviceVehicleWasteWaterTankReceipt);
+        public void notifyGroundOperations(Object groundOperationCenterPort){
+            innerMethodNotifyGroundOperations(groundOperationCenterPort);
         }
 
     }
@@ -38,6 +38,7 @@ public class ServiceVehicleWasteWaterTank {
             Method pumpOut = wasteWaterTankPort.getClass().getDeclaredMethod("pumpOut");
             int currentValue = (Integer) pumpOut.invoke(wasteWaterTankPort);
             amountWasteWater += currentValue;
+            lastWasteWaterAmount = currentValue;
             return currentValue;
         } catch (Exception e) {
             e.printStackTrace();
@@ -45,10 +46,13 @@ public class ServiceVehicleWasteWaterTank {
         return -1;
     }
 
-
-    public void innerMethodNotifyGroundOperations ( ServiceVehicleWasteWaterTankReceipt serviceVehicleWasteWaterTankReceipt){
-
-
+    private void innerMethodNotifyGroundOperations(Object groundOperationCenterPort) {
+        try {
+            Method notifyGroundOperations = groundOperationCenterPort.getClass().getDeclaredMethod("receive", ServiceVehicleWasteWaterTankReceipt.class);
+            notifyGroundOperations.invoke(groundOperationCenterPort, new ServiceVehicleWasteWaterTankReceipt(lastWasteWaterAmount));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
