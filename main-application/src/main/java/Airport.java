@@ -8,8 +8,11 @@ import event.service_vehicle_oil.ServiceVehicleAPUOilTankIncreaseLevel;
 import event.service_vehicle_oil.ServiceVehicleChangeFireExtinguisher;
 import event.service_vehicle_oil.ServiceVehicleEngineOilTankIncreaseLevel;
 import event.service_vehicle_oil.ServiceVehicleRefillDeIcingSystem;
-import event.service_vehicle_waster_water.ServiceVehiclePumpOut;
+import event.service_vehicle_waste_water.ServiceVehiclePumpOut;
+import factory.ServiceVehicleFreshWaterFactory;
+import factory.ServiceVehicleNitrogenOxygenFactory;
 import factory.ServiceVehicleOilFactory;
+import factory.ServiceVehicleWasteWaterTankFactory;
 import logging.LogEngine;
 
 import java.lang.reflect.Method;
@@ -40,9 +43,9 @@ public class Airport extends Subscriber {
 //        federalPolicePort = .build();
 //        customsPort = .build();
         serviceVehicleOilPort = ServiceVehicleOilFactory.build();
-//        serviceVehicleNitrogenOxygenPort = .build();
-//        serviceVehicleFreshWaterPort = .build();
-//        serviceVehicleWasteWaterTankPort = .build();
+        serviceVehicleNitrogenOxygenPort = ServiceVehicleNitrogenOxygenFactory.build();
+        serviceVehicleFreshWaterPort = ServiceVehicleFreshWaterFactory.build();
+        serviceVehicleWasteWaterTankPort = ServiceVehicleWasteWaterTankFactory.build();
 //        airCargoPalletLifterPort = .build();
 //        skyTankingVehiclePort = SkyTankingVehicleFactory.build();
 //        boardingControlPort = .build();
