@@ -1,5 +1,3 @@
-package base;
-
 public class Passport {
     private String id;
     private String picture;
@@ -47,7 +45,7 @@ public class Passport {
 
     @Override
     public String toString() {
-        return "base.Passport{" +
+        return "Passport{" +
                 "id='" + id + '\'' +
                 ", picture='" + picture + '\'' +
                 ", visa='" + visa + '\'' +

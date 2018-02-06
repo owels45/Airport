@@ -1,5 +1,3 @@
-package base;
-
 public class Employee {
 
     private int id;
@@ -30,7 +28,7 @@ public class Employee {
 
     @Override
     public String toString() {
-        return "base.Employee{" +
+        return "Employee{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", idCard='" + idCard + '\'' +

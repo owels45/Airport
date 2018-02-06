@@ -1,5 +1,3 @@
-package base;
-
 public class BoardingPass {
 
     private String id;
@@ -120,7 +118,7 @@ public class BoardingPass {
 
     @Override
     public String toString() {
-        return "base.BoardingPass{" +
+        return "BoardingPass{" +
                 "id='" + id + '\'' +
                 ", carrier=" + carrier +
                 ", flight='" + flight + '\'' +

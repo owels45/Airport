@@ -1,5 +1,3 @@
-package base;
-
 public class CottonPad {
     private String surface;
 
@@ -17,7 +15,7 @@ public class CottonPad {
 
     @Override
     public String toString() {
-        return "base.CottonPad{" +
+        return "CottonPad{" +
                 "surface='" + surface + '\'' +
                 '}';
     }

@@ -1,5 +1,3 @@
-package base;
-
 public class Baggage {
 
     private String id;
@@ -38,7 +36,7 @@ public class Baggage {
 
     @Override
     public String toString() {
-        return "base.Baggage{" +
+        return "Baggage{" +
                 "id='" + id + '\'' +
                 ", weight=" + weight +
                 ", baggageType=" + baggageType +
