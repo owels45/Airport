@@ -12,7 +12,7 @@ public class BaggageSortingUnitFactory {
         String fileSeparator = System.getProperty("file.separator");
 
         try {
-            URL[] urls = {new File(Configuration.instance.commonPathToJavaArchive + fileSeparator+"baggage-sorting-unit"+fileSeparator+"target"+fileSeparator+"baggage-sorting-unit-1.0.0.jar").toURI().toURL()};
+            URL[] urls = {new File(Configuration.instance.commonPathToJavaArchive +fileSeparator+"baggagesortingunit.jar").toURI().toURL()};
             URLClassLoader urlClassLoader = new URLClassLoader(urls, CustomsFactory.class.getClassLoader());
             Class CustomsClass = Class.forName("BaggageSortingUnit", true, urlClassLoader);
             Object CustomsInstance = CustomsClass.getMethod("getInstance", new Class[0]).invoke(null, new Object[0]);

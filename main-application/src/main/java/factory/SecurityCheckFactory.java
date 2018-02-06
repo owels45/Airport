@@ -12,7 +12,7 @@ public class SecurityCheckFactory {
         String fileSeparator = System.getProperty("file.separator");
 
         try {
-            URL[] urls = {new File(Configuration.instance.commonPathToJavaArchive + fileSeparator+"security-check"+fileSeparator+"target"+fileSeparator+"security-check-1.0.0.jar").toURI().toURL()};
+            URL[] urls = {new File(Configuration.instance.commonPathToJavaArchive + fileSeparator+"securitycheck.jar").toURI().toURL()};
             URLClassLoader urlClassLoader = new URLClassLoader(urls, CustomsFactory.class.getClassLoader());
             Class CustomsClass = Class.forName("SecurityCheck", true, urlClassLoader);
             Object CustomsInstance = CustomsClass.getMethod("getInstance", new Class[0]).invoke(null, new Object[0]);
