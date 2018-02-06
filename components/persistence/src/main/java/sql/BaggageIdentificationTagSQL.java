@@ -23,13 +23,13 @@ public class BaggageIdentificationTagSQL {
         StringBuilder sqlStringBuilder = new StringBuilder();
         sqlStringBuilder.append("CREATE TABLE baggageIdentificationTag").append(" ( ");
         sqlStringBuilder.append("id TEXT NOT NULL").append(",");
-        sqlStringBuilder.append("boardingPass TEXT NOT NULL").append(",");
+        sqlStringBuilder.append("boardingPassid VARCHAR(36) NOT NULL").append(",");
         sqlStringBuilder.append("carrier TEXT NOT NULL").append(",");
         sqlStringBuilder.append("sequence INT NOT NULL").append(",");
         sqlStringBuilder.append("via01 TEXT NOT NULL").append(",");
         sqlStringBuilder.append("via02 TEXT NOT NULL").append(",");
         sqlStringBuilder.append("via03 TEXT NOT NULL").append(",");
-        sqlStringBuilder.append("baggage TEXT NOT NULL").append(",");
+        sqlStringBuilder.append("baggageid TEXT NOT NULL").append(",");
         sqlStringBuilder.append("isLocal TEXT NOT NULL").append(",");
         sqlStringBuilder.append("isTransfer TEXT NOT NULL").append(",");
         sqlStringBuilder.append("isTransferFirst TEXT NOT NULL").append(",");
@@ -43,10 +43,11 @@ public class BaggageIdentificationTagSQL {
 
     public String buildInsertSQLStatement(BaggageIdentificationTag baggageIdentificationTag) {
         StringBuilder sqlStringBuilder = new StringBuilder();
-        sqlStringBuilder.append("INSERT INTO baggageIdentificationTag (id,boardingPass,carrier,sequence,via01,via02,via03,baggage,specialGood,isLocal,isTransfer,isTransferFirst,barCode) VALUES (");
+        sqlStringBuilder.append("INSERT INTO baggageIdentificationTag (id,boardingPassid,carrier,sequence,via01,via02,via03,baggageid,specialGood,isLocal,isTransfer,isTransferFirst,barCode) VALUES (");
+        sqlStringBuilder.append("'").append(baggageIdentificationTag.getId()).append("'").append(",");
         sqlStringBuilder.append("'").append(baggageIdentificationTag.getBoardingPass().getId()).append("'").append(",");
         sqlStringBuilder.append("'").append(baggageIdentificationTag.getCarrier().toString()).append("'").append(",");
-        sqlStringBuilder.append(baggageIdentificationTag.getSequence()).append(",");
+        sqlStringBuilder.append("'").append(baggageIdentificationTag.getSequence()).append("'").append(",");
         sqlStringBuilder.append("'").append(baggageIdentificationTag.getVia01()).append("'").append(",");
         sqlStringBuilder.append("'").append(baggageIdentificationTag.getVia02()).append("'").append(",");
         sqlStringBuilder.append("'").append(baggageIdentificationTag.getVia03()).append("'").append(",");
@@ -67,13 +68,13 @@ public class BaggageIdentificationTagSQL {
 
     public String buildUpdateSQLStatement(BaggageIdentificationTag baggageIdentificationTag) {
         StringBuilder sqlStringBuilder = new StringBuilder();
-        sqlStringBuilder.append("UPDATE baggageIdentificationTag SET boardingPass = '").append(baggageIdentificationTag.getBoardingPass()).append("'").append(",");
+        sqlStringBuilder.append("UPDATE baggageIdentificationTag SET boardingPassid = '").append(baggageIdentificationTag.getBoardingPass().getId()).append("'").append(",");
         sqlStringBuilder.append("carrier = ").append(baggageIdentificationTag.getCarrier().toString()).append(",");
         sqlStringBuilder.append("sequence = ").append(baggageIdentificationTag.getSequence()).append(",");
         sqlStringBuilder.append("via01 = ").append(baggageIdentificationTag.getVia01()).append(",");
         sqlStringBuilder.append("via02 = ").append(baggageIdentificationTag.getVia02()).append(",");
         sqlStringBuilder.append("via03 = ").append(baggageIdentificationTag.getVia03()).append(",");
-        sqlStringBuilder.append("baggage = ").append(baggageIdentificationTag.getBaggage().getUUID()).append(",");
+        sqlStringBuilder.append("baggageid = ").append(baggageIdentificationTag.getBaggage().getUUID()).append(",");
         sqlStringBuilder.append("specialGood = ").append(baggageIdentificationTag.getSpecialGood().getSpecialGoodType()).append(",");
         sqlStringBuilder.append("isLocal = ").append(baggageIdentificationTag.isLocal()).append(",");
         sqlStringBuilder.append("isTransfer = ").append(baggageIdentificationTag.isTransfer()).append(",");

@@ -4,6 +4,11 @@ package sql;
         import engine.LogEngine;
         import main.Database;
 
+        import java.sql.ResultSet;
+        import java.sql.SQLException;
+        import java.sql.Statement;
+        import java.util.ArrayList;
+
 public class CottonPadSQL {
 
     private Database instance;
@@ -45,5 +50,23 @@ public class CottonPadSQL {
         sqlStringBuilder.append("UPDATE container SET surface = '").append(cottonPad.getSurface()).append("'").append(",");
         sqlStringBuilder.append("WHERE uuid = '").append(cottonPad.getId()).append("'");
         return sqlStringBuilder.toString();
+    }
+
+    public ArrayList<CottonPad> buildSelectSQLStatement() throws SQLException {
+
+        ArrayList<CottonPad> allbagages = new ArrayList<CottonPad>();
+        StringBuilder sb = new StringBuilder();
+        sb.append("SELECT * FROM cottonpad");
+        Statement statement = instance.getConnection().createStatement();
+        ResultSet rs = statement.executeQuery(sb.toString());
+        while (rs.next()) {
+            String id = rs.getString("uuid");
+            String surface = rs.getString("surface");
+            allbagages.add(new CottonPad(id, surface));
+        }
+
+        statement.close();
+
+        return allbagages;
     }
 }

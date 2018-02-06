@@ -4,6 +4,11 @@ import base.Employee;
 import engine.LogEngine;
 import main.Database;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+
 public class EmployeeSQL {
 
     private Database instance;
@@ -52,5 +57,24 @@ public class EmployeeSQL {
         sqlStringBuilder.append("idcard = '").append(employee.getIdCard()).append("'").append(",");
         sqlStringBuilder.append("WHERE id = '").append(employee.getId()).append("'");
         return sqlStringBuilder.toString();
+    }
+
+    public ArrayList<Employee> buildSelectSQLStatement() throws SQLException {
+
+        ArrayList<Employee> allemployees = new ArrayList<Employee>();
+        StringBuilder sb = new StringBuilder();
+        sb.append("SELECT * FROM employee");
+        Statement statement = instance.getConnection().createStatement();
+        ResultSet rs = statement.executeQuery(sb.toString());
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            String name = rs.getString("name");
+            String idcard = rs.getString("idcard");
+            allemployees.add(new Employee(id, name, idcard));
+        }
+
+        statement.close();
+
+        return allemployees;
     }
 }

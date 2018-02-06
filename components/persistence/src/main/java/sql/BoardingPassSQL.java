@@ -5,6 +5,11 @@ import base.Passenger;
 import engine.LogEngine;
 import main.Database;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+
 public class BoardingPassSQL {
 
     private Database instance;
@@ -76,8 +81,23 @@ public class BoardingPassSQL {
         return sqlStringBuilder.toString();
     }
 
+    public ArrayList<BoardingPass> buildSelectSQLStatement() throws SQLException {
 
+        ArrayList<BoardingPass> allbagages = new ArrayList<BoardingPass>();
+        StringBuilder sb = new StringBuilder();
+        sb.append("SELECT * FROM baggage INNER JOIN passenger ON boardingpass.passengerid=passenger.id");
+        Statement statement = instance.getConnection().createStatement();
+        ResultSet rs = statement.executeQuery(sb.toString());
+        while (rs.next()) {
+            String id = rs.getString("uuid");
+            String content = rs.getString("content");
+            int weight = rs.getInt("weight");
+            //allbagages.add(new BoardingPass());
+        }
 
+        statement.close();
 
+        return allbagages;
+    }
 
 }
