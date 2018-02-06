@@ -18,6 +18,14 @@ package base;public class Employee {
         this.id = id;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getIdCard() {
         return idCard;
     }

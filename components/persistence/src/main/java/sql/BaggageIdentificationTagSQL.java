@@ -1,8 +1,14 @@
 package sql;
 
+import base.Baggage;
 import base.BaggageIdentificationTag;
+import base.BoardingPass;
 import engine.LogEngine;
 import main.Database;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class BaggageIdentificationTagSQL {
     Database instance = new Database();
@@ -76,5 +82,20 @@ public class BaggageIdentificationTagSQL {
         sqlStringBuilder.append("WHERE id = '").append(baggageIdentificationTag.getId()).append("'");
         return sqlStringBuilder.toString();
     }
+
+    /*
+    public BaggageIdentificationTag buildSelectSQLStatement (Baggage baggage) throws SQLException {
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("SELECT * FROM baggageIdentificationTag WHERE baggage=").append("'").append(baggage.getUUID()).append("'");
+        Statement statement = instance.getConnection().createStatement();
+        ResultSet result = statement.executeQuery(sb.toString());
+        while (result.next()){
+
+            //BaggageIdentificationTag baggageIdentificationTag = new BaggageIdentificationTag("3",)
+
+        }
+    }
+    */
 }
 

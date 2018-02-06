@@ -4,13 +4,12 @@ import base.*;
 import engine.LogEngine;
 import sql.BaggageSQL;
 import sql.ContainerSQL;
+import sql.DestinationBoxSQL;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.UUID;
 
 public class Database {
     private LogEngine logEngine;
@@ -160,10 +159,12 @@ public class Database {
     }
 
     private void innerMethodAddDestinationBox(DestinationBox destinationBox) {
+        DestinationBoxSQL box = new DestinationBoxSQL(Database.instance);
+        box.buildInsertSQLStatement(destinationBox);
     }
 
     private void innerMethodAddContainer(Container container) {
-        ContainerSQL sql = new ContainerSQL();
+        //ContainerSQL sql = new ContainerSQL();
     }
 
     private BoardingPass innerMethodGetBoardingPass(Passenger passenger) {
@@ -302,13 +303,19 @@ public class Database {
 
     public static void main(String... args) {
 
-        BaggageSQL sql = new BaggageSQL(Database.instance);
         LogEngine log = new LogEngine(Configuration.instance.logFile);
-
+        ArrayList<Baggage> list = new ArrayList<Baggage>();
 
         Database.instance.innerSetLogEngine(log);
         Database.instance.startup(Configuration.instance.dataPath);
-        Database.instance.innerMethodInitBaggage();
+        DestinationBox box = new DestinationBox();
+        Baggage baggage = new Baggage("12", "cont", 15.0,BaggageType.Normal);
+        list.add(baggage);
+        box.setBarCode("ad185sfadg51r6");
+        box.setBaggegeList(list);
+        Database.instance.innerMethodAddDestinationBox(box);
+
+        //Database.instance.innerMethodInitBaggage();
         /*
         ArrayList<Baggage> bag = sql.buildSelectSQLStatement();
         for (int i = 0; i < bag.size(); i++)

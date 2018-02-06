@@ -58,8 +58,8 @@ public class BaggageSQL {
     public String buildUpdateSQLStatement(Baggage baggage) {
         StringBuilder sqlStringBuilder = new StringBuilder();
         sqlStringBuilder.append("UPDATE baggage SET content = '").append(baggage.getContent()).append("'").append(",");
-        sqlStringBuilder.append("weight = ").append(baggage.getWeight()).append(",");
-        sqlStringBuilder.append("baggage = ").append(baggage.getBaggageType()).append(",");
+        sqlStringBuilder.append("weight = '").append(baggage.getWeight()).append("'").append(",");
+        sqlStringBuilder.append("baggage = '").append(baggage.getBaggageType()).append("'").append(",");
         sqlStringBuilder.append("WHERE uuid = '").append(baggage.getUUID()).append("'");
         return sqlStringBuilder.toString();
     }

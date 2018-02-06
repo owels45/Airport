@@ -9,7 +9,7 @@ public interface IDatabase{
     ArrayList<Baggage> getAllBaggages();
     void addBaggageIdentificationTag(BaggageIdentificationTag baggageIdentificationTag);
     BaggageIdentificationTag getBaggageIdentificationTag(Baggage baggage);
-    void addBoardingPass(BoardingPass boardingPass);
+    void addBoardingPass(BoardingPass boardingPass, Passenger passenger);
     BoardingPass getBoardingPass(Passenger passenger);
     void addContainer(Container container);
     Container getContainer();
