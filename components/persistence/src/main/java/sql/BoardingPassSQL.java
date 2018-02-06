@@ -38,7 +38,7 @@ public class BoardingPassSQL {
         instance.update(sqlStringBuilder.toString());
     }
 
-    public String buildInsertSQLStatement(BoardingPass boardingPass, Passenger passenger){
+    public String buildInsertSQLStatement(BoardingPass boardingPass){
         StringBuilder sqlStringBuilder = new StringBuilder();
         sqlStringBuilder.append("INSERT INTO boardingpass (uuid,carrier,ticketclass,source,destination,date,gate,boardingtime,seat,passengerid) VALUES (");
         sqlStringBuilder.append("'").append(boardingPass.getId()).append("'").append(",");
@@ -50,18 +50,18 @@ public class BoardingPassSQL {
         sqlStringBuilder.append("'").append(boardingPass.getGate()).append("'").append(",");
         sqlStringBuilder.append("'").append(boardingPass.getBoardingTime()).append("'").append(",");
         sqlStringBuilder.append("'").append(boardingPass.getSeat()).append("'").append(",");
-        sqlStringBuilder.append("'").append(passenger.getId()).append("'");
+        sqlStringBuilder.append("'").append(boardingPass.getPassenger().getId()).append("'");
         sqlStringBuilder.append(")");
         return sqlStringBuilder.toString();
     }
 
     public void insert(BoardingPass boardingPass, Passenger passenger, LogEngine logEngine) {
         System.out.println(boardingPass.hashCode());
-        logEngine.write("main.Database", "insert", "baggage = " + boardingPass.getId(), buildInsertSQLStatement(boardingPass,passenger));
-        instance.update(buildInsertSQLStatement(boardingPass,passenger));
+        logEngine.write("main.Database", "insert", "baggage = " + boardingPass.getId(), buildInsertSQLStatement(boardingPass));
+        instance.update(buildInsertSQLStatement(boardingPass));
     }
 
-    public String buildUpdateSQLStatement(BoardingPass boardingPass, Passenger passenger){
+    public String buildUpdateSQLStatement(BoardingPass boardingPass){
         StringBuilder sqlStringBuilder = new StringBuilder();
         sqlStringBuilder.append("UPDATE boardingpass SET carrier = '").append(boardingPass.getCarrier().toString()).append("'").append(",");
         sqlStringBuilder.append("ticketclass = ").append(boardingPass.getTicketClass().toString()).append(",");
@@ -71,7 +71,7 @@ public class BoardingPassSQL {
         sqlStringBuilder.append("gate = ").append(boardingPass.getGate()).append(",");
         sqlStringBuilder.append("boardingtime = ").append(boardingPass.getBoardingTime()).append(",");
         sqlStringBuilder.append("seat = ").append(boardingPass.getSeat()).append(",");
-        sqlStringBuilder.append("passengerid = ").append(passenger.getId()).append(",");
+        sqlStringBuilder.append("passengerid = ").append(boardingPass.getPassenger().getId()).append(",");
         sqlStringBuilder.append("WHERE uuid = '").append(boardingPass.getId()).append("'");
         return sqlStringBuilder.toString();
     }

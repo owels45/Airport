@@ -32,28 +32,28 @@ public class PassportSQL {
         instance.update(sqlStringBuilder.toString());
     }
 
-    public String buildInsertSQLStatement(Passport passport, Passenger passenger) {
+    public String buildInsertSQLStatement(Passport passport) {
         StringBuilder sqlStringBuilder = new StringBuilder();
         sqlStringBuilder.append("INSERT INTO baggage (id,picture,visa,passengerid) VALUES (");
         sqlStringBuilder.append("'").append(passport.getId()).append("'").append(",");
         sqlStringBuilder.append("'").append(passport.getPicture()).append("'").append(",");
         sqlStringBuilder.append("'").append(passport.getVisa()).append("'").append(",");
-        sqlStringBuilder.append("'").append(passenger.getId()).append("'").append(",");
+        sqlStringBuilder.append("'").append(passport.getPassenger().getId()).append("'").append(",");
         sqlStringBuilder.append(")");
         return sqlStringBuilder.toString();
     }
 
     public void insert(Passport passport,Passenger passenger, LogEngine logEngine) {
         System.out.println(passport.hashCode());
-        logEngine.write("main.Database", "insert", "baggage = " + passport.getId(), buildInsertSQLStatement(passport,passenger));
-        instance.update(buildInsertSQLStatement(passport,passenger));
+        logEngine.write("main.Database", "insert", "baggage = " + passport.getId(), buildInsertSQLStatement(passport));
+        instance.update(buildInsertSQLStatement(passport));
     }
 
-    public String buildUpdateSQLStatement(Passport passport, Passenger passenger) {
+    public String buildUpdateSQLStatement(Passport passport) {
         StringBuilder sqlStringBuilder = new StringBuilder();
         sqlStringBuilder.append("UPDATE passport SET picture = '").append(passport.getPicture()).append("'").append(",");
         sqlStringBuilder.append("visa = '").append(passport.getVisa()).append("'").append(",");
-        sqlStringBuilder.append("passengerid = '").append(passenger.getId()).append("'").append(",");
+        sqlStringBuilder.append("passengerid = '").append(passport.getPassenger().getId()).append("'").append(",");
         sqlStringBuilder.append("WHERE id = '").append(passport.getId()).append("'");
         return sqlStringBuilder.toString();
     }

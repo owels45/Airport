@@ -34,12 +34,12 @@ public class InvoiceSQL {
         instance.update(sqlStringBuilder.toString());
     }
 
-    public String buildInsertSQLStatement(Invoice invoice, Passenger passenger) {
+    public String buildInsertSQLStatement(Invoice invoice) {
         StringBuilder sqlStringBuilder = new StringBuilder();
         sqlStringBuilder.append("INSERT INTO baggage (id,date,passengerid,numberofgoods,amount) VALUES (");
         sqlStringBuilder.append("'").append(invoice.getId()).append("'").append(",");
         sqlStringBuilder.append("'").append(invoice.getDate()).append("'").append(",");
-        sqlStringBuilder.append("'").append(passenger.getId()).append("'").append(",");
+        sqlStringBuilder.append("'").append(invoice.getPassenger().getId()).append("'").append(",");
         sqlStringBuilder.append("'").append(invoice.getNumberOfGoods()).append("'").append(",");
         sqlStringBuilder.append("'").append(invoice.getAmount()).append("'");
         sqlStringBuilder.append(")");
@@ -48,14 +48,14 @@ public class InvoiceSQL {
 
     public void insert(Invoice invoice,Passenger passenger, LogEngine logEngine) {
         System.out.println(invoice.hashCode());
-        logEngine.write("main.Database", "insert", "baggage = " + invoice.getId(), buildInsertSQLStatement(invoice,passenger));
-        instance.update(buildInsertSQLStatement(invoice,passenger));
+        logEngine.write("main.Database", "insert", "baggage = " + invoice.getId(), buildInsertSQLStatement(invoice));
+        instance.update(buildInsertSQLStatement(invoice));
     }
 
-    public String buildUpdateSQLStatement(Invoice invoice, Passenger passenger) {
+    public String buildUpdateSQLStatement(Invoice invoice) {
         StringBuilder sqlStringBuilder = new StringBuilder();
         sqlStringBuilder.append("UPDATE invoice SET date = '").append(invoice.getDate()).append("'").append(",");
-        sqlStringBuilder.append("passengerid = '").append(passenger.getId()).append("'").append(",");
+        sqlStringBuilder.append("passengerid = '").append(invoice.getPassenger().getId()).append("'").append(",");
         sqlStringBuilder.append("numberofgoods = '").append(invoice.getNumberOfGoods()).append("'").append(",");
         sqlStringBuilder.append("amount = '").append(invoice.getAmount()).append("'").append(",");
         sqlStringBuilder.append("WHERE id = '").append(invoice.getId()).append("'");

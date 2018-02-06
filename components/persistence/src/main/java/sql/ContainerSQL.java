@@ -37,13 +37,13 @@ public class ContainerSQL {
     }
 
 
-    public String buildInsertSQLStatement(Container container, ContainerProfile containerProfile) {
+    public String buildInsertSQLStatement(Container container) {
         StringBuilder sqlStringBuilder = new StringBuilder();
         sqlStringBuilder.append("INSERT INTO container (id,type,category,profile,barCode,qrCode,maxLugage) VALUES (");
         sqlStringBuilder.append("'").append(container.getId()).append("'").append(",");
         sqlStringBuilder.append("'").append(container.getType().toString()).append("'").append(",");
         sqlStringBuilder.append("'").append(container.getCategory().toString()).append("'").append(",");
-        sqlStringBuilder.append("'").append(containerProfile.getId()).append("'").append(",");
+        sqlStringBuilder.append("'").append(container.getProfile().getId()).append("'").append(",");
         sqlStringBuilder.append("'").append(container.getBarCodeIDCategory()).append("'").append(",");
         sqlStringBuilder.append("'").append(container.getQrCodeIDECategory()).append("'").append(",");
         sqlStringBuilder.append(container.getMaximumNumberOfBaggages());
@@ -52,8 +52,8 @@ public class ContainerSQL {
     }
 
     public void insert(Container container, ContainerProfile containerProfile, LogEngine logEngine) {
-        logEngine.write("main.Database", "insert", "container = " + container.getId(), buildInsertSQLStatement(container ,containerProfile));
-        instance.update(buildInsertSQLStatement(container,containerProfile));
+        logEngine.write("main.Database", "insert", "container = " + container.getId(), buildInsertSQLStatement(container));
+        instance.update(buildInsertSQLStatement(container));
     }
 
     public String buildUpdateSQLStatement(Container container) {
