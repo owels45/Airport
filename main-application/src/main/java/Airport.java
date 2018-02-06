@@ -9,7 +9,9 @@ import event.service_vehicle_oil.ServiceVehicleChangeFireExtinguisher;
 import event.service_vehicle_oil.ServiceVehicleEngineOilTankIncreaseLevel;
 import event.service_vehicle_oil.ServiceVehicleRefillDeIcingSystem;
 import event.service_vehicle_waster_water.ServiceVehiclePumpOut;
+import factory.AirCargoPalletLifterFactory;
 import factory.ServiceVehicleOilFactory;
+import factory.SpecialGoodRoboterFactory;
 import logging.LogEngine;
 
 import java.lang.reflect.Method;
@@ -30,6 +32,9 @@ public class Airport extends Subscriber {
     private Object skyTankingVehiclePort;
     private Object boardingControlPort;
     private Object pushBackVehiclePort;
+    private Object specialGoodRoboterPort;
+    private Object baggageVehiclePort;
+    private Object containerLifterPort;
 
 
     // TODO: 01.02.2018  HIER ALLE FACTORYS EINFÜGEN VON JEDEM TEAM SELBST!!!
@@ -43,10 +48,13 @@ public class Airport extends Subscriber {
 //        serviceVehicleNitrogenOxygenPort = .build();
 //        serviceVehicleFreshWaterPort = .build();
 //        serviceVehicleWasteWaterTankPort = .build();
-//        airCargoPalletLifterPort = .build();
+        airCargoPalletLifterPort = AirCargoPalletLifterFactory.build();
 //        skyTankingVehiclePort = SkyTankingVehicleFactory.build();
 //        boardingControlPort = .build();
 //        pushBackVehiclePort = .build();
+        specialGoodRoboterPort = SpecialGoodRoboterFactory.build();
+        //baggageVehiclePort = BaggageVehicleFactory.build();
+        //containerLifterPort = ContainerLifterFactory.build();
     }
 
     // TODO: 01.02.2018  HIER DIE GANZEN SUBSCRIBE METHODEN VON JEDEM TEAM SELBST!!!

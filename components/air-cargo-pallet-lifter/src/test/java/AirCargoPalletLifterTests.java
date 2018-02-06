@@ -31,7 +31,7 @@ public class AirCargoPalletLifterTests {
     public void moveTest(){
 
     AirCargoPalletLifter lifter = new AirCargoPalletLifter();
-    Stowage stowage = new Stowage();
+    Stowage stowage = new Stowage(null);
 
     ArrayList<AirCargoPallet> expectedValue3 = new ArrayList<AirCargoPallet>();
     expectedValue3.add(new AirCargoPallet("1","1"));
