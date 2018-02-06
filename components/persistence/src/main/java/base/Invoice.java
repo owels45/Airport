@@ -2,16 +2,26 @@ package base;
 
 public class Invoice {
 
+    private String id;
     private String date;
     private Passenger passenger;
     private int numberOfGoods;
     private int amount;
 
-    public Invoice(String date, Passenger passenger, int numberOfGoods, int amount) {
+    public Invoice(String id, String date, Passenger passenger, int numberOfGoods, int amount) {
+        this.id = id;
         this.date = date;
         this.passenger = passenger;
         this.numberOfGoods = numberOfGoods;
         this.amount = amount;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getDate() {
