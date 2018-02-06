@@ -49,6 +49,7 @@ package base;public class Baggage {
     public String toString() {
         return "Baggage{" +
                 "UUID='" + UUID + '\'' +
+                ", content='" + content + '\'' +
                 ", weight=" + weight +
                 ", baggageType=" + baggageType +
                 '}';

@@ -14,13 +14,13 @@ public class InvoiceSQL {
         this.instance = instance;
     }
 
-    public void dropTableBaggage(LogEngine logEngine) {
+    public void dropTableInvoice(LogEngine logEngine) {
         String sqlStatement = "DROP TABLE invoice IF EXISTS";
         logEngine.write("main.Database", "dropTableInvoice", "-", sqlStatement);
         instance.update(sqlStatement);
     }
 
-    public void createTableBaggage(LogEngine logEngine) {
+    public void createTableInvoice(LogEngine logEngine) {
         StringBuilder sqlStringBuilder = new StringBuilder();
         sqlStringBuilder.append("CREATE TABLE invoice").append(" ( ");
         sqlStringBuilder.append("id VARCHAR(36) NOT NULL").append(",");

@@ -2,6 +2,7 @@ package base;import java.util.ArrayList;
 
 public class PassengerList {
 
+    private String id;
     private ArrayList<Passenger> passengerList;
 
     public PassengerList(ArrayList<Passenger> passengerList) {
@@ -12,14 +13,16 @@ public class PassengerList {
         return passengerList;
     }
 
-    public void setPassengerList(ArrayList<Passenger> passengerList) {
+    public void setPassengerList(String id, ArrayList<Passenger> passengerList) {
+        this.id = id;
         this.passengerList = passengerList;
     }
 
     @Override
     public String toString() {
         return "PassengerList{" +
-                "passengerList=" + passengerList +
+                "id='" + id + '\'' +
+                ", passengerList=" + passengerList +
                 '}';
     }
 }

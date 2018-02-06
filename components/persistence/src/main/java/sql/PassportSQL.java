@@ -13,13 +13,13 @@ public class PassportSQL {
         this.instance = instance;
     }
 
-    public void dropTableBaggage(LogEngine logEngine) {
+    public void dropTablePassport(LogEngine logEngine) {
         String sqlStatement = "DROP TABLE passport IF EXISTS";
         logEngine.write("main.Database", "dropTablePassport", "-", sqlStatement);
         instance.update(sqlStatement);
     }
 
-    public void createTableBaggage(LogEngine logEngine) {
+    public void createTablePassport(LogEngine logEngine) {
         StringBuilder sqlStringBuilder = new StringBuilder();
         sqlStringBuilder.append("CREATE TABLE passport").append(" ( ");
         sqlStringBuilder.append("id VARCHAR(36) NOT NULL").append(",");

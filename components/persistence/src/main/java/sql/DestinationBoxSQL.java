@@ -25,7 +25,7 @@ public class DestinationBoxSQL {
         StringBuilder sqlStringBuilder = new StringBuilder();
         sqlStringBuilder.append("CREATE TABLE destinationbox").append(" ( ");
         sqlStringBuilder.append("barcode VARCHAR(36) NOT NULL").append(",");
-        sqlStringBuilder.append("baggage VARCHAR(36) NOT NULL").append(",");
+        sqlStringBuilder.append("baggage TEXT NOT NULL").append(",");
         sqlStringBuilder.append("PRIMARY KEY (barcode)");
         sqlStringBuilder.append(")");
         logEngine.write("main.Database", "createTableDestinationBox", "-", sqlStringBuilder.toString());
@@ -63,6 +63,7 @@ public class DestinationBoxSQL {
             if (processedFirst)
                 listbuilder.append(",");
             listbuilder.append(record);
+            processedFirst = true;
         }
         return listbuilder.toString();
     }
