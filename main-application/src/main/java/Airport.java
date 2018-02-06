@@ -9,9 +9,7 @@ import event.service_vehicle_oil.ServiceVehicleChangeFireExtinguisher;
 import event.service_vehicle_oil.ServiceVehicleEngineOilTankIncreaseLevel;
 import event.service_vehicle_oil.ServiceVehicleRefillDeIcingSystem;
 import event.service_vehicle_waster_water.ServiceVehiclePumpOut;
-import factory.AirCargoPalletLifterFactory;
-import factory.ServiceVehicleOilFactory;
-import factory.SpecialGoodRoboterFactory;
+import factory.*;
 import logging.LogEngine;
 
 import java.lang.reflect.Method;
@@ -53,8 +51,8 @@ public class Airport extends Subscriber {
 //        boardingControlPort = .build();
 //        pushBackVehiclePort = .build();
         specialGoodRoboterPort = SpecialGoodRoboterFactory.build();
-        //baggageVehiclePort = BaggageVehicleFactory.build();
-        //containerLifterPort = ContainerLifterFactory.build();
+        baggageVehiclePort = BaggageVehicleFactory.build();
+        containerLifterPort = ContainerLifterFactory.build();
     }
 
     // TODO: 01.02.2018  HIER DIE GANZEN SUBSCRIBE METHODEN VON JEDEM TEAM SELBST!!!
