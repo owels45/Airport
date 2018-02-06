@@ -5,12 +5,12 @@ public class BoardingControl {
     private static BoardingControl instance = new BoardingControl();
     public Port port;
 
-    private CheckInDesk checkInDesk;
+    private CheckInDesk.Port checkInDeskPort;
     private PassengerList boardedPassengerList;
 
     private BoardingControl() {
         port = new Port();
-        checkInDesk = new CheckInDesk();
+        checkInDeskPort = CheckInDesk.getInstance().port;
         // boardedPassengerList = dbManager.getPassengerList();
     }
 
