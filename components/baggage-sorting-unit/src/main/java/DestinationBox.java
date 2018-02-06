@@ -5,6 +5,10 @@ public class DestinationBox {
     private String barCode;
     private ArrayList<Baggage> baggageList;
 
+    public DestinationBox() {
+        this.baggageList = new ArrayList<Baggage>();
+    }
+
     public String getBarCode() {
         return barCode;
     }
