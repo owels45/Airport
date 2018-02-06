@@ -16,7 +16,7 @@ public class BoardingControlFactory {
 
         try {
             // Convert the jar path to a URL
-            String jarPath = Configuration.instance.commonPathToJavaArchive + "/boarding-control/jar/boarding-control.jar";
+            String jarPath = Configuration.instance.commonPathToJavaArchive + "/boarding-control.jar";
             URL[] urls = { new File(jarPath).toURI().toURL() };
 
             // Load boarding control class with the designated URLClassLoader
