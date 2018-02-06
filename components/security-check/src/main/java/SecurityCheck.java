@@ -229,7 +229,7 @@ public class SecurityCheck {
             Method method = scanner.getClass().getMethod("scan", Baggage.class, String.class);
             result = (Boolean) method.invoke(scanner, baggage, pattern);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
         }
         return result;
     }
@@ -246,7 +246,7 @@ public class SecurityCheck {
             Method method = scanner.getClass().getMethod("scan", Passenger.class, String.class);
             result = (Boolean) method.invoke(scanner, passenger, pattern);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
         }
         return result;
     }
