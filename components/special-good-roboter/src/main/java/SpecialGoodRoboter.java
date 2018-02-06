@@ -1,6 +1,6 @@
 public class SpecialGoodRoboter {
     private String id;
-    private boolean isDown = true;
+    private boolean isDown;
 
     private static SpecialGoodRoboter instance = new SpecialGoodRoboter("SGR01");
 
@@ -8,6 +8,7 @@ public class SpecialGoodRoboter {
 
     public SpecialGoodRoboter(String id) {
         this.id = id;
+        isDown = true;
         port = new Port();
     }
 

@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class AirCargoPalletLifter {
 
-    private boolean isDown = true;
+    private boolean isDown;
 
     private static AirCargoPalletLifter instance = new AirCargoPalletLifter();
 
@@ -11,6 +11,7 @@ public class AirCargoPalletLifter {
 
     public AirCargoPalletLifter() {
         port = new Port();
+        isDown = true;
     }
 
     public static AirCargoPalletLifter getInstance() {
