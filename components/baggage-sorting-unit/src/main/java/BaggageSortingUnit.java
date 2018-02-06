@@ -1,5 +1,3 @@
-import placeholder.*;
-
 import java.util.ArrayList;
 
 /**
@@ -64,6 +62,7 @@ public class BaggageSortingUnit {
         this.destination = destination;
 
         this.destinationBox = new DestinationBox();
+        this.destinationBox.setBaggegeList(new ArrayList<Baggage>());
         this.emptyContainerList = new ArrayList<Container>();
         this.filledContainerList = new ArrayList<Container>();
         this.baggageVehicleList = baggageVehicles;

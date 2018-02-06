@@ -1,5 +1,3 @@
-package placeholder;
-
 public class Baggage {
 
     private String id;

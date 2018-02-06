@@ -1,6 +1,5 @@
 import org.junit.Assert;
 import org.junit.Test;
-import placeholder.*;
 
 import java.util.ArrayList;
 
@@ -12,7 +11,7 @@ public class BaggageSortingUnitTest {
         BaggageSortingUnit unit = BaggageSortingUnit.getInstance();
 
         Baggage baggage = new Baggage("1", 1.0, BaggageType.Normal);
-        LuggageTub luggageTub = new LuggageTub(null, placeholder.Destination.CPT);
+        LuggageTub luggageTub = new LuggageTub(null, Destination.CPT);
         unit.drop(luggageTub, baggage);
 
         Assert.assertEquals("LuggageTub should contain baggage", baggage, luggageTub.getBaggage());
@@ -22,15 +21,16 @@ public class BaggageSortingUnitTest {
     public void BaggageSortingUnitTest_throwOff_BaggageIsInBox() {
         BaggageSortingUnit unit = BaggageSortingUnit.getInstance();
         DestinationBox box = new DestinationBox();
+        box.setBaggegeList(new ArrayList<Baggage>());
 
         Baggage firstBaggage = new Baggage("1", 1.0, BaggageType.Normal);
         Baggage secondBaggage = new Baggage("2", 2.0, BaggageType.Normal);
 
-        LuggageTub luggageTub = new LuggageTub(null, placeholder.Destination.CPT);
+        LuggageTub luggageTub = new LuggageTub(null, Destination.CPT);
         luggageTub.setBaggage(firstBaggage);
         unit.throwOff(luggageTub, box);
 
-        LuggageTub secondTub = new LuggageTub(null, placeholder.Destination.CPT);
+        LuggageTub secondTub = new LuggageTub(null, Destination.CPT);
         secondTub.setBaggage(secondBaggage);
         unit.throwOff(secondTub, box);
 
@@ -129,7 +129,7 @@ public class BaggageSortingUnitTest {
     private ArrayList<BaggageIdentificationTag> createBaggageTagsForBaggage(ArrayList<Baggage> baggageList, TicketClass ticketClass) {
         ArrayList<BaggageIdentificationTag> tags = new ArrayList<BaggageIdentificationTag>();
         for (Baggage bagggage : baggageList ) {
-            tags.add(new BaggageIdentificationTag(bagggage.getId(), new BoardingPass(bagggage.getId(),ticketClass)));
+            tags.add(new TestBaggageIdentificationTag(bagggage.getId(), new TestBoardingPass(bagggage.getId(),ticketClass)));
         }
         return tags;
     }

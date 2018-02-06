@@ -1,13 +1,7 @@
-package placeholder;
-
 import java.util.ArrayList;
 
 public class DestinationBox {
 
-    public DestinationBox() {
-        this.baggageList = new ArrayList<Baggage>();
-        this.barCode = "";
-    }
     private String barCode;
     private ArrayList<Baggage> baggageList;
 

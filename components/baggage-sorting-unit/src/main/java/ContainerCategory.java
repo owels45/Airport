@@ -1,5 +1,3 @@
-package placeholder;
-
 public enum ContainerCategory {
     First,
     Business,

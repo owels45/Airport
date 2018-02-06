@@ -1,7 +1,3 @@
-package placeholder;
-
-
-
 public class LuggageTub {
 
     private Baggage baggage;
