@@ -24,6 +24,11 @@
             <version>5.0.0</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>de.dhbw.mosbach.ai.se</groupId>
+            <artifactId>base</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>
