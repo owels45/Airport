@@ -1,6 +1,3 @@
-import base.CottonPad;
-import base.Employee;
-
 import java.util.ArrayList;
 
 public class SecurityCheckReceipt {
