@@ -9,6 +9,7 @@ import event.service_vehicle_oil.ServiceVehicleChangeFireExtinguisher;
 import event.service_vehicle_oil.ServiceVehicleEngineOilTankIncreaseLevel;
 import event.service_vehicle_oil.ServiceVehicleRefillDeIcingSystem;
 import event.service_vehicle_waster_water.ServiceVehiclePumpOut;
+import factory.BoardingControlFactory;
 import factory.ServiceVehicleOilFactory;
 import logging.LogEngine;
 
@@ -45,7 +46,7 @@ public class Airport extends Subscriber {
 //        serviceVehicleWasteWaterTankPort = .build();
 //        airCargoPalletLifterPort = .build();
 //        skyTankingVehiclePort = SkyTankingVehicleFactory.build();
-//        boardingControlPort = .build();
+        boardingControlPort = BoardingControlFactory.build();
 //        pushBackVehiclePort = .build();
     }
 
@@ -64,7 +65,7 @@ public class Airport extends Subscriber {
 
                 LogEngine.instance.write("+");
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -155,7 +156,7 @@ public class Airport extends Subscriber {
 
                 LogEngine.instance.write("+");
             }
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -173,7 +174,7 @@ public class Airport extends Subscriber {
 
                 LogEngine.instance.write("+");
             }
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -194,6 +195,11 @@ public class Airport extends Subscriber {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Subscribe
+    public void receive() {
+
     }
 
 }
