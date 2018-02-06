@@ -9,6 +9,7 @@ import event.service_vehicle_oil.ServiceVehicleChangeFireExtinguisher;
 import event.service_vehicle_oil.ServiceVehicleEngineOilTankIncreaseLevel;
 import event.service_vehicle_oil.ServiceVehicleRefillDeIcingSystem;
 import event.service_vehicle_waster_water.ServiceVehiclePumpOut;
+import factory.GroundOperationsCenterFactory;
 import factory.ServiceVehicleOilFactory;
 import logging.LogEngine;
 
@@ -30,6 +31,7 @@ public class Airport extends Subscriber {
     private Object skyTankingVehiclePort;
     private Object boardingControlPort;
     private Object pushBackVehiclePort;
+    private Object groundOperationCenter;
 
 
     // TODO: 01.02.2018  HIER ALLE FACTORYS EINFÜGEN VON JEDEM TEAM SELBST!!!
@@ -47,6 +49,7 @@ public class Airport extends Subscriber {
 //        skyTankingVehiclePort = SkyTankingVehicleFactory.build();
 //        boardingControlPort = .build();
 //        pushBackVehiclePort = .build();
+        groundOperationCenter = GroundOperationsCenterFactory.build();
     }
 
     // TODO: 01.02.2018  HIER DIE GANZEN SUBSCRIBE METHODEN VON JEDEM TEAM SELBST!!!
@@ -196,4 +199,170 @@ public class Airport extends Subscriber {
         }
     }
 
+    /*
+    @Subscribe
+    public void receive(CheckInDeskNotifyGroundOperations event) { //1
+        try {
+            Method receive = groundOperationCenter.getClass().getDeclaredMethod("receive", Object.class);
+            receive.invoke(groundOperationCenter, event.getCheckInReceipt());
+            LogEngine.instance.write(event.getPhase() + " : received");
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Subscribe
+    public void receive(BulkyBaggageDeskNotifyGroundOperations event) { //2
+        try {
+            Method receive = groundOperationCenter.getClass().getDeclaredMethod("receive", Object.class);
+            receive.invoke(groundOperationCenter, event.getBulkyBaggageDeskReceipt());
+            LogEngine.instance.write(event.getPhase() + " : received");
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Subscribe
+    public void receive(BaggageSortingUnitNotifyGroundOperations event) { //3
+        try {
+            Method receive = groundOperationCenter.getClass().getDeclaredMethod("receive", Object.class);
+            receive.invoke(groundOperationCenter, event.getBaggageSortingUnitReceipt());
+            LogEngine.instance.write(event.getPhase() + " : received");
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Subscribe
+    public void receive(SecurityCheckNotifyGroundOperations event) { //4
+        try {
+            Method receive = groundOperationCenter.getClass().getDeclaredMethod("receive", Object.class);
+            receive.invoke(groundOperationCenter, event.getSecurityCheckReceipt());
+            LogEngine.instance.write(event.getPhase() + " : received");
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Subscribe
+    public void receive(FederalPoliceNotifyGroundOperations event) { //5
+        try {
+            Method receive = groundOperationCenter.getClass().getDeclaredMethod("receive", Object.class);
+            receive.invoke(groundOperationCenter, event.getFederalPoliceReceipt());
+            LogEngine.instance.write(event.getPhase() + " : received");
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Subscribe
+    public void receive(CustomsNotifyGroundOperations event) { //6
+        try {
+            Method receive = groundOperationCenter.getClass().getDeclaredMethod("receive", Object.class);
+            receive.invoke(groundOperationCenter, event.getCustomsReceipt());
+            LogEngine.instance.write(event.getPhase() + " : received");
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Subscribe
+    public void receive(ServiceVehicleOilNotifyGroundOperations event) { //7
+        try {
+            Method receive = groundOperationCenter.getClass().getDeclaredMethod("receive", Object.class);
+            receive.invoke(groundOperationCenter, event.getServiceVehicleOilReceipt());
+            LogEngine.instance.write(event.getPhase() + " : received");
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Subscribe
+    public void receive(ServiceVehicleNitrogenOxygenNotifyGroundOperations event) { //8
+        try {
+            Method receive = groundOperationCenter.getClass().getDeclaredMethod("receive", Object.class);
+            receive.invoke(groundOperationCenter, event.getServiceVehicleNitrogenOxygenReceipt());
+            LogEngine.instance.write(event.getPhase() + " : received");
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Subscribe
+    public void receive(ServiceVehicleFreshWaterNotifyGroundOperations event) { //9
+        try {
+            Method receive = groundOperationCenter.getClass().getDeclaredMethod("receive", Object.class);
+            receive.invoke(groundOperationCenter, event.getServiceVehicleFreshWaterReceipt());
+            LogEngine.instance.write(event.getPhase() + " : received");
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Subscribe
+    public void receive(ServiceVehicleWasteWaterTankNotifyGroundOperations event) { //10
+        try {
+            Method receive = groundOperationCenter.getClass().getDeclaredMethod("receive", Object.class);
+            receive.invoke(groundOperationCenter, event.getServiceVehicleWasteWaterTankReceipt());
+            LogEngine.instance.write(event.getPhase() + " : received");
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Subscribe
+    public void receive(AirCargoPalletLifterNotifyGroundOperations event) { //11
+        try {
+            Method receive = groundOperationCenter.getClass().getDeclaredMethod("receive", Object.class);
+            receive.invoke(groundOperationCenter, event.getAirCargoPalletLifterReceipt());
+            LogEngine.instance.write(event.getPhase() + " : received");
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Subscribe
+    public void receive(ContainerLifterNotifyGroundOperations event) { //12
+        try {
+            Method receive = groundOperationCenter.getClass().getDeclaredMethod("receive", Object.class);
+            receive.invoke(groundOperationCenter, event.getContainerLifterLifterReceipt());
+            LogEngine.instance.write(event.getPhase() + " : received");
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Subscribe
+    public void receive(FuelNotifyGroundOperations event) { //13
+        try {
+            Method receive = groundOperationCenter.getClass().getDeclaredMethod("receive", Object.class);
+            receive.invoke(groundOperationCenter, event.getFuelReceipt());
+            LogEngine.instance.write(event.getPhase() + " : received");
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Subscribe
+    public void receive(BoardingControlNotifyGroundOperations event) { //14
+        try {
+            Method receive = groundOperationCenter.getClass().getDeclaredMethod("receive", Object.class);
+            receive.invoke(groundOperationCenter, event.getBoardingControlReceipt());
+            LogEngine.instance.write(event.getPhase() + " : received");
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Subscribe
+    public void receive(PushBackVehicleNotifyGroundOperations event) { //15
+        try {
+            Method receive = groundOperationCenter.getClass().getDeclaredMethod("receive", Object.class);
+            receive.invoke(groundOperationCenter, event.getPushBackVehicleReceipt());
+            LogEngine.instance.write(event.getPhase() + " : received");
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    */
 }
