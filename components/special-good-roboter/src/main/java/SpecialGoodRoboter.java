@@ -2,7 +2,7 @@ public class SpecialGoodRoboter {
     private String id;
     private boolean isDown = true;
 
-    //private static SpecialGoodRoboter instance = new SpecialGoodRoboter(testRobot);
+    private static SpecialGoodRoboter instance = new SpecialGoodRoboter("SGR01");
 
     public Port port;
 
@@ -24,7 +24,7 @@ public class SpecialGoodRoboter {
 
 
 
-    //public static SpecialGoodRoboter getinstance() {return instance;}
+    public static SpecialGoodRoboter getinstance() {return instance;}
 
     public class Port implements ISpecialGoodRoboter{
 
