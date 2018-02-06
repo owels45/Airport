@@ -9,6 +9,9 @@ import event.service_vehicle_oil.ServiceVehicleChangeFireExtinguisher;
 import event.service_vehicle_oil.ServiceVehicleEngineOilTankIncreaseLevel;
 import event.service_vehicle_oil.ServiceVehicleRefillDeIcingSystem;
 import event.service_vehicle_waster_water.ServiceVehiclePumpOut;
+import event.sky_tanking_vehicle.SkyTankingVehicleConnect;
+import event.sky_tanking_vehicle.SkyTankingVehiclePrint;
+import event.sky_tanking_vehicle.SkyTankingVehiclePump;
 import logging.LogEngine;
 
 public class Application {
@@ -59,8 +62,11 @@ public class Application {
         eventBus.post(new ServiceVehiclePumpOut(phase, airplane));
     }
     //    ...?
-    public void tanking() {
-
+    public void tanking(Airplane airplane) {
+        String phase = "SkyTanking Vehicle";
+        eventBus.post(new SkyTankingVehicleConnect(phase, airplane));
+        eventBus.post(new SkyTankingVehiclePump(phase, airplane));
+        eventBus.post(new SkyTankingVehiclePrint(phase, airplane));
     }
 // TODO: 01.02.2018  ...alle service-Vehicle-Events ergänzen
 

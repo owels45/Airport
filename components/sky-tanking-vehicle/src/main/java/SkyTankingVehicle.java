@@ -1,4 +1,5 @@
 import dummy.FuelTank;
+import java.lang.reflect.Method;
 //Dummy imports remove for complete build
 
 public class SkyTankingVehicle {
@@ -57,7 +58,13 @@ public class SkyTankingVehicle {
     }
 
     public void innerMethodNotifyGroundOperations(FuelReceipt fuelReceipt) {
-        //GroundOperationsCenter groundOperationsCenter = new GroundOperationsCenter();
-        //groundOperationsCenter.recieve(fuelReceipt);
+        Object componentPort;
+        componentPort = ComponentLoader.loadComponent("ground-operations-center","GroundOperationsCenter");
+        try {
+            Method onMethod = componentPort.getClass().getDeclaredMethod("receive",SkyTankingVehicle.class);
+            onMethod.invoke(componentPort,fuelReceipt);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
