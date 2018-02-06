@@ -36,7 +36,7 @@ public class MobileHandHeldScanner {
         return null;
     }
 
-    public void orderRoboterToLoad(ArrayList<BaggageIdentificationTag> baggageIdentificationTagList, Container container, BaggageVehicle vehicle) {
+    public void orderRoboterToLoad(ArrayList<BaggageIdentificationTag> baggageIdentificationTagList, Container container, Object vehicle) {
         container.getProfile().setNumberOfBaggages(baggageIdentificationTagList.size());
         ArrayList<Baggage> tagBaggages = this.getBaggageForTags(baggageIdentificationTagList);
         this.roboter.load(tagBaggages, container);

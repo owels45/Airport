@@ -64,7 +64,7 @@ public class BaggageSortingUnitTest {
         combinedBaggage.addAll(businessClassBaggages);
         combinedBaggage.addAll(premiumEconomyClassBaggages);
 
-        ArrayList<BaggageVehicle> vehicles = this.generateBaggageVehicles(6);
+        ArrayList<Object> vehicles = this.generateBaggageVehicles(6);
 
         ArrayList<BaggageIdentificationTag> combinedTags = new ArrayList<BaggageIdentificationTag>();
         combinedTags.addAll(firstClassTags);
@@ -119,9 +119,9 @@ public class BaggageSortingUnitTest {
         return counter;
     }
 
-    private ArrayList<BaggageVehicle> generateBaggageVehicles(int size) {
-        ArrayList<BaggageVehicle> vehicles = new ArrayList<BaggageVehicle>();
-        for (int i = 0; i < size; i++) vehicles.add(new BaggageVehicle());
+    private ArrayList<Object> generateBaggageVehicles(int size) {
+        ArrayList<Object> vehicles = new ArrayList<Object>();
+        for (int i = 0; i < size; i++) vehicles.add(new MockBaggageVehicle());
 
          return vehicles;
     }

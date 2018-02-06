@@ -17,7 +17,7 @@ public class BaggageSortingUnit {
     private ArrayList<Container> emptyContainerList;
     private ArrayList<Container> filledContainerList;
     private Roboter roboter;
-    private ArrayList<BaggageVehicle> baggageVehicleList;
+    private ArrayList<Object> baggageVehicleList;
     private ArrayList<BaggageIdentificationTag> baggageIdentificationTags;
     private ArrayList<Baggage> baggageList;
     private Destination destination;
@@ -55,7 +55,7 @@ public class BaggageSortingUnit {
      * @param baggageVehicles The baggage vehicles to load the containers.
      * @param baggageIdentificationTags The tags for the baggage.
      */
-    private void initialize(String position, Destination destination, ArrayList<Baggage> baggage, ArrayList<BaggageVehicle> baggageVehicles, ArrayList<BaggageIdentificationTag> baggageIdentificationTags) {
+    private void initialize(String position, Destination destination, ArrayList<Baggage> baggage, ArrayList<Object> baggageVehicles, ArrayList<BaggageIdentificationTag> baggageIdentificationTags) {
 
         this.position = position;
         this.luggageTubList = new ArrayList<LuggageTub>();
@@ -167,7 +167,7 @@ public class BaggageSortingUnit {
         return receipt;
     }
 
-    private BaggageVehicle getEmptyBaggageVehicle() throws Exception {
+    private Object getEmptyBaggageVehicle() throws Exception {
         if(this.baggageVehicleList.size() == 0) {
             throw new Exception("Not enough Baggage Vehicles!");
         }
@@ -245,7 +245,7 @@ public class BaggageSortingUnit {
      * Port for the baggage sorting unit.
      */
     public class Port implements IBaggageSortingUnit {
-        public BaggageSortingUnitReceipt execute(String position, Destination destination, ArrayList<Baggage> baggage, ArrayList<BaggageVehicle> baggageVehicles, ArrayList<BaggageIdentificationTag> baggageIdentificationTags) throws Exception {
+        public BaggageSortingUnitReceipt execute(String position, Destination destination, ArrayList<Baggage> baggage, ArrayList<Object> baggageVehicles, ArrayList<BaggageIdentificationTag> baggageIdentificationTags) throws Exception {
             initialize(position, destination, baggage, baggageVehicles, baggageIdentificationTags);
             return innerExecute();
         }
