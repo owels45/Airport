@@ -1,6 +1,3 @@
-import base.Baggage;
-import base.Passenger;
-
 /**
  * Interface for the Scanner
  */

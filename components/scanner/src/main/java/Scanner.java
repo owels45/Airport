@@ -1,6 +1,3 @@
-import base.Baggage;
-import base.Passenger;
-
 public class Scanner {
     /**
      * The hash instance.
