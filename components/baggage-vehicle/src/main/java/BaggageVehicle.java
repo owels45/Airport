@@ -17,6 +17,10 @@ public class BaggageVehicle {
         containers.add(container);
     }
 
+    public void innerMove(String position){
+
+    }
+
     public BaggageVehicle() {port =new Port();}
 
     public static BaggageVehicle getInstance() {return instance;}
@@ -33,6 +37,8 @@ public class BaggageVehicle {
         public void connect(Object containerLifterPort){
             innerConnect(containerLifterPort);
         }
+
+        public void move(String position){innerMove(position);}
 
     }
 }
