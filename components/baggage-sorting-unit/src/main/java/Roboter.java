@@ -4,9 +4,8 @@ public class Roboter {
 
     public Roboter(){}
 
-    public void load(ArrayList<BaggageIdentificationTag> baggageIdentificationTagList, Container container){
-        // TODO: Wie soll das in den Container? wegschmeißen?
-
+    public void load(ArrayList<Baggage> baggages, Container container){
+        container.store(baggages);
     }
 
     public void load(Container container, BaggageVehicle baggageVehicle) {
@@ -14,6 +13,6 @@ public class Roboter {
     }
 
     public void orderBaggageVehicleMove( BaggageVehicle baggageVehicle, String position) {
-        // TODO: Wie bewegen? Per Event?
+        baggageVehicle.move(position);
     }
 }
