@@ -1,11 +1,11 @@
 import java.util.ArrayList;
 
 public class BoardingControlReceipt {
-    private CheckInDesk checkInDesk;
+    private CheckInDesk.Port checkInDeskPort;
     private PassengerList boardedPassengerList;
 
     public BoardingControlReceipt() {
-        checkInDesk = new CheckInDesk();
+        checkInDeskPort = CheckInDesk.getInstance().port;
         boardedPassengerList = new PassengerList(new ArrayList<Passenger>());
     }
 
@@ -22,11 +22,11 @@ public class BoardingControlReceipt {
         this.boardedPassengerList = boardedPassengerList;
     }
 
-    public CheckInDesk getCheckInDesk() {
-        return checkInDesk;
+    public CheckInDesk.Port getCheckInDeskPort() {
+        return checkInDeskPort;
     }
 
-    public void setCheckInDesk(CheckInDesk checkInDesk) {
-        this.checkInDesk = checkInDesk;
+    public void setCheckInDesk(CheckInDesk.Port checkInDeskPort) {
+        this.checkInDeskPort = checkInDeskPort;
     }
 }

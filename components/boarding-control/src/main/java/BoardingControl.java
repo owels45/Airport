@@ -40,7 +40,6 @@ public class BoardingControl {
 
     private boolean innerInspectPassport(Passport passport) {
         return true;
-
     }
 
     private boolean innerScanBoardingPass(BoardingPass boardingPass) {
