@@ -6,12 +6,13 @@ import java.util.ArrayList;
 import static org.junit.Assert.*;
 
 public class BoardingControlTest {
-    private BoardingControl boardingControl;
+    private BoardingControl.Port boardingControlPort;
     private PassengerList passengerList;
 
     @Before
     public void init() {
-        boardingControl = BoardingControl.getInstance();
+        BoardingControl boardingControl = BoardingControl.getInstance();
+        boardingControlPort = boardingControl.port;
 
         passengerList = new PassengerList(new ArrayList<Passenger>());
         for (int i = 0; i < 100; i++) {
@@ -19,32 +20,31 @@ public class BoardingControlTest {
                     "Example Street", "74822", "Mosbach", CitizenshipCode.DEU, Gender.Female,
                     null, null, null));
         }
+    }
 
+    @Test
+    public void testGetInstance() {
+        assertNotNull(BoardingControl.getInstance());
     }
 
     @Test
     public void testCallPassengers() {
-        boardingControl.printPassengerList(passengerList);
+        boardingControlPort.printPassengerList(passengerList);
     }
 
     @Test
     public void testInspectPassport() {
-        assertTrue(boardingControl.inspectPassport(new Passport("1", "/path/to/picture.png", "DEU", null)));
+        assertTrue(boardingControlPort.inspect(new Passport("1", "/path/to/picture.png", "DEU", null)));
     }
 
     @Test
     public void testScanBoardingPass() {
-        assertTrue(boardingControl.scanBoardingPass(new BoardingPass("1", Carrier.Lufthansa, "NH380", null, null,
+        assertTrue(boardingControlPort.scan(new BoardingPass("1", Carrier.Lufthansa, "NH380", null, null,
                 Source.MUC, Destination.CPT, "01.04.1998", "B4", "13:14", "6F")));
     }
 
     @Test
     public void testPrintPassengersList() {
-        boardingControl.printPassengerList(passengerList);
-    }
-
-    @Test
-    public void testNotifyGroundOperations() {
-        boardingControl.notifyGroundOperations(new BoardingControlReceipt());
+        boardingControlPort.printPassengerList(passengerList);
     }
 }

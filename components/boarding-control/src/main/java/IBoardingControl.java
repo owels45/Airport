@@ -8,6 +8,6 @@ public interface IBoardingControl {
 
     public void printPassengerList(PassengerList passengerList);
 
-    public void notifyGroundOperations(BoardingControlReceipt boardingControlReceipt);
+    public void notifyGroundOperations(Object groundOperationPort);
 
 }

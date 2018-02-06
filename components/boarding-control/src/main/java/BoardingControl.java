@@ -1,5 +1,3 @@
-import factory.GroundOperationsCenterFactory;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -20,7 +18,7 @@ public class BoardingControl {
         return instance;
     }
 
-    public void callPassengers(PassengerList passengerList) {
+    private void innerCallPassengers(PassengerList passengerList) {
         printMethodCall("callPassengers", false);
         if (!passengerList.getPassengerList().isEmpty()) {
             Passenger examplePassenger = passengerList.getPassengerList().get(0);
@@ -40,27 +38,25 @@ public class BoardingControl {
         printMethodCall("callPassengers", true);
     }
 
-    public boolean inspectPassport(Passport passport) {
+    private boolean innerInspectPassport(Passport passport) {
         return true;
 
     }
 
-    public boolean scanBoardingPass(BoardingPass boardingPass) {
+    private boolean innerScanBoardingPass(BoardingPass boardingPass) {
         return true;
     }
 
-    public void printPassengerList(PassengerList passengerList) {
+    private void innerPrintPassengerList(PassengerList passengerList) {
         printMethodCall("printPassengerList", false);
         printPassengers(passengerList);
         printMethodCall("printPassengerList", true);
     }
 
-    public void notifyGroundOperations(BoardingControlReceipt boardingControlReceipt) {
-        boardingControlReceipt.setBoardedPassengerList(boardedPassengerList);
-        Object groundControlPort = GroundOperationsCenterFactory.build();
+    private void innerNotifyGroundOperations(Object groundOperationPort) {
         try {
-            Method method = groundControlPort.getClass().getMethod("receive", BoardingControlReceipt.class);
-            method.invoke(groundControlPort, boardingControlReceipt);
+            Method method = groundOperationPort.getClass().getMethod("receive", BoardingControlReceipt.class);
+            method.invoke(groundOperationPort, new BoardingControlReceipt(boardedPassengerList));
         } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException exc) {
             exc.printStackTrace();
         }
@@ -81,23 +77,23 @@ public class BoardingControl {
     public class Port implements IBoardingControl {
 
         public void call(PassengerList passengerList) {
-            getInstance().callPassengers(passengerList);
+            innerCallPassengers(passengerList);
         }
 
         public boolean inspect(Passport passport) {
-            return getInstance().inspectPassport(passport);
+            return innerInspectPassport(passport);
         }
 
         public boolean scan(BoardingPass boardingPass) {
-            return getInstance().scanBoardingPass(boardingPass);
+            return innerScanBoardingPass(boardingPass);
         }
 
         public void printPassengerList(PassengerList passengerList) {
-            getInstance().printPassengerList(passengerList);
+            innerPrintPassengerList(passengerList);
         }
 
-        public void notifyGroundOperations(BoardingControlReceipt boardingControlReceipt) {
-            getInstance().notifyGroundOperations(boardingControlReceipt);
+        public void notifyGroundOperations(Object groundOperationPort) {
+            innerNotifyGroundOperations(groundOperationPort);
         }
     }
 }

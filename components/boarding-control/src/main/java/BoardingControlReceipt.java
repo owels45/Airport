@@ -9,8 +9,8 @@ public class BoardingControlReceipt {
         boardedPassengerList = new PassengerList(new ArrayList<Passenger>());
     }
 
-    public BoardingControlReceipt(CheckInDesk desk, PassengerList list) {
-        checkInDesk = desk;
+    public BoardingControlReceipt(PassengerList list) {
+        this();
         boardedPassengerList = list;
     }
 
