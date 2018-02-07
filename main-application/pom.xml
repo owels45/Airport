@@ -26,6 +26,11 @@
             <artifactId>guava</artifactId>
             <version>RELEASE</version>
         </dependency>
+        <dependency>
+            <groupId>de.dhbw.mosbach.ai.se</groupId>
+            <artifactId>customs</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 
     <build>

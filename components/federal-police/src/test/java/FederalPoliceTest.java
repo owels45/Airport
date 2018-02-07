@@ -54,15 +54,15 @@ public class FederalPoliceTest {
         assertFalse(FederalPolice.getInstance().innerMethodInspectMunition(specialGood));
     }
 
-    @Test
-    public void testInnerMethodNotifyGroundOperations() {
-        FederalPoliceReceipt receipt = new FederalPoliceReceipt(0,0, null,null);
-        try{
-            FederalPolice.getInstance().innerMethodNotifyGroundOperations(receipt);
-            assertTrue(true);
-        }catch (Exception e){
-            e.printStackTrace();
-            assertTrue(false);
-        }
-    }
+//    @Test
+//    public void testInnerMethodNotifyGroundOperations() {
+//        FederalPoliceReceipt receipt = new FederalPoliceReceipt(0,0, null,null);
+//        try{
+//            FederalPolice.getInstance().innerMethodNotifyGroundOperations(receipt);
+//            assertTrue(true);
+//        }catch (Exception e){
+//            e.printStackTrace();
+//            assertTrue(false);
+//        }
+//    }
 }

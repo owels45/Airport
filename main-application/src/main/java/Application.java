@@ -1,6 +1,15 @@
 import base.Airplane;
+import base.Baggage;
+import base.BoardingPass;
+import base.Invoice;
+import base.Passenger;
+import base.Passport;
+import base.SpecialGood;
 import com.google.common.eventbus.EventBus;
 import event.Subscriber;
+import event.customs.CustomsScan;
+import event.customs.CustomsVerify;
+import event.federal_police.*;
 import event.service_vehicle_fresh_water.ServiceVehicleRefillFreshWater;
 import event.service_vehicle_nitrogen_oxygen.ServiceVehicleRefillNitrogenBottle;
 import event.service_vehicle_nitrogen_oxygen.ServiceVehicleRefillOxygenBottle;
@@ -36,11 +45,20 @@ public class Application {
 
     }
 
-    public void federalPolice() {
-
+    public void federalPolice(Passport passport, Passenger passenger, SpecialGood specialGood, Baggage baggage) {
+        String phase = "Federal Police";
+        eventBus.post(new FederalPoliceVerify(phase, passport));
+        eventBus.post(new FederalPoliceInspectWeapon(phase, specialGood));
+        eventBus.post(new FederalPoliceInspectMunition(phase, specialGood));
+        eventBus.post(new FederalPoliceScan(phase, passport));
+        eventBus.post(new FederalPoliceArrest(phase, passenger));
+        eventBus.post(new FederalPoliceKeepSafe(phase, baggage));
     }
 
-    public void customs() {
+    public void customsTasks(Passport passport, BoardingPass boardingPass, Invoice invoice, Baggage baggage) {
+        String phase = "Customs";
+        eventBus.post(new CustomsVerify(phase, passport, boardingPass, invoice ));
+        eventBus.post(new CustomsScan(phase, baggage));
 
     }
 
