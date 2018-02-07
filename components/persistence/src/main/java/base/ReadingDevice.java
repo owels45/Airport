@@ -1,4 +1,6 @@
-package base;public class ReadingDevice {
+package base;
+
+public class ReadingDevice {
 
     public ReadingDevice() {
     }
@@ -7,7 +9,7 @@ package base;public class ReadingDevice {
         return true;
     }
 
-    public boolean scan(Passport passport) {
+    public boolean scan(Passenger passenger) {
         return true;
     }
 

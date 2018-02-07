@@ -87,7 +87,7 @@ public class BoardingPassSQL {
 
         ArrayList<BoardingPass> allbagages = new ArrayList<BoardingPass>();
         StringBuilder sb = new StringBuilder();
-        sb.append("SELECT * FROM boardingpass INNER JOIN passenger ON boardingpass.passengerid=passenger.id INNER JOIN passport ON passenger.passportid=passport.id");
+        sb.append("SELECT * FROM boardingpass INNER JOIN passenger ON boardingpass.passengerid=passenger.id");
         Statement statement = instance.getConnection().createStatement();
         ResultSet rs = statement.executeQuery(sb.toString());
         while (rs.next()) {
@@ -98,10 +98,11 @@ public class BoardingPassSQL {
             String source = rs.getString("source");
             String destination = rs.getString("destination");
             String date = rs.getString("date");
+            String gate = rs.getString("gate");
             String boardingtime = rs.getString("boardingtime");
             String seat = rs.getString("seat");
             String passengerid = rs.getString("passenger.id");
-            String name = rs.getString("seat");
+            String name = rs.getString("name");
             String content = rs.getString("content");
             String birthdate = rs.getString("birthdate");
             String street = rs.getString("street");
@@ -110,11 +111,13 @@ public class BoardingPassSQL {
             String citizenship = rs.getString("citizenship");
             String gender = rs.getString("gender");
             String baggage = rs.getString("baggage");
-            String passportid = rs.getString("passport.id");
             String picture = rs.getString("picture");
             String visa = rs.getString("visa");
 
-
+            BoardingPass boardingPass = new BoardingPass(uuid,Carrier.valueOf(carrier),flight,null,TicketClass.valueOf(ticketclass),Source.valueOf(source),Destination.valueOf(destination),date,gate,boardingtime,seat);
+            Passenger passenger = new Passenger(passengerid,name,content,birthdate,street,postcode,city,picture,visa,CitizenshipCode.valueOf(citizenship),Gender.valueOf(gender),BaggageSQL.getObjectfromCSV(baggage),boardingPass);
+            boardingPass.setPassenger(passenger);
+            allbagages.add(boardingPass);
 
         }
         statement.close();

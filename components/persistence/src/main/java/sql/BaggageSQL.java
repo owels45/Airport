@@ -84,4 +84,22 @@ public class BaggageSQL {
         return allbagages;
     }
 
+    public static String getCSVFromObject(Baggage baggage){
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(baggage.getUUID()).append(",").append(baggage.getContent()).append(",").append(String.valueOf(baggage.getWeight())).append(",").append(baggage.getBaggageType().toString());
+        return sb.toString();
+    }
+
+    public static ArrayList<Baggage> getObjectfromCSV(String list){
+        ArrayList<Baggage> result = new ArrayList<Baggage>();
+        String[] objects = list.split(";");
+        for (int i = 0; i< objects.length; i++){
+            String[] values = objects[i].split(",");
+            result.add(new Baggage(values[0],values[1],Double.parseDouble(values[2]), BaggageType.valueOf(values[3])));
+        }
+
+        return result;
+    }
+
 }

@@ -114,14 +114,6 @@ public class Database {
             return innerMethodGetAllPassenger();
         }
 
-        public void addPassport(Passport passport) {
-            innerMethodAddPassport(passport);
-        }
-
-        public Passport getPassport() {
-            return innerMethodGetPassport();
-        }
-
         public Storage getStorrage() {
             return innerMethodGetStorage();
         }
@@ -255,16 +247,6 @@ public class Database {
     }
 
     private ArrayList<Passenger> innerMethodGetAllPassenger() {
-        return null;
-    }
-
-    private void innerMethodAddPassport(Passport passport) {
-        init();
-        PassportSQL passportSQL = new PassportSQL(Database.instance);
-        passportSQL.insert(passport,logEngine);
-    }
-
-    private Passport innerMethodGetPassport() {
         return null;
     }
 

@@ -27,7 +27,5 @@ public interface IDatabase{
     void addPassenger(Passenger passenger);
     ArrayList<Passenger> getAllPassenger();
     PassengerList getPassengerList();
-    void addPassport(Passport passport);
-    Passport getPassport();
     Storage getStorrage();
 }

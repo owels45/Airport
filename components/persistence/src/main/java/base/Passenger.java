@@ -8,13 +8,14 @@ public class Passenger {
     private String street;
     private String postCode;
     private String city;
+    private String picture;
+    private String visa = "N/A";
     private CitizenshipCode citizenshipCode;
     private Gender gender;
-    private Passport passport;
     private ArrayList<Baggage> baggageList;
     private BoardingPass boardingPass;
 
-    public Passenger(String id, String name, String content, String birthDate, String street, String postCode, String city, CitizenshipCode citizenshipCode, Gender gender, Passport passport, ArrayList<Baggage> baggageList, BoardingPass boardingPass) {
+    public Passenger(String id, String name, String content, String birthDate, String street, String postCode, String city, String picture, String visa, CitizenshipCode citizenshipCode, Gender gender, ArrayList<Baggage> baggageList, BoardingPass boardingPass) {
         this.id = id;
         this.name = name;
         this.content = content;
@@ -22,9 +23,10 @@ public class Passenger {
         this.street = street;
         this.postCode = postCode;
         this.city = city;
+        this.picture = picture;
+        this.visa = visa;
         this.citizenshipCode = citizenshipCode;
         this.gender = gender;
-        this.passport = passport;
         this.baggageList = baggageList;
         this.boardingPass = boardingPass;
     }
@@ -35,6 +37,26 @@ public class Passenger {
 
     public String getName() {
         return name;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
+    public String getVisa() {
+        return visa;
+    }
+
+    public void setVisa(String visa) {
+        this.visa = visa;
     }
 
     public void setName(String name) {
@@ -97,14 +119,6 @@ public class Passenger {
         this.gender = gender;
     }
 
-    public Passport getPassport() {
-        return passport;
-    }
-
-    public void setPassport(Passport passport) {
-        this.passport = passport;
-    }
-
     public ArrayList<Baggage> getBaggageList() {
         return baggageList;
     }
@@ -132,7 +146,6 @@ public class Passenger {
                 ", city='" + city + '\'' +
                 ", citizenshipCode=" + citizenshipCode +
                 ", gender=" + gender +
-                ", passport=" + passport +
                 ", baggageList=" + baggageList +
                 ", boardingPass=" + boardingPass +
                 '}';
