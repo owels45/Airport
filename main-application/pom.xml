@@ -7,6 +7,7 @@
     <groupId>de.dhbw.mosbach.ai.se</groupId>
     <artifactId>main-application</artifactId>
     <version>1.0.0</version>
+
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -19,6 +20,11 @@
             <artifactId>junit-jupiter-api</artifactId>
             <version>5.0.3</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>RELEASE</version>
         </dependency>
     </dependencies>
 
