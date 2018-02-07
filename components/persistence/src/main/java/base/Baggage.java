@@ -1,4 +1,6 @@
-package base;public class Baggage {
+package base;
+
+public class Baggage {
 
     private String UUID;
     private String content;

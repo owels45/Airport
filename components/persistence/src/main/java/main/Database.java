@@ -2,9 +2,7 @@ package main;
 
 import base.*;
 import engine.LogEngine;
-import sql.BaggageSQL;
-import sql.ContainerSQL;
-import sql.DestinationBoxSQL;
+import sql.*;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -48,8 +46,8 @@ public class Database {
             return innerMethodGetBaggageIdentificationTag(baggage);
         }
 
-        public void addBoardingPass(BoardingPass boardingPass, Passenger passenger) {                                        //Done
-            innerMethodAddBoardingPass(boardingPass,passenger);
+        public void addBoardingPass(BoardingPass boardingPass) {                                        //Done
+            innerMethodAddBoardingPass();
         }
 
         public BoardingPass getBoardingPass(Passenger passenger) {
@@ -105,7 +103,7 @@ public class Database {
         }
 
         public void addPassenger(Passenger passenger) {
-            innerMethodAddPassenger(passenger);
+            innerMethodAddPassenger();
         }
 
         public ArrayList<Passenger> getAllPassenger() {
@@ -160,7 +158,7 @@ public class Database {
 
     private void innerMethodAddDestinationBox(DestinationBox destinationBox) {
         DestinationBoxSQL box = new DestinationBoxSQL(Database.instance);
-        box.buildInsertSQLStatement(destinationBox);
+        box.createTableDestinationBox(logEngine);
     }
 
     private void innerMethodAddContainer(Container container) {
@@ -197,7 +195,9 @@ public class Database {
         return null;
     }
 
-    private void innerMethodAddPassenger(Passenger passenger) {
+    private void innerMethodAddPassenger() {
+        PassengerSQL passengerSQL = new PassengerSQL(Database.instance);
+        passengerSQL.createTablePassenger(logEngine);
     }
 
     private ArrayList<Passenger> innerMethodGetAllPassenger() {
@@ -205,13 +205,17 @@ public class Database {
     }
 
     private void innerMethodAddPassport(Passport passport) {
+        PassportSQL passportSQL = new PassportSQL(Database.instance);
+        passportSQL.createTablePassport(logEngine);
     }
 
     private Passport innerMethodGetPassport() {
         return null;
     }
 
-    private void innerMethodAddBoardingPass(BoardingPass boardingPass, Passenger passenger) {
+    private void innerMethodAddBoardingPass() {
+        BoardingPassSQL boardingPassSQL = new BoardingPassSQL(Database.instance);
+        boardingPassSQL.createTableBoardingPass(logEngine);
     }
 
     private BaggageIdentificationTag innerMethodGetBaggageIdentificationTag(Baggage baggage) {
@@ -308,12 +312,9 @@ public class Database {
 
         Database.instance.innerSetLogEngine(log);
         Database.instance.startup(Configuration.instance.dataPath);
-        DestinationBox box = new DestinationBox();
-        Baggage baggage = new Baggage("12", "cont", 15.0,BaggageType.Normal);
-        list.add(baggage);
-        box.setBarCode("ad185sfadg51r6");
-        box.setBaggegeList(list);
-        Database.instance.innerMethodAddDestinationBox(box);
+        PassengerSQL passengerSQL = new PassengerSQL(Database.instance);
+        String objects = "Baggage{UUID='1', content='ok', weight=15.0, baggageType=Normal};Baggage{UUID='2', content='ok', weight=18.0, baggageType=Normal}";
+        passengerSQL.getListfromString(objects);
 
         //Database.instance.innerMethodInitBaggage();
         /*
