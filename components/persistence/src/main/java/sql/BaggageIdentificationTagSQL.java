@@ -11,7 +11,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class BaggageIdentificationTagSQL {
-    Database instance = new Database();
+    Database instance;
+
+    public BaggageIdentificationTagSQL(Database instance) {
+        this.instance = instance;
+    }
 
     public void dropTableBaggageIdentificationTag(LogEngine logEngine) {
         String sqlStatement = "DROP TABLE BaggageIdentificationTag IF EXISTS";

@@ -33,6 +33,10 @@ public class Database {
 
             innerMethodInitBaggage();
         }
+
+        public void initTables(){
+            innerMethodinitTables();
+        }
         
         public ArrayList<Baggage> getAllBaggages(){
             return innerMethodGetAllBaggages();
@@ -47,7 +51,7 @@ public class Database {
         }
 
         public void addBoardingPass(BoardingPass boardingPass) {                                        //Done
-            innerMethodAddBoardingPass();
+            innerMethodAddBoardingPass(boardingPass);
         }
 
         public BoardingPass getBoardingPass(Passenger passenger) {
@@ -58,7 +62,7 @@ public class Database {
             innerMethodAddContainer(container);
         }
 
-        public Container getContainer() {
+        public ArrayList<Container> getContainer() {
             return innerMethodGetContainer();
         }
 
@@ -66,7 +70,7 @@ public class Database {
             innerMethodAddCottonPad(cottonPad);
         }
 
-        public CottonPad getCottonPad() {
+        public ArrayList<CottonPad> getCottonPad() {
             return innerMethodGetCottonPad();
         }
 
@@ -74,7 +78,7 @@ public class Database {
             innerMethodAddDestinationBox(destinationBox);
         }
 
-        public DestinationBox getDestinationBox() {
+        public ArrayList<DestinationBox> getDestinationBox() {
             return innerMethodGetDestinationBox();
         }
 
@@ -82,7 +86,7 @@ public class Database {
             innerMethodAddEmployee(employee);
         }
 
-        public Employee getEmployee() {
+        public ArrayList<Employee> getEmployee() {
             return innerMethodGetEmployee();
         }
 
@@ -103,7 +107,7 @@ public class Database {
         }
 
         public void addPassenger(Passenger passenger) {
-            innerMethodAddPassenger();
+            innerMethodAddPassenger(passenger);
         }
 
         public ArrayList<Passenger> getAllPassenger() {
@@ -137,23 +141,47 @@ public class Database {
     }
 
     private Storage innerMethodGetStorage() {
-        return null;
+        init();
+        ContainerSQL containerSQL = new ContainerSQL(Database.instance);
+        try {
+            return containerSQL.buildSelectSQLStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     private ArrayList<Baggage> innerMethodGetAllBaggages() {
-        return null;
+        init();
+        BaggageSQL baggageSQL = new BaggageSQL(Database.instance);
+        try {
+            return baggageSQL.buildSelectSQLStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 
-    private Container innerMethodGetContainer() {
+    private ArrayList<Container> innerMethodGetContainer() {
         return null;
     }
 
     private void innerMethodAddCottonPad(CottonPad cottonPad) {
+        init();
+        CottonPadSQL cottonPadSQL = new CottonPadSQL(Database.instance);
+        cottonPadSQL.insert(cottonPad,logEngine);
     }
 
-    private CottonPad innerMethodGetCottonPad() {
-        return null;
+    private ArrayList<CottonPad> innerMethodGetCottonPad() {
+        init();
+        CottonPadSQL cottonPadSQL = new CottonPadSQL(Database.instance);
+        try {
+            return cottonPadSQL.buildSelectSQLStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     private void innerMethodAddDestinationBox(DestinationBox destinationBox) {
@@ -162,7 +190,9 @@ public class Database {
     }
 
     private void innerMethodAddContainer(Container container) {
-        //ContainerSQL sql = new ContainerSQL();
+        init();
+        ContainerSQL containerSQL = new ContainerSQL(Database.instance);
+        containerSQL.insert(container,logEngine);
     }
 
     private BoardingPass innerMethodGetBoardingPass(Passenger passenger) {
@@ -170,18 +200,38 @@ public class Database {
     }
 
 
-    private DestinationBox innerMethodGetDestinationBox() {
-        return null;
+    private ArrayList<DestinationBox> innerMethodGetDestinationBox() {
+        init();
+        DestinationBoxSQL destinationBoxSQL = new DestinationBoxSQL(Database.instance);
+        try {
+            return destinationBoxSQL.buildSelectSQLStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     private void innerMethodAddEmployee(Employee employee) {
+        init();
+        EmployeeSQL employeeSQL = new EmployeeSQL(Database.instance);
+        employeeSQL.insert(employee,logEngine);
     }
 
-    private Employee innerMethodGetEmployee() {
-        return null;
+    private ArrayList<Employee> innerMethodGetEmployee() {
+        init();
+        EmployeeSQL employeeSQL = new EmployeeSQL(Database.instance);
+        try {
+            return employeeSQL.buildSelectSQLStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     private void innerMethodAddFlight(Flight flight) {
+        init();
+        FlightSQL flightSQL = new FlightSQL(Database.instance);
+        flightSQL.insert(flight,logEngine);
     }
 
     private Flight innerMethodGetFlight() {
@@ -189,15 +239,19 @@ public class Database {
     }
 
     private void innerMethodAddInvoice(Invoice invoice) {
+        init();
+        InvoiceSQL invoiceSQL = new InvoiceSQL(Database.instance);
+        invoiceSQL.insert(invoice,logEngine);
     }
 
     private Invoice innerMethodGetInvoice() {
         return null;
     }
 
-    private void innerMethodAddPassenger() {
+    private void innerMethodAddPassenger(Passenger passenger) {
+        init();
         PassengerSQL passengerSQL = new PassengerSQL(Database.instance);
-        passengerSQL.createTablePassenger(logEngine);
+        passengerSQL.insert(passenger,logEngine);
     }
 
     private ArrayList<Passenger> innerMethodGetAllPassenger() {
@@ -205,17 +259,19 @@ public class Database {
     }
 
     private void innerMethodAddPassport(Passport passport) {
+        init();
         PassportSQL passportSQL = new PassportSQL(Database.instance);
-        passportSQL.createTablePassport(logEngine);
+        passportSQL.insert(passport,logEngine);
     }
 
     private Passport innerMethodGetPassport() {
         return null;
     }
 
-    private void innerMethodAddBoardingPass() {
+    private void innerMethodAddBoardingPass(BoardingPass boardingPass) {
+        init();
         BoardingPassSQL boardingPassSQL = new BoardingPassSQL(Database.instance);
-        boardingPassSQL.createTableBoardingPass(logEngine);
+        boardingPassSQL.insert(boardingPass,logEngine);
     }
 
     private BaggageIdentificationTag innerMethodGetBaggageIdentificationTag(Baggage baggage) {
@@ -223,6 +279,9 @@ public class Database {
     }
 
     private void innerMethodAddBaggageIdentificationTag(BaggageIdentificationTag baggageIdentificationTag) {
+        init();
+        BaggageIdentificationTagSQL baggageIdentificationTagSQL = new BaggageIdentificationTagSQL(Database.instance);
+        baggageIdentificationTagSQL.insert(baggageIdentificationTag,logEngine);
     }
 
     //Essentials
@@ -268,6 +327,10 @@ public class Database {
         this.logEngine = logEngine;
     }
 
+    public void innerMethodinitTables(){
+
+    }
+
     public void innerMethodInitBaggage() {
         BaggageSQL sql = new BaggageSQL(Database.instance);
 
@@ -305,6 +368,12 @@ public class Database {
         }
     }
 
+    public void init(){
+        LogEngine log = new LogEngine(Configuration.instance.logFile);
+        Database.instance.innerSetLogEngine(log);
+        Database.instance.startup(Configuration.instance.dataPath);
+    }
+
     public static void main(String... args) {
 
         LogEngine log = new LogEngine(Configuration.instance.logFile);
@@ -314,7 +383,6 @@ public class Database {
         Database.instance.startup(Configuration.instance.dataPath);
         PassengerSQL passengerSQL = new PassengerSQL(Database.instance);
         String objects = "Baggage{UUID='1', content='ok', weight=15.0, baggageType=Normal};Baggage{UUID='2', content='ok', weight=18.0, baggageType=Normal}";
-        passengerSQL.getListfromString(objects);
 
         //Database.instance.innerMethodInitBaggage();
         /*

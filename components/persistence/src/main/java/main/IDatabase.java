@@ -6,19 +6,20 @@ import java.util.ArrayList;
 
 public interface IDatabase{
     void initBaggage();
+    void initTables();
     ArrayList<Baggage> getAllBaggages();
     void addBaggageIdentificationTag(BaggageIdentificationTag baggageIdentificationTag);
     BaggageIdentificationTag getBaggageIdentificationTag(Baggage baggage);
     void addBoardingPass(BoardingPass boardingPass);
     BoardingPass getBoardingPass(Passenger passenger);
     void addContainer(Container container);
-    Container getContainer();
+    ArrayList<Container> getContainer();
     void addCottonPad(CottonPad cottonPad);
-    CottonPad getCottonPad();
+    ArrayList<CottonPad> getCottonPad();
     void addDestinationBox(DestinationBox destinationBox);
-    DestinationBox getDestinationBox();
+    ArrayList<DestinationBox> getDestinationBox();
     void addEmployee(Employee employee);
-    Employee getEmployee();
+    ArrayList<Employee> getEmployee();
     void addFlight(Flight flight);
     Flight getFlight();
     void addInvoice(Invoice invoice);

@@ -1,10 +1,7 @@
 package sql;
 
 
-import base.Container;
-import base.ContainerCategory;
-import base.ContainerProfile;
-import base.ContainerType;
+import base.*;
 import engine.LogEngine;
 import main.Database;
 
@@ -58,7 +55,7 @@ public class ContainerSQL {
         return sqlStringBuilder.toString();
     }
 
-    public void insert(Container container, ContainerProfile containerProfile, LogEngine logEngine) {
+    public void insert(Container container, LogEngine logEngine) {
         logEngine.write("main.Database", "insert", "container = " + container.getId(), buildInsertSQLStatement(container));
         instance.update(buildInsertSQLStatement(container));
     }
@@ -75,7 +72,7 @@ public class ContainerSQL {
         return sqlStringBuilder.toString();
     }
 
-    public ArrayList<Container> buildSelectSQLStatement() throws SQLException {
+    public Storage buildSelectSQLStatement() throws SQLException {
 
         ArrayList<Container> allbagages = new ArrayList<Container>();
         StringBuilder sb = new StringBuilder();
@@ -97,7 +94,7 @@ public class ContainerSQL {
 
         statement.close();
 
-        return allbagages;
+        return new Storage(allbagages);
 
     }
 }

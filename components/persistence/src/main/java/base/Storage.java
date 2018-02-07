@@ -2,16 +2,8 @@ package base;import java.util.ArrayList;
 
 public class Storage {
 
-    private String id;
     private ArrayList<Container> containerList;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public ArrayList<Container> getContainerList() {
         return containerList;
@@ -21,8 +13,7 @@ public class Storage {
         this.containerList = containerList;
     }
 
-    public Storage(String id, ArrayList<Container> containerList) {
-        this.id = id;
+    public Storage(ArrayList<Container> containerList) {
         this.containerList = containerList;
     }
 

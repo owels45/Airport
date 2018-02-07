@@ -43,7 +43,7 @@ public class PassportSQL {
         return sqlStringBuilder.toString();
     }
 
-    public void insert(Passport passport,Passenger passenger, LogEngine logEngine) {
+    public void insert(Passport passport, LogEngine logEngine) {
         System.out.println(passport.hashCode());
         logEngine.write("main.Database", "insert", "baggage = " + passport.getId(), buildInsertSQLStatement(passport));
         instance.update(buildInsertSQLStatement(passport));

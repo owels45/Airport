@@ -82,6 +82,6 @@ public class BaggageSQL {
         statement.close();
 
         return allbagages;
-
     }
+
 }

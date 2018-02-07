@@ -46,7 +46,7 @@ public class InvoiceSQL {
         return sqlStringBuilder.toString();
     }
 
-    public void insert(Invoice invoice,Passenger passenger, LogEngine logEngine) {
+    public void insert(Invoice invoice, LogEngine logEngine) {
         System.out.println(invoice.hashCode());
         logEngine.write("main.Database", "insert", "baggage = " + invoice.getId(), buildInsertSQLStatement(invoice));
         instance.update(buildInsertSQLStatement(invoice));
