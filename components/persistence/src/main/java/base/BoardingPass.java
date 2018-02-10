@@ -3,7 +3,7 @@ package base;public class BoardingPass {
     private String id;
     private Carrier carrier;
     private String flight;
-    private Passenger passenger;
+    private String passengername;
     private TicketClass ticketClass;
     private Source source;
     private Destination destination;
@@ -12,13 +12,13 @@ package base;public class BoardingPass {
     private String boardingTime;
     private String seat;
 
-    public BoardingPass(String id, Carrier carrier, String flight, Passenger passenger,
+    public BoardingPass(String id, Carrier carrier, String flight, String passengername,
                         TicketClass ticketClass, Source source, Destination destination,
                         String date, String gate, String boardingTime, String seat) {
         this.id = id;
         this.carrier = carrier;
         this.flight = flight;
-        this.passenger = passenger;
+        this.passengername = passengername;
         this.ticketClass = ticketClass;
         this.source = source;
         this.destination = destination;
@@ -40,8 +40,8 @@ package base;public class BoardingPass {
         return flight;
     }
 
-    public Passenger getPassenger() {
-        return passenger;
+    public String getPassengerName() {
+        return passengername;
     }
 
     public TicketClass getTicketClass() {
@@ -84,8 +84,8 @@ package base;public class BoardingPass {
         this.flight = flight;
     }
 
-    public void setPassenger(Passenger passenger) {
-        this.passenger = passenger;
+    public void setPassengerName(String passengername) {
+        this.passengername = passengername;
     }
 
     public void setTicketClass(TicketClass ticketClass) {
@@ -122,7 +122,7 @@ package base;public class BoardingPass {
                 "id='" + id + '\'' +
                 ", carrier=" + carrier +
                 ", flight='" + flight + '\'' +
-                ", passenger=" + passenger +
+                ", passenger=" + passengername +
                 ", ticketClass=" + ticketClass +
                 ", source=" + source +
                 ", destination=" + destination +

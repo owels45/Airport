@@ -1,8 +1,6 @@
 package sql;
 
-import base.Baggage;
-import base.BaggageIdentificationTag;
-import base.BoardingPass;
+import base.*;
 import engine.LogEngine;
 import main.Database;
 
@@ -88,19 +86,50 @@ public class BaggageIdentificationTagSQL {
         return sqlStringBuilder.toString();
     }
 
-    /*
+
     public BaggageIdentificationTag buildSelectSQLStatement (Baggage baggage) throws SQLException {
 
+        BaggageIdentificationTag baggageIdentificationTag = null;
         StringBuilder sb = new StringBuilder();
-        sb.append("SELECT * FROM baggageIdentificationTag WHERE baggage=").append("'").append(baggage.getUUID()).append("'");
+        sb.append("SELECT * FROM baggageIdentificationTag WHERE baggageid=").append("'").append(baggage.getUUID()).append("'").append("INNER JOIN boardingpass ON baggageIdentificationTag.boardingpassid=boardingpass.id INNER JOIN baggage ON baggageIdentificationTag.baggageid=baggage.uuid");
         Statement statement = instance.getConnection().createStatement();
-        ResultSet result = statement.executeQuery(sb.toString());
-        while (result.next()){
+        ResultSet rs = statement.executeQuery(sb.toString());
+        while (rs.next()){
 
-            //BaggageIdentificationTag baggageIdentificationTag = new BaggageIdentificationTag("3",)
+            String id = rs.getString("id");
+            String carrier  = rs.getString("baggageIdentificationTag.carrier");
+            int sequence  = rs.getInt("sequence");
+            String via1  = rs.getString("via1");
+            String via2  = rs.getString("via2");
+            String via3  = rs.getString("via3");
+            String specialgood  = rs.getString("specialgood");
+            String isLocal  = rs.getString("isLocal");
+            String isTransfer  = rs.getString("isTransfer");
+            String isTransferFirst  = rs.getString("isTransferFirst");
+            String barCode  = rs.getString("barCode");
+            String boardingpassid = rs.getString("boardingpass.uuid");
+            String boardingpasscarrier = rs.getString("boardingpass.carrier");
+            String flight = rs.getString("flight");
+            String passengername = rs.getString("passengername");
+            String ticketclass = rs.getString("ticketclass");
+            String source = rs.getString("source");
+            String destination = rs.getString("destination");
+            String date = rs.getString("date");
+            String gate = rs.getString("gate");
+            String boardingtime = rs.getString("boardingtime");
+            String seat = rs.getString("seat");
+            String baggageid = rs.getString("baggage.uuid");
+            String content = rs.getString("content");
+            int weight = rs.getInt("weight");
+            String type = rs.getString("baggage");
+
+            baggageIdentificationTag = new BaggageIdentificationTag(id,new BoardingPass(boardingpassid, Carrier.valueOf(boardingpasscarrier),flight,passengername, TicketClass.valueOf(ticketclass),Source.valueOf(source),Destination.valueOf(destination),date,gate,boardingtime,seat),Carrier.valueOf(carrier),sequence,via1,via2,via3,new Baggage(baggageid,content,weight,BaggageType.valueOf(type)),new SpecialGood(SpecialGoodType.valueOf(specialgood)),Boolean.getBoolean(isLocal),Boolean.getBoolean(isTransfer),Boolean.getBoolean(isTransferFirst),barCode);
 
         }
+
+        return baggageIdentificationTag;
+
     }
-    */
+
 }
 

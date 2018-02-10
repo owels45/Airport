@@ -29,6 +29,7 @@ public class BoardingPassSQL {
         sqlStringBuilder.append("uuid VARCHAR(36) NOT NULL").append(",");
         sqlStringBuilder.append("carrier TEXT NOT NULL").append(",");
         sqlStringBuilder.append("flight TEXT NOT NULL").append(",");
+        sqlStringBuilder.append("passengername TEXT NOT NULL").append(",");
         sqlStringBuilder.append("ticketclass TEXT NOT NULL").append(",");
         sqlStringBuilder.append("source TEXT NOT NULL").append(",");
         sqlStringBuilder.append("destination TEXT NOT NULL").append(",");
@@ -36,7 +37,6 @@ public class BoardingPassSQL {
         sqlStringBuilder.append("gate TEXT NOT NULL").append(",");
         sqlStringBuilder.append("boardingtime TEXT NOT NULL").append(",");
         sqlStringBuilder.append("seat TEXT NOT NULL").append(",");
-        sqlStringBuilder.append("passengerid VARCHAR(36) NOT NULL").append(",");
         sqlStringBuilder.append("PRIMARY KEY (uuid)");
         sqlStringBuilder.append(" )");
         logEngine.write("main.Database", "createTableBoardingPass", "-", sqlStringBuilder.toString());
@@ -45,10 +45,11 @@ public class BoardingPassSQL {
 
     public String buildInsertSQLStatement(BoardingPass boardingPass){
         StringBuilder sqlStringBuilder = new StringBuilder();
-        sqlStringBuilder.append("INSERT INTO boardingpass (uuid,carrier,flight,ticketclass,source,destination,date,gate,boardingtime,seat,passengerid) VALUES (");
+        sqlStringBuilder.append("INSERT INTO boardingpass (uuid,carrier,flight,passengername,ticketclass,source,destination,date,gate,boardingtime,seat) VALUES (");
         sqlStringBuilder.append("'").append(boardingPass.getId()).append("'").append(",");
         sqlStringBuilder.append("'").append(boardingPass.getCarrier().toString()).append("'").append(",");
         sqlStringBuilder.append("'").append(boardingPass.getFlight()).append("'").append(",");
+        sqlStringBuilder.append("'").append(boardingPass.getPassengerName()).append("'").append(",");
         sqlStringBuilder.append("'").append(boardingPass.getTicketClass().toString()).append("'").append(",");
         sqlStringBuilder.append("'").append(boardingPass.getSource().toString()).append("'").append(",");
         sqlStringBuilder.append("'").append(boardingPass.getDestination().toString()).append("'").append(",");
@@ -56,7 +57,6 @@ public class BoardingPassSQL {
         sqlStringBuilder.append("'").append(boardingPass.getGate()).append("'").append(",");
         sqlStringBuilder.append("'").append(boardingPass.getBoardingTime()).append("'").append(",");
         sqlStringBuilder.append("'").append(boardingPass.getSeat()).append("'").append(",");
-        sqlStringBuilder.append("'").append(boardingPass.getPassenger().getId()).append("'");
         sqlStringBuilder.append(")");
         return sqlStringBuilder.toString();
     }
@@ -71,6 +71,7 @@ public class BoardingPassSQL {
         StringBuilder sqlStringBuilder = new StringBuilder();
         sqlStringBuilder.append("UPDATE boardingpass SET carrier = '").append(boardingPass.getCarrier().toString()).append("'").append(",");
         sqlStringBuilder.append("flight = '").append(boardingPass.getFlight()).append("'").append(",");
+        sqlStringBuilder.append("passengername = '").append(boardingPass.getPassengerName()).append("'").append(",");
         sqlStringBuilder.append("ticketclass = '").append(boardingPass.getTicketClass().toString()).append("'").append(",");
         sqlStringBuilder.append("source = '").append(boardingPass.getSource().toString()).append("'").append(",");
         sqlStringBuilder.append("destination = '").append(boardingPass.getDestination().toString()).append("'").append(",");
@@ -78,7 +79,6 @@ public class BoardingPassSQL {
         sqlStringBuilder.append("gate = '").append(boardingPass.getGate()).append("'").append(",");
         sqlStringBuilder.append("boardingtime = '").append(boardingPass.getBoardingTime()).append("'").append(",");
         sqlStringBuilder.append("seat = '").append(boardingPass.getSeat()).append("'").append(",");
-        sqlStringBuilder.append("passengerid = '").append(boardingPass.getPassenger().getId()).append("'").append(",");
         sqlStringBuilder.append("WHERE uuid = '").append(boardingPass.getId()).append("'");
         return sqlStringBuilder.toString();
     }
@@ -94,6 +94,7 @@ public class BoardingPassSQL {
             String uuid = rs.getString("uuid");
             String carrier = rs.getString("carrier");
             String flight = rs.getString("flight");
+            String passengername = rs.getString("passengername");
             String ticketclass = rs.getString("ticketclass");
             String source = rs.getString("source");
             String destination = rs.getString("destination");
@@ -101,22 +102,8 @@ public class BoardingPassSQL {
             String gate = rs.getString("gate");
             String boardingtime = rs.getString("boardingtime");
             String seat = rs.getString("seat");
-            String passengerid = rs.getString("passenger.id");
-            String name = rs.getString("name");
-            String content = rs.getString("content");
-            String birthdate = rs.getString("birthdate");
-            String street = rs.getString("street");
-            String postcode = rs.getString("postcode");
-            String city = rs.getString("city");
-            String citizenship = rs.getString("citizenship");
-            String gender = rs.getString("gender");
-            String baggage = rs.getString("baggage");
-            String picture = rs.getString("picture");
-            String visa = rs.getString("visa");
 
-            BoardingPass boardingPass = new BoardingPass(uuid,Carrier.valueOf(carrier),flight,null,TicketClass.valueOf(ticketclass),Source.valueOf(source),Destination.valueOf(destination),date,gate,boardingtime,seat);
-            Passenger passenger = new Passenger(passengerid,name,content,birthdate,street,postcode,city,picture,visa,CitizenshipCode.valueOf(citizenship),Gender.valueOf(gender),BaggageSQL.getObjectfromCSV(baggage),boardingPass);
-            boardingPass.setPassenger(passenger);
+            BoardingPass boardingPass = new BoardingPass(uuid,Carrier.valueOf(carrier),flight,passengername,TicketClass.valueOf(ticketclass),Source.valueOf(source),Destination.valueOf(destination),date,gate,boardingtime,seat);
             allbagages.add(boardingPass);
 
         }
