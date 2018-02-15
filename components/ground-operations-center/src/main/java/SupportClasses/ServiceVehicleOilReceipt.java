@@ -1,3 +1,5 @@
+package SupportClasses;
+
 public class ServiceVehicleOilReceipt {
 
     private int amountAPUOil;

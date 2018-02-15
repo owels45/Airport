@@ -1,6 +1,11 @@
 import base.Airplane;
 import com.google.common.eventbus.EventBus;
 import event.Subscriber;
+import event.boarding_control.BoardingControlCallPassengers;
+import event.boarding_control.BoardingControlInspectPassports;
+import event.boarding_control.BoardingControlNotifyGroundOperations;
+import event.boarding_control.BoardingControlScanBoardingPass;
+import event.boarding_control.base.PassengerList;
 import event.service_vehicle_fresh_water.ServiceVehicleRefillFreshWater;
 import event.service_vehicle_nitrogen_oxygen.ServiceVehicleRefillNitrogenBottle;
 import event.service_vehicle_nitrogen_oxygen.ServiceVehicleRefillOxygenBottle;
@@ -9,7 +14,10 @@ import event.service_vehicle_oil.ServiceVehicleChangeFireExtinguisher;
 import event.service_vehicle_oil.ServiceVehicleEngineOilTankIncreaseLevel;
 import event.service_vehicle_oil.ServiceVehicleRefillDeIcingSystem;
 import event.service_vehicle_waster_water.ServiceVehiclePumpOut;
+import factory.GroundOperationsCenterFactory;
 import logging.LogEngine;
+
+import java.util.ArrayList;
 
 public class Application {
 
@@ -64,8 +72,13 @@ public class Application {
     }
 // TODO: 01.02.2018  ...alle service-Vehicle-Events ergänzen
 
+    // TODO: Insert passenger list into allPassengers if passenger instances are available (either database or instantiation)
     public void boardingControl() {
-
+        PassengerList allPassengers = new PassengerList(new ArrayList<>());
+        eventBus.post(new BoardingControlCallPassengers(allPassengers));
+        eventBus.post(new BoardingControlInspectPassports(allPassengers));
+        eventBus.post(new BoardingControlScanBoardingPass(allPassengers));
+        eventBus.post(new BoardingControlNotifyGroundOperations(allPassengers, GroundOperationsCenterFactory.build()));
     }
 
     public void pushBack() {
@@ -76,6 +89,7 @@ public class Application {
     public void startSimulation(Airplane airplane) {
         //Aufruf obiger Methoden in richtiger Reihenfolge
         //serviceVehicleTasks(airplane);
+        boardingControl();
     }
 
     public static void main(String... args) {

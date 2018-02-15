@@ -8,6 +8,18 @@
     <artifactId>main-application</artifactId>
     <version>1.0.0</version>
 
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
     <dependencies>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -18,6 +30,11 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>de.dhbw.mosbach.ai.se</groupId>
+            <artifactId>base</artifactId>
+            <version>1.0.0</version>
         </dependency>
     </dependencies>
 
