@@ -91,7 +91,7 @@ public class Database {
             innerMethodAddFlight(flight);
         }
 
-        public Flight getFlight() {
+        public ArrayList<Flight> getFlight() {
             return innerMethodGetFlight();
         }
 
@@ -126,6 +126,13 @@ public class Database {
 
 
     private PassengerList innerMethodGetPassengerList() {
+        init();
+        PassengerSQL passengerSQL = new PassengerSQL(Database.instance);
+        try {
+            return new PassengerList(passengerSQL.buildSelectSQLStatement());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
@@ -153,6 +160,14 @@ public class Database {
 
 
     private ArrayList<Container> innerMethodGetContainer() {
+        init();
+        ContainerSQL containerSQL = new ContainerSQL(Database.instance);
+        try {
+            Storage storage = containerSQL.buildSelectSQLStatement();
+            return storage.getContainerList();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
@@ -191,7 +206,6 @@ public class Database {
 
     }
 
-
     private DestinationBox innerMethodGetDestinationBox() {
         init();
         BaggageSQL destinationBoxSQL = new BaggageSQL(Database.instance);
@@ -226,9 +240,14 @@ public class Database {
         flightSQL.insert(flight, logEngine);
     }
 
-    private Flight innerMethodGetFlight() {
+    private ArrayList<Flight> innerMethodGetFlight() {
         init();
-        //TODO
+        FlightSQL flightSQL = new FlightSQL(Database.instance);
+        try {
+            return new ArrayList<Flight>(flightSQL.buildSelectSQLStatement());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
@@ -350,7 +369,8 @@ public class Database {
         baggageSQL.dropTableBaggage(logEngine);
         boardingPassSQL.dropTableBoardingPass(logEngine);
         containerProfileSQL.dropTableContainerProfile(logEngine);
-        containerSQL.dropTableContainer(logEngine);;
+        containerSQL.dropTableContainer(logEngine);
+        ;
         cottonPadSQL.dropTableCottonPad(logEngine);
         employeeSQL.dropTableBaggage(logEngine);
         flightSQL.dropTableFlight(logEngine);
@@ -361,7 +381,8 @@ public class Database {
         baggageSQL.dropTableBaggage(logEngine);
         boardingPassSQL.createTableBoardingPass(logEngine);
         containerProfileSQL.createTableContainerProfile(logEngine);
-        containerSQL.createTableContainer(logEngine);;
+        containerSQL.createTableContainer(logEngine);
+        ;
         cottonPadSQL.createTableCottonPad(logEngine);
         employeeSQL.createTableBaggage(logEngine);
         flightSQL.createTableFlight(logEngine);
@@ -379,7 +400,6 @@ public class Database {
         ArrayList<String> baggages = new ArrayList<String>();
         sql.dropTableBaggage(logEngine);
         sql.createTableBaggage(logEngine);
-
 
         try {
 
@@ -402,8 +422,6 @@ public class Database {
                     j += 3;
                 }
             }
-
-
         }
     }
 

@@ -8,10 +8,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class PassengerSQL {
 
     private Database instance;
+    ArrayList<String> baggagelists = new ArrayList<String>();
 
     public PassengerSQL(Database instance) {
         this.instance = instance;
@@ -103,19 +105,6 @@ public class PassengerSQL {
         return listbuilder.toString();
     }
 
-    private String getStringfromListWithColon(Passenger passenger) {
-        boolean processedFirst = true;
-        StringBuilder listbuilder = new StringBuilder();
-        for (Baggage record : passenger.getBaggageList()) {
-            if (processedFirst)
-                listbuilder.append("::");
-            listbuilder.append(BaggageSQL.getCSVFromObject(record));
-            listbuilder.append("::");
-            processedFirst = false;
-        }
-        return listbuilder.toString();
-    }
-
 
     public String getCSVfromObject(Passenger passenger) {
 
@@ -133,7 +122,7 @@ public class PassengerSQL {
         sb.append(passenger.getVisa()).append(",");
         sb.append(passenger.getCitizenshipCode().toString()).append(",");
         sb.append(passenger.getGender().toString()).append(",");
-        sb.append(getStringfromListWithColon(passenger)).append(",");
+        baggagelists.add(getStringfromListWithSemicolon(passenger));
         sb.append(boardingPass.getId()).append(",");
         sb.append(boardingPass.getCarrier().toString()).append(",");
         sb.append(boardingPass.getFlight()).append(",");
@@ -149,17 +138,20 @@ public class PassengerSQL {
         return sb.toString();
     }
 
-    public static ArrayList<Passenger> getObjectfromCSV(String list) {
+    public ArrayList<Passenger> getObjectfromCSV(String list) {
         ArrayList<Passenger> result = new ArrayList<Passenger>();
-        StringBuilder sb = new StringBuilder();
-        String[] objects = list.split(";");
-        for (int i = 0; i < objects.length; i++) {
-            String[] passengers = objects[i].split("::");
-            for (int j = 1; j<passengers.length-1; j++){
-                sb.append(passengers[j]).append(";");
+        ArrayList<Baggage> baggageArrayList = new ArrayList<Baggage>();
+        ArrayList<String> passengerlist = new ArrayList<String>(Arrays.asList(list.split(";")));
+        for (String passengers: passengerlist){
+            String[] passenger = passengers.split(",");
+            for (String baggages: baggagelists){
+                String[] baggagelist = baggages.split(";");
+                for (int i = 0; i<baggagelist.length; i++){
+                    String[] onebaggage = baggagelist[i].split(",");
+                    baggageArrayList.add(new Baggage(onebaggage[0],onebaggage[1],Double.parseDouble(onebaggage[2]),BaggageType.valueOf(onebaggage[3])));
+                }
             }
-            String[] values = objects[i].split(",");
-            result.add(new Passenger(values[0], values[1], values[2], values[3], values[4], values[5], values[6], values[7], values[8], CitizenshipCode.valueOf(values[9]), Gender.valueOf(values[10]), BaggageSQL.getObjectfromCSV(sb.toString()), new BoardingPass(values[12], Carrier.valueOf(values[13]), values[14], values[15], TicketClass.valueOf(values[16]), Source.valueOf(values[17]), Destination.valueOf(values[18]), values[19], values[20], values[21], values[22])));
+            result.add(new Passenger(passenger[0],passenger[1],passenger[2],passenger[3],passenger[4],passenger[5],passenger[6],passenger[7],passenger[8],CitizenshipCode.valueOf(passenger[9]),Gender.valueOf(passenger[10]),baggageArrayList,new BoardingPass(passenger[11],Carrier.valueOf(passenger[12]),passenger[13],passenger[14],TicketClass.valueOf(passenger[15]),Source.valueOf(passenger[16]),Destination.valueOf(passenger[17]),passenger[18],passenger[19],passenger[20], passenger[21])));
         }
 
         return result;

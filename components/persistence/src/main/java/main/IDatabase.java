@@ -20,7 +20,7 @@ public interface IDatabase{
     void addEmployee(Employee employee);
     ArrayList<Employee> getEmployee();
     void addFlight(Flight flight);
-    Flight getFlight();
+    ArrayList<Flight> getFlight();
     void addInvoice(Invoice invoice);
     ArrayList<Invoice> getInvoice();
     void addPassenger(Passenger passenger);
