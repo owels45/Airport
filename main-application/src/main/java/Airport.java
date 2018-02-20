@@ -17,13 +17,12 @@ import event.service_vehicle_oil.ServiceVehicleChangeFireExtinguisher;
 import event.service_vehicle_oil.ServiceVehicleEngineOilTankIncreaseLevel;
 import event.service_vehicle_oil.ServiceVehicleRefillDeIcingSystem;
 import event.service_vehicle_waster_water.ServiceVehiclePumpOut;
-//import factory.BoardingControlFactory;
+import factory.BoardingControlFactory;
 //import factory.GroundOperationsCenterFactory;
 //import factory.ServiceVehicleOilFactory;
 //import factory.SkyTankingVehicleFactory;
 import factory.*;
 import logging.LogEngine;
-import sun.rmi.runtime.Log;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -59,8 +58,11 @@ public class Airport extends Subscriber {
         serviceVehicleWasteWaterTankPort = ServiceVehicleWasteWaterTankFactory.build();
 //        airCargoPalletLifterPort = AirCargoPalletLifterFactory.build();// TODO: 20.02.2018 Factory missing!!!
 //        skyTankingVehiclePort = SkyTankingVehicleFactory.build(); // TODO: 20.02.2018 java.lang.ClassNotFoundException: main.SkyTankingVehicle
-//        boardingControlPort = BoardingControlFactory.build(); // TODO: 20.02.2018 Abhängigkeit zu CheckInDesk??
-//        pushBackVehiclePort = PushBackVehicleFactory.build(); // TODO: 20.02.2018 what the heck??? 
+        boardingControlPort = BoardingControlFactory.build(); // TODO: 20.02.2018 Abhängigkeit zu CheckInDesk??
+                                                              // TODO: 20.02.2018 Wird in BoardingControl benutzt, ist also Abhängigkeit
+                                                              //                  (in Maven als <dependency> hinzugefügt, um Dummy-Klassen
+                                                              //                   entfernen zu können, JAR bauen zu können und Komponente fertigzustellen)
+//        pushBackVehiclePort = PushBackVehicleFactory.build(); // TODO: 20.02.2018 what the heck???
     }
 
     // TODO: 01.02.2018  HIER DIE GANZEN SUBSCRIBE METHODEN VON JEDEM TEAM SELBST!!!
