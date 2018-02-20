@@ -94,6 +94,11 @@
             <artifactId>check-in-desk</artifactId>
             <version>1.0.0</version>
         </dependency>
+        <dependency>
+            <groupId>de.dhbw.mosbach.ai.se</groupId>
+            <artifactId>main-application</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 
 

@@ -17,9 +17,11 @@ import event.service_vehicle_oil.ServiceVehicleChangeFireExtinguisher;
 import event.service_vehicle_oil.ServiceVehicleEngineOilTankIncreaseLevel;
 import event.service_vehicle_oil.ServiceVehicleRefillDeIcingSystem;
 import event.service_vehicle_waster_water.ServiceVehiclePumpOut;
-import factory.BoardingControlFactory;
-import factory.GroundOperationsCenterFactory;
-import factory.ServiceVehicleOilFactory;
+//import factory.BoardingControlFactory;
+//import factory.GroundOperationsCenterFactory;
+//import factory.ServiceVehicleOilFactory;
+//import factory.SkyTankingVehicleFactory;
+import factory.*;
 import logging.LogEngine;
 import sun.rmi.runtime.Log;
 
@@ -46,19 +48,19 @@ public class Airport extends Subscriber {
 
     // TODO: 01.02.2018  HIER ALLE FACTORYS EINFÜGEN VON JEDEM TEAM SELBST!!!
     public void build() {
-//        checkInDeskPort = .build();
-//        baggageSortingUnitPort = .build();
-//        securityCheckPort = .build();
-//        federalPolicePort = .build();
-//        customsPort = .build();
+//        checkInDeskPort = CheckInDeskFactory.build(); // TODO: 20.02.2018 Factory missing!!!
+        baggageSortingUnitPort = BaggageSortingUnitFactory.build();
+        securityCheckPort = SecurityCheckFactory.build();
+//        federalPolicePort = FederalPoliceFactory.build();// TODO: 20.02.2018 Factory missing!!!
+        customsPort = CustomsFactory.build();
         serviceVehicleOilPort = ServiceVehicleOilFactory.build();
-//        serviceVehicleNitrogenOxygenPort = .build();
-//        serviceVehicleFreshWaterPort = .build();
-//        serviceVehicleWasteWaterTankPort = .build();
-//        airCargoPalletLifterPort = .build();
-//        skyTankingVehiclePort = SkyTankingVehicleFactory.build();
-        boardingControlPort = BoardingControlFactory.build();
-//        pushBackVehiclePort = .build();
+        serviceVehicleNitrogenOxygenPort = ServiceVehicleNitrogenOxygenFactory.build();
+        serviceVehicleFreshWaterPort = ServiceVehicleFreshWaterFactory.build();
+        serviceVehicleWasteWaterTankPort = ServiceVehicleWasteWaterTankFactory.build();
+//        airCargoPalletLifterPort = AirCargoPalletLifterFactory.build();// TODO: 20.02.2018 Factory missing!!!
+//        skyTankingVehiclePort = SkyTankingVehicleFactory.build(); // TODO: 20.02.2018 java.lang.ClassNotFoundException: main.SkyTankingVehicle
+//        boardingControlPort = BoardingControlFactory.build(); // TODO: 20.02.2018 Abhängigkeit zu CheckInDesk??
+//        pushBackVehiclePort = PushBackVehicleFactory.build(); // TODO: 20.02.2018 what the heck??? 
     }
 
     // TODO: 01.02.2018  HIER DIE GANZEN SUBSCRIBE METHODEN VON JEDEM TEAM SELBST!!!
