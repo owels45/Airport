@@ -91,17 +91,17 @@ public class Application {
 
     public void startSimulation(Airplane airplane) {
         //eigentlicher Ablauf der Simulation:
-        checkIn();
-        baggageSorting();
-        securityCheck();
-        federalPolice();
-        customs();
-        customs();
+//        checkIn();
+//        baggageSorting();
+//        securityCheck();
+//        federalPolice();
+//        customs();
+//        customs();
 //        serviceVehicleTasks(airplane);
-        airCargoPalletLifterTask();
-        tanking();
+//        airCargoPalletLifterTask();
+//        tanking();
 //        boardingControl();
-        pushBack();
+//        pushBack();
     }
 
     public static void main(String... args) {
