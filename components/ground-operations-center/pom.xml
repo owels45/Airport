@@ -20,13 +20,17 @@
             </plugin>
         </plugins>
     </build>
-
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>de.dhbw.mosbach.ai.se</groupId>
+            <artifactId>main-application</artifactId>
+            <version>1.0.0</version>
         </dependency>
     </dependencies>
 </project>

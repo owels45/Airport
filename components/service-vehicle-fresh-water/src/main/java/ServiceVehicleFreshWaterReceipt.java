@@ -1,4 +1,3 @@
-
 public class ServiceVehicleFreshWaterReceipt {
 
     private int amountFreshWater;

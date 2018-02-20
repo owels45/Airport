@@ -1,6 +1,14 @@
 import com.google.common.eventbus.Subscribe;
 
 import event.Subscriber;
+import event.boarding_control.BoardingControlCallPassengers;
+import event.boarding_control.BoardingControlInspectPassports;
+import event.boarding_control.BoardingControlNotifyGroundOperations;
+import event.boarding_control.BoardingControlScanBoardingPass;
+import event.boarding_control.base.BoardingPass;
+import event.boarding_control.base.Passenger;
+import event.boarding_control.base.PassengerList;
+import event.boarding_control.base.Passport;
 import event.service_vehicle_fresh_water.ServiceVehicleRefillFreshWater;
 import event.service_vehicle_nitrogen_oxygen.ServiceVehicleRefillNitrogenBottle;
 import event.service_vehicle_nitrogen_oxygen.ServiceVehicleRefillOxygenBottle;
@@ -9,10 +17,15 @@ import event.service_vehicle_oil.ServiceVehicleChangeFireExtinguisher;
 import event.service_vehicle_oil.ServiceVehicleEngineOilTankIncreaseLevel;
 import event.service_vehicle_oil.ServiceVehicleRefillDeIcingSystem;
 import event.service_vehicle_waster_water.ServiceVehiclePumpOut;
-import factory.GroundOperationsCenterFactory;
-import factory.ServiceVehicleOilFactory;
+//import factory.BoardingControlFactory;
+//import factory.GroundOperationsCenterFactory;
+//import factory.ServiceVehicleOilFactory;
+//import factory.SkyTankingVehicleFactory;
+import factory.*;
 import logging.LogEngine;
+import sun.rmi.runtime.Log;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
@@ -36,20 +49,20 @@ public class Airport extends Subscriber {
 
     // TODO: 01.02.2018  HIER ALLE FACTORYS EINFÜGEN VON JEDEM TEAM SELBST!!!
     public void build() {
-//        checkInDeskPort = .build();
-//        baggageSortingUnitPort = .build();
-//        securityCheckPort = .build();
-//        federalPolicePort = .build();
-//        customsPort = .build();
+//        checkInDeskPort = CheckInDeskFactory.build(); // TODO: 20.02.2018 Factory missing!!!
+        baggageSortingUnitPort = BaggageSortingUnitFactory.build();
+        securityCheckPort = SecurityCheckFactory.build();
+//        federalPolicePort = FederalPoliceFactory.build();// TODO: 20.02.2018 Factory missing!!!
+        customsPort = CustomsFactory.build();
         serviceVehicleOilPort = ServiceVehicleOilFactory.build();
-//        serviceVehicleNitrogenOxygenPort = .build();
-//        serviceVehicleFreshWaterPort = .build();
-//        serviceVehicleWasteWaterTankPort = .build();
-//        airCargoPalletLifterPort = .build();
-//        skyTankingVehiclePort = SkyTankingVehicleFactory.build();
-//        boardingControlPort = .build();
-//        pushBackVehiclePort = .build();
+        serviceVehicleNitrogenOxygenPort = ServiceVehicleNitrogenOxygenFactory.build();
+        serviceVehicleFreshWaterPort = ServiceVehicleFreshWaterFactory.build();
+        serviceVehicleWasteWaterTankPort = ServiceVehicleWasteWaterTankFactory.build();
         groundOperationCenter = GroundOperationsCenterFactory.build();
+//        airCargoPalletLifterPort = AirCargoPalletLifterFactory.build();// TODO: 20.02.2018 Factory missing!!!
+//        skyTankingVehiclePort = SkyTankingVehicleFactory.build(); // TODO: 20.02.2018 java.lang.ClassNotFoundException: main.SkyTankingVehicle
+//        boardingControlPort = BoardingControlFactory.build(); // TODO: 20.02.2018 Abhängigkeit zu CheckInDesk??
+//        pushBackVehiclePort = PushBackVehicleFactory.build(); // TODO: 20.02.2018 what the heck??? 
     }
 
     // TODO: 01.02.2018  HIER DIE GANZEN SUBSCRIBE METHODEN VON JEDEM TEAM SELBST!!!
@@ -67,7 +80,7 @@ public class Airport extends Subscriber {
 
                 LogEngine.instance.write("+");
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -158,7 +171,7 @@ public class Airport extends Subscriber {
 
                 LogEngine.instance.write("+");
             }
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -176,7 +189,7 @@ public class Airport extends Subscriber {
 
                 LogEngine.instance.write("+");
             }
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -199,170 +212,83 @@ public class Airport extends Subscriber {
         }
     }
 
-    /*
     @Subscribe
-    public void receive(CheckInDeskNotifyGroundOperations event) { //1
+    public void receive(BoardingControlCallPassengers event) {
         try {
-            Method receive = groundOperationCenter.getClass().getDeclaredMethod("receive", Object.class);
-            receive.invoke(groundOperationCenter, event.getCheckInReceipt());
-            LogEngine.instance.write(event.getPhase() + " : received");
-        }catch (Exception e) {
-            e.printStackTrace();
+            // Load method 'call' from boardingControlPort with parameter of type PassengerList
+            Method callPassengerMethod = boardingControlPort.getClass().getDeclaredMethod("call", PassengerList.class);
+            LogEngine.instance.write("signature of BoardingControl.Port.call(PassengerList.class): " + callPassengerMethod.toGenericString());
+
+            // Invoke method with passenger list from event
+            callPassengerMethod.invoke(boardingControlPort, event.getPassengers());
+            LogEngine.instance.write("--- Call all passengers to gate to start boarding");
+            int passengerId = 1;
+            for (Passenger passenger : event.getPassengers().getPassengerList()) {
+                LogEngine.instance.write(String.format("%03d: %s", passengerId, passenger.toString()));
+                passengerId++;
+            }
+            LogEngine.instance.write("--- Calling passengers completed");
+        } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException exc) {
+            exc.printStackTrace();
         }
     }
 
     @Subscribe
-    public void receive(BulkyBaggageDeskNotifyGroundOperations event) { //2
+    public void receive(BoardingControlInspectPassports event) {
         try {
-            Method receive = groundOperationCenter.getClass().getDeclaredMethod("receive", Object.class);
-            receive.invoke(groundOperationCenter, event.getBulkyBaggageDeskReceipt());
-            LogEngine.instance.write(event.getPhase() + " : received");
-        }catch (Exception e) {
-            e.printStackTrace();
+            // Load method 'inspect' with the Passport parameter from BoardingControl class
+            Method inspectPassportMethod = boardingControlPort.getClass().getMethod("inspect", Passport.class);
+            LogEngine.instance.write("signature of BoardingControl.Port.inspect(Passport.class): " + inspectPassportMethod.toGenericString());
+
+            // Inspect the passport for each passenger before boarding
+            LogEngine.instance.write("--- Inspect the passports of all passengers");
+            for (Passenger passenger : event.getPassengers().getPassengerList()) {
+                boolean validPassport = (boolean) inspectPassportMethod.invoke(boardingControlPort, passenger.getPassport());
+                LogEngine.instance.write(validPassport ? "Passenger " + passenger.getName() + " has a valid passport." :
+                        "Security Alert: Passenger " + passenger.getName() + " has a counterfeit passport!");
+            }
+            LogEngine.instance.write("--- Finished inspection: All passports are valid!");
+        } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException exc) {
+            exc.printStackTrace();
         }
     }
 
     @Subscribe
-    public void receive(BaggageSortingUnitNotifyGroundOperations event) { //3
+    public void receive(BoardingControlScanBoardingPass event) {
         try {
-            Method receive = groundOperationCenter.getClass().getDeclaredMethod("receive", Object.class);
-            receive.invoke(groundOperationCenter, event.getBaggageSortingUnitReceipt());
-            LogEngine.instance.write(event.getPhase() + " : received");
-        }catch (Exception e) {
-            e.printStackTrace();
+            // Load method 'scan' from BoardingControl to scan all boarding passes
+            Method scanMethod = boardingControlPort.getClass().getDeclaredMethod("scan", BoardingPass.class);
+            LogEngine.instance.write("signature of BoardingControl.Port.scan(BoardingPass.class): " + scanMethod.toGenericString());
+
+            // Scan the boarding pass for each passenger and log the progress
+            LogEngine.instance.write("--- Scanning all boarding passes of passengers");
+            for (Passenger passenger : event.getPassengers().getPassengerList()) {
+                boolean boardingPassScanned = (boolean) scanMethod.invoke(boardingControlPort, passenger.getBoardingPass());
+                LogEngine.instance.write(boardingPassScanned ? "Passenger " + passenger.getName() + " is registered to flight " +
+                        passenger.getBoardingPass().getFlight() + " from " + passenger.getBoardingPass().getSource() + " to " +
+                        passenger.getBoardingPass().getDestination() + "!" : "Passenger " + passenger.getName() +
+                        " is not registered on this flight!");
+            }
+            LogEngine.instance.write("--- Scanning boarding passes completed: All passengers are validly registered on this flight!");
+        } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException exc) {
+            exc.printStackTrace();
         }
     }
 
     @Subscribe
-    public void receive(SecurityCheckNotifyGroundOperations event) { //4
+    public void receive(BoardingControlNotifyGroundOperations event) {
         try {
-            Method receive = groundOperationCenter.getClass().getDeclaredMethod("receive", Object.class);
-            receive.invoke(groundOperationCenter, event.getSecurityCheckReceipt());
-            LogEngine.instance.write(event.getPhase() + " : received");
-        }catch (Exception e) {
-            e.printStackTrace();
+            // Load method 'notifyGroundOperations' from BoardingControl to invoke receive method of GroundOperationsCenter
+            Method notifyGroundOperationsMethod = boardingControlPort.getClass().getDeclaredMethod("notifyGroundOperations", Object.class);
+            LogEngine.instance.write("signature of BoardingControl.Port.notifyGroundOperations(Object.class): " + notifyGroundOperationsMethod.toGenericString());
+
+            // Invoke notification of ground operations by applying the ground operation's port to method
+            notifyGroundOperationsMethod.invoke(boardingControlPort, event.getGroundOperationsPort());
+            LogEngine.instance.write("--- Notifying ground operations that boarding is completed and passengers are" +
+                    "on their way to the airplane");
+        } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException exc) {
+            exc.printStackTrace();
         }
     }
 
-    @Subscribe
-    public void receive(FederalPoliceNotifyGroundOperations event) { //5
-        try {
-            Method receive = groundOperationCenter.getClass().getDeclaredMethod("receive", Object.class);
-            receive.invoke(groundOperationCenter, event.getFederalPoliceReceipt());
-            LogEngine.instance.write(event.getPhase() + " : received");
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Subscribe
-    public void receive(CustomsNotifyGroundOperations event) { //6
-        try {
-            Method receive = groundOperationCenter.getClass().getDeclaredMethod("receive", Object.class);
-            receive.invoke(groundOperationCenter, event.getCustomsReceipt());
-            LogEngine.instance.write(event.getPhase() + " : received");
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Subscribe
-    public void receive(ServiceVehicleOilNotifyGroundOperations event) { //7
-        try {
-            Method receive = groundOperationCenter.getClass().getDeclaredMethod("receive", Object.class);
-            receive.invoke(groundOperationCenter, event.getServiceVehicleOilReceipt());
-            LogEngine.instance.write(event.getPhase() + " : received");
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Subscribe
-    public void receive(ServiceVehicleNitrogenOxygenNotifyGroundOperations event) { //8
-        try {
-            Method receive = groundOperationCenter.getClass().getDeclaredMethod("receive", Object.class);
-            receive.invoke(groundOperationCenter, event.getServiceVehicleNitrogenOxygenReceipt());
-            LogEngine.instance.write(event.getPhase() + " : received");
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Subscribe
-    public void receive(ServiceVehicleFreshWaterNotifyGroundOperations event) { //9
-        try {
-            Method receive = groundOperationCenter.getClass().getDeclaredMethod("receive", Object.class);
-            receive.invoke(groundOperationCenter, event.getServiceVehicleFreshWaterReceipt());
-            LogEngine.instance.write(event.getPhase() + " : received");
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Subscribe
-    public void receive(ServiceVehicleWasteWaterTankNotifyGroundOperations event) { //10
-        try {
-            Method receive = groundOperationCenter.getClass().getDeclaredMethod("receive", Object.class);
-            receive.invoke(groundOperationCenter, event.getServiceVehicleWasteWaterTankReceipt());
-            LogEngine.instance.write(event.getPhase() + " : received");
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Subscribe
-    public void receive(AirCargoPalletLifterNotifyGroundOperations event) { //11
-        try {
-            Method receive = groundOperationCenter.getClass().getDeclaredMethod("receive", Object.class);
-            receive.invoke(groundOperationCenter, event.getAirCargoPalletLifterReceipt());
-            LogEngine.instance.write(event.getPhase() + " : received");
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Subscribe
-    public void receive(ContainerLifterNotifyGroundOperations event) { //12
-        try {
-            Method receive = groundOperationCenter.getClass().getDeclaredMethod("receive", Object.class);
-            receive.invoke(groundOperationCenter, event.getContainerLifterLifterReceipt());
-            LogEngine.instance.write(event.getPhase() + " : received");
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Subscribe
-    public void receive(FuelNotifyGroundOperations event) { //13
-        try {
-            Method receive = groundOperationCenter.getClass().getDeclaredMethod("receive", Object.class);
-            receive.invoke(groundOperationCenter, event.getFuelReceipt());
-            LogEngine.instance.write(event.getPhase() + " : received");
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Subscribe
-    public void receive(BoardingControlNotifyGroundOperations event) { //14
-        try {
-            Method receive = groundOperationCenter.getClass().getDeclaredMethod("receive", Object.class);
-            receive.invoke(groundOperationCenter, event.getBoardingControlReceipt());
-            LogEngine.instance.write(event.getPhase() + " : received");
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Subscribe
-    public void receive(PushBackVehicleNotifyGroundOperations event) { //15
-        try {
-            Method receive = groundOperationCenter.getClass().getDeclaredMethod("receive", Object.class);
-            receive.invoke(groundOperationCenter, event.getPushBackVehicleReceipt());
-            LogEngine.instance.write(event.getPhase() + " : received");
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    */
 }
