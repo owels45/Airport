@@ -66,11 +66,14 @@ public class Application {
 
         eventBus.post(new ServiceVehiclePumpOut(phase, airplane));
     }
-    //    ...?
+
+    public void airCargoPalletLifterTask() {
+
+    }
+
     public void tanking() {
 
     }
-// TODO: 01.02.2018  ...alle service-Vehicle-Events ergänzen
 
     // TODO: Insert passenger list into allPassengers if passenger instances are available (either database or instantiation)
     public void boardingControl() {
@@ -87,9 +90,18 @@ public class Application {
 
 
     public void startSimulation(Airplane airplane) {
-        //Aufruf obiger Methoden in richtiger Reihenfolge
-        //serviceVehicleTasks(airplane);
-        boardingControl();
+        //eigentlicher Ablauf der Simulation:
+//        checkIn();
+//        baggageSorting();
+//        securityCheck();
+//        federalPolice();
+//        customs();
+//        customs();
+//        serviceVehicleTasks(airplane);
+//        airCargoPalletLifterTask();
+//        tanking();
+//        boardingControl();
+//        pushBack();
     }
 
     public static void main(String... args) {
