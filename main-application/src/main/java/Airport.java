@@ -17,6 +17,10 @@ import event.service_vehicle_oil.ServiceVehicleChangeFireExtinguisher;
 import event.service_vehicle_oil.ServiceVehicleEngineOilTankIncreaseLevel;
 import event.service_vehicle_oil.ServiceVehicleRefillDeIcingSystem;
 import event.service_vehicle_waster_water.ServiceVehiclePumpOut;
+import factory.BoardingControlFactory;
+//import factory.GroundOperationsCenterFactory;
+//import factory.ServiceVehicleOilFactory;
+//import factory.SkyTankingVehicleFactory;
 import factory.*;
 import logging.LogEngine;
 
@@ -43,11 +47,11 @@ public class Airport extends Subscriber {
 
     // TODO: 01.02.2018  HIER ALLE FACTORYS EINFÜGEN VON JEDEM TEAM SELBST!!!
     public void build() {
-//        checkInDeskPort = .build();
-//        baggageSortingUnitPort = .build();
-//        securityCheckPort = .build();
-//        federalPolicePort = .build();
-//        customsPort = .build();
+//        checkInDeskPort = CheckInDeskFactory.build(); // TODO: 20.02.2018 Factory missing!!!
+        baggageSortingUnitPort = BaggageSortingUnitFactory.build();
+        securityCheckPort = SecurityCheckFactory.build();
+//        federalPolicePort = FederalPoliceFactory.build();// TODO: 20.02.2018 Factory missing!!!
+        customsPort = CustomsFactory.build();
         serviceVehicleOilPort = ServiceVehicleOilFactory.build();
         serviceVehicleNitrogenOxygenPort = ServiceVehicleNitrogenOxygenFactory.build();
         serviceVehicleFreshWaterPort = ServiceVehicleFreshWaterFactory.build();
