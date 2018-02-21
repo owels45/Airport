@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The baggage sorting unit.
@@ -12,14 +13,14 @@ public class BaggageSortingUnit {
     }
 
     private String position;
-    private ArrayList<LuggageTub> luggageTubList;
+    private List<LuggageTub> luggageTubList;
     private DestinationBox destinationBox;
-    private ArrayList<Container> emptyContainerList;
-    private ArrayList<Container> filledContainerList;
+    private List<Container> emptyContainerList;
+    private List<Container> filledContainerList;
     private Roboter roboter;
-    private ArrayList<Object> baggageVehicleList;
-    private ArrayList<BaggageIdentificationTag> baggageIdentificationTags;
-    private ArrayList<Baggage> baggageList;
+    private List<Object> baggageVehicleList;
+    private List<BaggageIdentificationTag> baggageIdentificationTags;
+    private List<Baggage> baggageList;
     private Destination destination;
 
 
@@ -55,7 +56,7 @@ public class BaggageSortingUnit {
      * @param baggageVehicles The baggage vehicles to load the containers.
      * @param baggageIdentificationTags The tags for the baggage.
      */
-    private void initialize(String position, Destination destination, ArrayList<Baggage> baggage, ArrayList<Object> baggageVehicles, ArrayList<BaggageIdentificationTag> baggageIdentificationTags) {
+    private void initialize(String position, Destination destination, List<Baggage> baggage, List<Object> baggageVehicles, List<BaggageIdentificationTag> baggageIdentificationTags) {
 
         this.position = position;
         this.luggageTubList = new ArrayList<LuggageTub>();
@@ -245,7 +246,7 @@ public class BaggageSortingUnit {
      * Port for the baggage sorting unit.
      */
     public class Port implements IBaggageSortingUnit {
-        public BaggageSortingUnitReceipt execute(String position, Destination destination, ArrayList<Baggage> baggage, ArrayList<Object> baggageVehicles, ArrayList<BaggageIdentificationTag> baggageIdentificationTags) throws Exception {
+        public BaggageSortingUnitReceipt execute(String position, Destination destination, List<Baggage> baggage, List<Object> baggageVehicles, List<BaggageIdentificationTag> baggageIdentificationTags) throws Exception {
             initialize(position, destination, baggage, baggageVehicles, baggageIdentificationTags);
             return innerExecute();
         }

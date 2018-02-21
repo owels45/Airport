@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class CheckInDesk {
     private int id;
@@ -14,40 +15,6 @@ public class CheckInDesk {
     private int numberOfPassengersBusinessClass;
     private int numberOfPassengersEconomyClass;
     private int numberOfBaggage;
-
-    private static CheckInDesk instance = new CheckInDesk();
-    public Port port = new Port();
-
-    public static CheckInDesk getInstance() {
-        return instance;
-    }
-
-    private CheckInDesk() {
-    }
-
-    public class Port implements ICheckInDesk{
-
-        public BoardingPass checkIn(Passenger passenger, ArrayList<Baggage> baggage) {
-            return innerCheckIn(passenger,baggage);
-        }
-
-        public boolean scan(Passport passport) {
-            return innerScan(passport);
-        }
-
-        public void print(BoardingPass boardingPass) {
-            innerPrint(boardingPass);
-        }
-
-        public BaggageIdentificationTag checkIn(Baggage baggage) {
-            return innerCheckIn(baggage);
-        }
-
-        public void notifyGroundOperations(CheckInDeskReceipt checkInDeskReceipt) {
-            innerNotifyGroundOperations(checkInDeskReceipt);
-        }
-    }
-
 
     public int getId() {
         return id;
@@ -153,20 +120,69 @@ public class CheckInDesk {
         this.numberOfBaggage = numberOfBaggage;
     }
 
+    public static void setInstance(CheckInDesk instance) {
+        CheckInDesk.instance = instance;
+    }
+
+    private static CheckInDesk instance = new CheckInDesk();
+    public Port port = new Port();
+
+    public static CheckInDesk getInstance() {
+        return instance;
+    }
+
+    private CheckInDesk() {
+    }
+
+    public class Port implements ICheckInDesk{
+
+        public BoardingPass checkIn(Passenger passenger, ArrayList<Baggage> baggage) {
+            return innerCheckIn(passenger,baggage);
+        }
+
+        public boolean scan(Passport passport) {
+            return innerScan(passport);
+        }
+
+        public void print(BoardingPass boardingPass) {
+            innerPrint(boardingPass);
+        }
+
+        public BaggageIdentificationTag checkIn(Baggage baggage) {
+            return innerCheckIn(baggage);
+        }
+
+        public void notifyGroundOperations(CheckInDeskReceipt checkInDeskReceipt) {
+            innerNotifyGroundOperations(checkInDeskReceipt);
+        }
+    }
 
     public BoardingPass innerCheckIn(Passenger passenger, ArrayList<Baggage> baggage) {
         passenger.setBaggageList(baggage);
+
+        TicketClass ticketClass = TicketClass.Economy;
+        if(numberOfPassengersFirstClass > 0){
+            ticketClass = TicketClass.First;
+            numberOfPassengersFirstClass--;
+        } else if(numberOfPassengersBusinessClass > 0){
+            ticketClass = TicketClass.Business;
+            numberOfPassengersBusinessClass--;
+        } else if(numberOfPassengersEconomyClass > 0){
+            ticketClass = TicketClass.Economy;
+            numberOfPassengersEconomyClass--;
+        }
+
         BoardingPass boardingPass = new BoardingPass(
+                UUID.randomUUID().toString(),
                 null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
+                flight,
+                passenger,
+                ticketClass,
+                source,
+                destination,
+                date,
+                gate,
+                boardingTime,
                 null
         );
         return boardingPass;
@@ -181,19 +197,20 @@ public class CheckInDesk {
     }
 
     public BaggageIdentificationTag innerCheckIn(Baggage baggage) {
-        BaggageIdentificationTag baggageIdentificationTag = new BaggageIdentificationTag("1",
+        BaggageIdentificationTag baggageIdentificationTag = new BaggageIdentificationTag(
+                UUID.randomUUID().toString(),
                 null,
                 null,
                 1,
-                null,
-                null,
-                null,
-                null,
+                "N/A",
+                "N/A",
+                "N/A",
+                baggage,
                 null,
                 true,
                 true,
                 true,
-                null);
+                UUID.randomUUID().toString());
         return baggageIdentificationTag;
     }
 

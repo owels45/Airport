@@ -1,3 +1,5 @@
+import base.Airplane;
+
 public interface IPushBackVehicle {
 
     public void connect(Airplane airplane);
