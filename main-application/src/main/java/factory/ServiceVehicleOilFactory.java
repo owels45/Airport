@@ -10,9 +10,10 @@ public class ServiceVehicleOilFactory {
 
     public static Object build() {
         Object componentPort = null;
+        String fileSeparator = System.getProperty("file.separator");
 
         try {
-            URL[] urls = {new File(Configuration.instance.commonPathToJavaArchive + "/serviceVehicleOil.jar").toURI().toURL()};
+            URL[] urls = {new File(Configuration.instance.commonPathToJavaArchive + fileSeparator + "serviceVehicleOil.jar").toURI().toURL()};
             URLClassLoader urlClassLoader = new URLClassLoader(urls, ServiceVehicleOilFactory.class.getClassLoader());
             Class serviceVehicleOilClass = Class.forName("ServiceVehicleOil",true,urlClassLoader);
             Object serviceVehicleOilInstance = serviceVehicleOilClass.getMethod("getInstance",new Class[0]).invoke(null,new Object[0]);

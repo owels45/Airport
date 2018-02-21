@@ -5,7 +5,31 @@ public class BaggageVehicle {
 
     public static BaggageVehicle instance = new BaggageVehicle();
 
+    public static BaggageVehicle getInstance() {
+        return instance;
+    }
+
     public Port port;
+
+
+    public BaggageVehicle() {port =new Port();}
+
+
+    public class Port implements IBaggageVehicle {
+
+        private Object containerLifterPort;
+
+        public int store(Container container){
+            return innerStore(container);
+        }
+
+        public void connect(Object containerLifterPort){
+            innerConnect(containerLifterPort);
+        }
+
+        public void move(String position){innerMove(position);}
+
+    }
 
     public int innerStore(Container container1){
         container = container1;
@@ -17,22 +41,7 @@ public class BaggageVehicle {
         containers.add(container);
     }
 
-    public BaggageVehicle() {port =new Port();}
-
-    public static BaggageVehicle getInstance() {return instance;}
-
-    public class Port implements IBaggageVehicle {
-
-        private Object containerLifterPort;
-
-
-        public int store(Container container){
-            return innerStore(container);
-        }
-
-        public void connect(Object containerLifterPort){
-            innerConnect(containerLifterPort);
-        }
+    public void innerMove(String position){
 
     }
 }

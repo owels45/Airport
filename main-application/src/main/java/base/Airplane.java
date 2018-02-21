@@ -1,6 +1,6 @@
 package base;
 
-// TODO: dummy class -> durch richtige Airplane Klasse ersetzen
+// TODO: base class -> durch richtige Airplane Klasse ersetzen
 
 import com.google.common.eventbus.EventBus;
 import event.Subscriber;

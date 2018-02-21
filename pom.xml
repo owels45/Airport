@@ -54,6 +54,7 @@
     </build>
 
     <modules>
+
         <module>components/check-in-desk</module>
         <module>components/bulky-baggage-desk</module>
         <module>components/scanner</module>

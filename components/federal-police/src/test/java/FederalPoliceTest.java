@@ -1,11 +1,6 @@
-import base.Passport;
-import base.SpecialGood;
-import base.SpecialGoodType;
 import org.junit.Test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 
 public class FederalPoliceTest {
@@ -59,11 +54,15 @@ public class FederalPoliceTest {
         assertFalse(FederalPolice.getInstance().innerMethodInspectMunition(specialGood));
     }
 
-    @Test
-    public void testInnerMethodKeepSafe() {
-    }
-
-    @Test
-    public void testInnerMethodNotifyGroundOperations() {
-    }
+//    @Test
+//    public void testInnerMethodNotifyGroundOperations() {
+//        FederalPoliceReceipt receipt = new FederalPoliceReceipt(0,0, null,null);
+//        try{
+//            FederalPolice.getInstance().innerMethodNotifyGroundOperations(receipt);
+//            assertTrue(true);
+//        }catch (Exception e){
+//            e.printStackTrace();
+//            assertTrue(false);
+//        }
+//    }
 }
