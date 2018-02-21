@@ -47,7 +47,7 @@ public class Application {
 
     }
 
-    public void federalPolice(Passport passport, Passenger passenger, SpecialGood specialGood, Baggage baggage) {
+    public void federalPolice(base.Passport passport, base.Passenger passenger, base.SpecialGood specialGood, base.Baggage baggage) {
         String phase = "Federal Police";
         eventBus.post(new FederalPoliceVerify(phase, passport));
         eventBus.post(new FederalPoliceInspectWeapon(phase, specialGood));
@@ -57,7 +57,7 @@ public class Application {
         eventBus.post(new FederalPoliceKeepSafe(phase, baggage));
     }
 
-    public void customs(Passport passport, BoardingPass boardingPass, Invoice invoice, Baggage baggage) {
+    public void customs(base.Passport passport, base.BoardingPass boardingPass, base.Invoice invoice, base.Baggage baggage) {
         String phase = "Customs";
         eventBus.post(new CustomsVerify(phase, passport, boardingPass, invoice ));
         eventBus.post(new CustomsScan(phase, baggage));
