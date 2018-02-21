@@ -1,3 +1,7 @@
+import base.Baggage;
+import base.BoardingPass;
+import base.Destination;
+import base.Passenger;
 import com.google.common.eventbus.Subscribe;
 
 import event.Subscriber;
@@ -5,10 +9,7 @@ import event.boarding_control.BoardingControlCallPassengers;
 import event.boarding_control.BoardingControlInspectPassports;
 import event.boarding_control.BoardingControlNotifyGroundOperations;
 import event.boarding_control.BoardingControlScanBoardingPass;
-import event.boarding_control.base.BoardingPass;
-import event.boarding_control.base.Passenger;
-import event.boarding_control.base.PassengerList;
-import event.boarding_control.base.Passport;
+import event.security_check.SecurityCheck;
 import event.service_vehicle_fresh_water.ServiceVehicleRefillFreshWater;
 import event.service_vehicle_nitrogen_oxygen.ServiceVehicleRefillNitrogenBottle;
 import event.service_vehicle_nitrogen_oxygen.ServiceVehicleRefillOxygenBottle;
@@ -60,8 +61,9 @@ public class Airport extends Subscriber {
 //        skyTankingVehiclePort = SkyTankingVehicleFactory.build(); // TODO: 20.02.2018 java.lang.ClassNotFoundException: main.SkyTankingVehicle
         boardingControlPort = BoardingControlFactory.build(); // TODO: 20.02.2018 Abhängigkeit zu CheckInDesk??
                                                               // TODO: 20.02.2018 Wird in BoardingControl benutzt, ist also Abhängigkeit
-                                                              //                  (in Maven als <dependency> hinzugefügt, um Dummy-Klassen
-                                                              //                   entfernen zu können, JAR bauen zu können und Komponente fertigzustellen)
+        specialGoodRoboterPort = SpecialGoodRoboterFactory.build();
+        baggageVehiclePort = BaggageVehicleFactory.build();
+        containerLifterPort = ContainerLifterFactory.build();
 //        pushBackVehiclePort = PushBackVehicleFactory.build(); // TODO: 20.02.2018 what the heck???
     }
 

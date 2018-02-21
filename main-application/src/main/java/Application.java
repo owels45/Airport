@@ -1,11 +1,26 @@
 import base.Airplane;
 import com.google.common.eventbus.EventBus;
 import event.Subscriber;
+<<<<<<< Updated upstream
+=======
+
+import event.baggage_sorting.BaggageSorting;
+>>>>>>> Stashed changes
 import event.boarding_control.BoardingControlCallPassengers;
 import event.boarding_control.BoardingControlInspectPassports;
 import event.boarding_control.BoardingControlNotifyGroundOperations;
 import event.boarding_control.BoardingControlScanBoardingPass;
 import event.boarding_control.base.PassengerList;
+<<<<<<< Updated upstream
+=======
+import event.customs.CustomsScan;
+import event.customs.CustomsVerify;
+import event.federal_police.*;
+import event.pushback_vehicle.PushBackVehicleConnect;
+import event.pushback_vehicle.PushBackVehicleDisconnect;
+import event.pushback_vehicle.PushBackVehiclePushBack;
+import event.security_check.SecurityCheck;
+>>>>>>> Stashed changes
 import event.service_vehicle_fresh_water.ServiceVehicleRefillFreshWater;
 import event.service_vehicle_nitrogen_oxygen.ServiceVehicleRefillNitrogenBottle;
 import event.service_vehicle_nitrogen_oxygen.ServiceVehicleRefillOxygenBottle;
@@ -14,6 +29,12 @@ import event.service_vehicle_oil.ServiceVehicleChangeFireExtinguisher;
 import event.service_vehicle_oil.ServiceVehicleEngineOilTankIncreaseLevel;
 import event.service_vehicle_oil.ServiceVehicleRefillDeIcingSystem;
 import event.service_vehicle_waster_water.ServiceVehiclePumpOut;
+<<<<<<< Updated upstream
+=======
+import event.sky_tanking_vehicle.SkyTankingVehicleConnect;
+import event.sky_tanking_vehicle.SkyTankingVehiclePrint;
+import event.sky_tanking_vehicle.SkyTankingVehiclePump;
+>>>>>>> Stashed changes
 import factory.GroundOperationsCenterFactory;
 import logging.LogEngine;
 
@@ -48,7 +69,14 @@ public class Application {
 
     }
 
+<<<<<<< Updated upstream
     public void customs() {
+=======
+    public void customsTasks(Passport passport, BoardingPass boardingPass, Invoice invoice, Baggage baggage) {
+        String phase = "Customs";
+        eventBus.post(new CustomsVerify(phase, passport, boardingPass, invoice));
+        eventBus.post(new CustomsScan(phase, baggage));
+>>>>>>> Stashed changes
 
     }
 

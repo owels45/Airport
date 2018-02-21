@@ -1,4 +1,4 @@
-package event.boarding_control.base;
+package base;
 
 public class ContainerProfile {
     private String destination;

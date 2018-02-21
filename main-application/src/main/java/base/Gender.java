@@ -1,4 +1,4 @@
-package event.boarding_control.base;
+package base;
 
 public enum Gender {
     Female,
