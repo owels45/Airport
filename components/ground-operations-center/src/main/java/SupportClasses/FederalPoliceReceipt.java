@@ -1,3 +1,5 @@
+package SupportClasses;
+
 import base.Baggage;
 import base.Passenger;
 

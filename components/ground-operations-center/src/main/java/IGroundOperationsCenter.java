@@ -1,4 +1,4 @@
-
+import SupportClasses.*;
 
 public interface IGroundOperationsCenter {
   void receive(CheckInDeskReceipt checkInReceipt);

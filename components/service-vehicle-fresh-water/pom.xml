@@ -21,12 +21,5 @@
             </plugin>
         </plugins>
     </build>
-    <dependencies>
-        <dependency>
-            <groupId>de.dhbw.mosbach.ai.se</groupId>
-            <artifactId>ground-operations-center</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-    </dependencies>
-
+    
 </project>

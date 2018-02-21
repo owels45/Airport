@@ -21,14 +21,5 @@ class CustomsTest {
 
     @Test
     void TestInnerMethodNotifyGroundOperations() {
-        CustomsReceipt receipt = new CustomsReceipt(0,0, null,null);
-        try{
-            Customs.getInstance().innerMethodNotifyGroundOperations(receipt);
-            Assertions.assertTrue(true);
-        }catch (Exception e){
-            e.printStackTrace();
-            Assertions.assertTrue(false);
-        }
-
     }
 }
