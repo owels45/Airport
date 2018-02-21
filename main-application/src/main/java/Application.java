@@ -1,4 +1,8 @@
 import base.Airplane;
+import base.Destination;
+import base.Baggage;
+import base.BaggageIdentificationTag;
+import base.PassengerList;
 import com.google.common.eventbus.EventBus;
 import event.Subscriber;
 import event.baggage_sorting.BaggageSorting;
@@ -6,7 +10,6 @@ import event.boarding_control.BoardingControlCallPassengers;
 import event.boarding_control.BoardingControlInspectPassports;
 import event.boarding_control.BoardingControlNotifyGroundOperations;
 import event.boarding_control.BoardingControlScanBoardingPass;
-import event.boarding_control.base.PassengerList;
 import event.customs.CustomsScan;
 import event.customs.CustomsVerify;
 import event.federal_police.*;
@@ -50,10 +53,11 @@ public class Application {
     public void baggageSorting() {
         // TODO Use real data
         String targetPosition = "";
-        base.Destination destination = base.Destination.CPT;
-        List<base.Baggage> baggages = new ArrayList<>();
+        Destination destination = Destination.CPT;
+        List<Baggage> baggages = new ArrayList<>();
         List<Object> baggageVehicles = new ArrayList<>();
-        List<base.BaggageIdentificationTag> baggageTags = new ArrayList<>();
+        List<BaggageIdentificationTag> baggageTags = new ArrayList<>();
+
         eventBus.post(new BaggageSorting(targetPosition, destination, baggages, baggageVehicles, baggageTags));
     }
 
@@ -77,9 +81,8 @@ public class Application {
 
     public void customs(base.Passport passport, base.BoardingPass boardingPass, base.Invoice invoice, base.Baggage baggage) {
         String phase = "Customs";
-        eventBus.post(new CustomsVerify(phase, passport, boardingPass, invoice ));
+        eventBus.post(new CustomsVerify(phase, passport, boardingPass, invoice));
         eventBus.post(new CustomsScan(phase, baggage));
-
     }
 
     public void serviceVehicleTasks(Airplane airplane) {

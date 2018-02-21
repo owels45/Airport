@@ -1,4 +1,5 @@
 package base;
+
 import java.util.ArrayList;
 
 public class BaggageSortingUnitReceipt {

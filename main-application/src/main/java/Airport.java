@@ -1,5 +1,10 @@
 import base.Baggage;
+import base.BoardingPass;
 import base.Destination;
+import base.Passenger;
+import base.Passport;
+import base.PassengerList;
+
 import com.google.common.eventbus.Subscribe;
 import event.Subscriber;
 import event.baggage_sorting.BaggageSorting;
@@ -237,7 +242,7 @@ public class Airport extends Subscriber {
             callPassengerMethod.invoke(boardingControlPort, event.getPassengers());
             LogEngine.instance.write("--- Call all passengers to gate to start boarding");
             int passengerId = 1;
-            for (event.boarding_control.base.Passenger passenger : event.getPassengers().getPassengerList()) { // TODO: 21.02.2018 war die Änderung hier richtig von mir?
+            for (Passenger passenger : event.getPassengers().getPassengerList()) { // TODO: 21.02.2018 war die Änderung hier richtig von mir?
                 LogEngine.instance.write(String.format("%03d: %s", passengerId, passenger.toString()));
                 passengerId++;
             }
@@ -256,7 +261,7 @@ public class Airport extends Subscriber {
 
             // Inspect the passport for each passenger before boarding
             LogEngine.instance.write("--- Inspect the passports of all passengers");
-            for (event.boarding_control.base.Passenger passenger : event.getPassengers().getPassengerList()) {
+            for (Passenger passenger : event.getPassengers().getPassengerList()) {
                 boolean validPassport = (boolean) inspectPassportMethod.invoke(boardingControlPort, passenger.getPassport());
                 LogEngine.instance.write(validPassport ? "Passenger " + passenger.getName() + " has a valid passport." :
                         "Security Alert: Passenger " + passenger.getName() + " has a counterfeit passport!");
@@ -276,7 +281,7 @@ public class Airport extends Subscriber {
 
             // Scan the boarding pass for each passenger and log the progress
             LogEngine.instance.write("--- Scanning all boarding passes of passengers");
-            for (event.boarding_control.base.Passenger passenger : event.getPassengers().getPassengerList()) {
+            for (Passenger passenger : event.getPassengers().getPassengerList()) {
                 boolean boardingPassScanned = (boolean) scanMethod.invoke(boardingControlPort, passenger.getBoardingPass());
                 LogEngine.instance.write(boardingPassScanned ? "Passenger " + passenger.getName() + " is registered to flight " +
                         passenger.getBoardingPass().getFlight() + " from " + passenger.getBoardingPass().getSource() + " to " +

@@ -6,7 +6,7 @@ public class BoardingControlReceipt {
 
     public BoardingControlReceipt() {
         checkInDeskPort = CheckInDesk.getInstance().port;
-        boardedPassengerList = new PassengerList(new ArrayList<Passenger>());
+        boardedPassengerList = new PassengerList(new ArrayList<>());
     }
 
     public BoardingControlReceipt(PassengerList list) {
