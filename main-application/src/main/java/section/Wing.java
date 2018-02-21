@@ -1,6 +1,6 @@
 package section;
 
-// TODO: base class -> durch richtige Wing Klasse ersetzen
+// TODO: dummy class -> durch richtige Wing Klasse ersetzen
 
 import event.Subscriber;
 import logging.LogEngine;
