@@ -1,5 +1,3 @@
-
-
 public class FuelReceipt {
 
     private String date_time;

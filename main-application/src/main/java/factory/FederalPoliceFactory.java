@@ -11,7 +11,7 @@ public class FederalPoliceFactory {
         Object componentPort = null;
 
         try {
-            URL[] urls = {new File(Configuration.instance.commonPathToJavaArchive + Configuration.instance.fileSeparator+"federal-police"+Configuration.instance.fileSeparator+"target"+Configuration.instance.fileSeparator+"federal-police-1.0.0.jar").toURI().toURL()};
+            URL[] urls = {new File(Configuration.instance.commonPathToJavaArchive + "/federal-police.jar").toURI().toURL()};
             URLClassLoader urlClassLoader = new URLClassLoader(urls, FederalPoliceFactory.class.getClassLoader());
             Class federalPoliceClass = Class.forName("FederalPolice", true, urlClassLoader);
             Object federalPoliceInstance = federalPoliceClass.getMethod("getInstance", new Class[0]).invoke(null, new Object[0]);

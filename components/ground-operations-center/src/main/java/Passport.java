@@ -1,5 +1,3 @@
-
-
 public class Passport {
     private String id;
     private String picture;

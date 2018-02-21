@@ -1,8 +1,3 @@
-<<<<<<< HEAD:components/ground-operations-center/src/main/java/ServiceVehicleOilReceipt.java
-=======
-package SupportClasses;
->>>>>>> master:components/ground-operations-center/src/main/java/SupportClasses/ServiceVehicleOilReceipt.java
-
 public class ServiceVehicleOilReceipt {
 
     private int amountAPUOil;

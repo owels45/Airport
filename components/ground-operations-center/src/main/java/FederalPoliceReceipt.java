@@ -1,12 +1,3 @@
-<<<<<<< HEAD:components/ground-operations-center/src/main/java/FederalPoliceReceipt.java
-
-=======
-package SupportClasses;
-
-import base.Baggage;
-import base.Passenger;
->>>>>>> master:components/ground-operations-center/src/main/java/SupportClasses/FederalPoliceReceipt.java
-
 import java.util.ArrayList;
 
 public class FederalPoliceReceipt {
