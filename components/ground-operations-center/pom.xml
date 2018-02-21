@@ -18,6 +18,8 @@
             </plugin>
         </plugins>
     </build>
+<<<<<<< HEAD
+=======
     <dependencies>
         <dependency>
             <groupId>de.dhbw.mosbach.ai.se</groupId>
@@ -102,4 +104,5 @@
     </dependencies>
 
 
+>>>>>>> master
 </project>

@@ -1,8 +1,3 @@
-import base.Baggage;
-import base.Passenger;
-import base.Passport;
-import base.SpecialGood;
-
 public interface IFederalPolice {
 
     boolean verify(Passport passport);
