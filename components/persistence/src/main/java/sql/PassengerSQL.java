@@ -9,12 +9,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class PassengerSQL {
 
     private Database instance;
-    ArrayList<String> baggagelists = new ArrayList<String>();
-
     public PassengerSQL(Database instance) {
         this.instance = instance;
     }
@@ -105,6 +105,20 @@ public class PassengerSQL {
         return listbuilder.toString();
     }
 
+    private String getStringfromListWithColon(Passenger passenger) {
+        boolean processedFirst = false;
+        StringBuilder listbuilder = new StringBuilder();
+        for (Baggage record : passenger.getBaggageList()) {
+            if (processedFirst)
+                listbuilder.append(":");
+            listbuilder.append(BaggageSQL.getCSVFromObject(record));
+            processedFirst = true;
+        }
+        return listbuilder.toString();
+    }
+
+
+
 
     public String getCSVfromObject(Passenger passenger) {
 
@@ -122,7 +136,6 @@ public class PassengerSQL {
         sb.append(passenger.getVisa()).append(",");
         sb.append(passenger.getCitizenshipCode().toString()).append(",");
         sb.append(passenger.getGender().toString()).append(",");
-        baggagelists.add(getStringfromListWithSemicolon(passenger));
         sb.append(boardingPass.getId()).append(",");
         sb.append(boardingPass.getCarrier().toString()).append(",");
         sb.append(boardingPass.getFlight()).append(",");
@@ -133,23 +146,24 @@ public class PassengerSQL {
         sb.append(boardingPass.getDate()).append(",");
         sb.append(boardingPass.getGate()).append(",");
         sb.append(boardingPass.getBoardingTime()).append(",");
-        sb.append(boardingPass.getSeat());
+        sb.append(boardingPass.getSeat()).append(",");
+        sb.append("<").append(getStringfromListWithColon(passenger)).append(">");
 
         return sb.toString();
     }
 
-    public ArrayList<Passenger> getObjectfromCSV(String list) {
+    public static ArrayList<Passenger> getObjectfromCSV(String list) {
         ArrayList<Passenger> result = new ArrayList<Passenger>();
-        ArrayList<Baggage> baggageArrayList = new ArrayList<Baggage>();
         ArrayList<String> passengerlist = new ArrayList<String>(Arrays.asList(list.split(";")));
         for (String passengers: passengerlist){
-            String[] passenger = passengers.split(",");
-            for (String baggages: baggagelists){
-                String[] baggagelist = baggages.split(";");
-                for (int i = 0; i<baggagelist.length; i++){
-                    String[] onebaggage = baggagelist[i].split(",");
-                    baggageArrayList.add(new Baggage(onebaggage[0],onebaggage[1],Double.parseDouble(onebaggage[2]),BaggageType.valueOf(onebaggage[3])));
-                }
+            ArrayList<Baggage> baggageArrayList = new ArrayList<Baggage>();
+            String[] listOfPassengers = passengers.split("<.*?>");
+            String listofbaggages = passengers.substring(listOfPassengers[0].length()+1,passengers.length()-1);
+            String[] passenger = listOfPassengers[0].split(",");
+            String[] baggageseperatedColon = listofbaggages.split(":");
+            for (int i = 0 ; i<baggageseperatedColon.length; i++){
+                String[]  baggageSeperatedComma = baggageseperatedColon[i].split(",");
+                baggageArrayList.add(new Baggage(baggageSeperatedComma[0],baggageSeperatedComma[1],Double.parseDouble(baggageSeperatedComma[2]),BaggageType.valueOf(baggageSeperatedComma[3])));
             }
             result.add(new Passenger(passenger[0],passenger[1],passenger[2],passenger[3],passenger[4],passenger[5],passenger[6],passenger[7],passenger[8],CitizenshipCode.valueOf(passenger[9]),Gender.valueOf(passenger[10]),baggageArrayList,new BoardingPass(passenger[11],Carrier.valueOf(passenger[12]),passenger[13],passenger[14],TicketClass.valueOf(passenger[15]),Source.valueOf(passenger[16]),Destination.valueOf(passenger[17]),passenger[18],passenger[19],passenger[20], passenger[21])));
         }

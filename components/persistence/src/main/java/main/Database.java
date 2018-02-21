@@ -370,7 +370,7 @@ public class Database {
         boardingPassSQL.dropTableBoardingPass(logEngine);
         containerProfileSQL.dropTableContainerProfile(logEngine);
         containerSQL.dropTableContainer(logEngine);
-        ;
+
         cottonPadSQL.dropTableCottonPad(logEngine);
         employeeSQL.dropTableBaggage(logEngine);
         flightSQL.dropTableFlight(logEngine);
@@ -440,7 +440,9 @@ public class Database {
         baggages.add(new Baggage("2", "contents", 15.0, BaggageType.Normal));
 
         list.add(new Passenger("1", "name", "content", "12.09.1996", "rei", "mos", "ci", "5646", "visa", CitizenshipCode.DEU, Gender.Male, baggages, new BoardingPass("1", Carrier.Emirates, "flight", "name", TicketClass.Economy, Source.MUC, Destination.DXB, "12.03.18", "13C", "20:15", "13C")));
+        list.add(new Passenger("2", "namee", "content", "12.09.1996", "rei", "mos", "ci", "5646", "visa", CitizenshipCode.DEU, Gender.Male, baggages, new BoardingPass("1", Carrier.Emirates, "flight", "name", TicketClass.Economy, Source.MUC, Destination.DXB, "12.03.18", "13C", "20:15", "13C")));
         Flight flight = new Flight("1", Carrier.Emirates, list, new Baggage("1", "content", 12.0, BaggageType.Normal));
+        Flight flight2 = new Flight("2", Carrier.Lufthansa, list, new Baggage("3", "electronics", 18.0, BaggageType.Bulky));
 
         Database.instance.innerSetLogEngine(log);
         Database.instance.startup(Configuration.instance.dataPath);
@@ -449,11 +451,14 @@ public class Database {
         baggageSQL.dropTableBaggage(log);
         baggageSQL.createTableBaggage(log);
         baggageSQL.insert(new Baggage("1", "content", 12.0, BaggageType.Normal), log);
+        baggageSQL.insert(new Baggage("3", "electronics", 18.0, BaggageType.Bulky), log);
         flightSQL.dropTableFlight(log);
         flightSQL.createTableFlight(log);
         flightSQL.insert(flight, log);
+        flightSQL.insert(flight2,log);
         try {
-            new ArrayList<Flight>(flightSQL.buildSelectSQLStatement());
+            ArrayList<Flight> flights = new ArrayList<Flight>(flightSQL.buildSelectSQLStatement());
+            System.out.println(flights.toString());
         } catch (SQLException e) {
             e.printStackTrace();
         }

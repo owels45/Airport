@@ -77,7 +77,6 @@ public class FlightSQL {
     }
 
     public ArrayList<Flight> buildSelectSQLStatement() throws SQLException {
-        PassengerSQL passengerSQL = new PassengerSQL(instance);
         ArrayList<Flight> allbagages = new ArrayList<Flight>();
         StringBuilder sb = new StringBuilder();
         sb.append("SELECT * FROM flight INNER JOIN baggage ON flight.baggageid=baggage.uuid");
@@ -91,7 +90,7 @@ public class FlightSQL {
             String content = rs.getString("content");
             int weight = rs.getInt("weight");
             BaggageType type = BaggageType.valueOf(rs.getString("type"));
-            allbagages.add(new Flight(id, Carrier.valueOf(carrier),passengerSQL.getObjectfromCSV(passenger),new Baggage(uuid,content,weight,type)));
+            allbagages.add(new Flight(id, Carrier.valueOf(carrier),PassengerSQL.getObjectfromCSV(passenger),new Baggage(uuid,content,weight,type)));
         }
 
         statement.close();
