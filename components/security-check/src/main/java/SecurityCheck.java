@@ -214,7 +214,14 @@ public class SecurityCheck {
      * @param securityCheckReceipt The security check receipt.
      */
     public void innerNotifyGroundOperations(SecurityCheckReceipt securityCheckReceipt) {
-        //TODO: Notify Ground Operations somehow, event is needed
+        Object componentPort;
+        componentPort = ComponentLoader.loadComponent("ground-operations-center", "GroundOperationsCenter", "securitycheck");
+        try {
+            Method onMethod = componentPort.getClass().getMethod("receive",SecurityCheckReceipt.class);
+            onMethod.invoke(componentPort, securityCheckReceipt);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     /**
      * Calls the method scan(Baggage baggage, String pattern) from the Scanner Component.

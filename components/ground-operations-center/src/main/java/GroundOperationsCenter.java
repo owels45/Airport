@@ -1,5 +1,5 @@
+import java.lang.reflect.Method;
 import java.util.ArrayList;
-import SupportClasses.*;
 
 public class GroundOperationsCenter {
 
@@ -69,65 +69,90 @@ public class GroundOperationsCenter {
 
         public void receive(ServiceVehicleNitrogenOxygenReceipt serviceVehicleNitrogenOxygenReceipt) {innerServiceVehicleNitrogenOxygenReceipt(serviceVehicleNitrogenOxygenReceipt); }
     }
+    private void insert(Class receiptClass){
+        Object componentPort;
+        componentPort = ComponentLoader.loadComponent("persistence","Database");
+        try {
+            Method onMethod = componentPort.getClass().getDeclaredMethod("insert",receiptClass);
+            onMethod.invoke(componentPort);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
+    }
     private void innerServiceVehicleNitrogenOxygenReceipt(ServiceVehicleNitrogenOxygenReceipt serviceVehicleNitrogenOxygenReceipt) {
         serviceVehicleNitrogenOxygenReceipts.add(serviceVehicleNitrogenOxygenReceipt);
+        insert(ServiceVehicleFreshWaterReceipt.class);
+
     }
 
     private void innerPushBackVehicleReceipt(PushBackVehicleReceipt pushBackVehicleReceipt) {
         pushBackVehicleReceipts.add(pushBackVehicleReceipt);
+        insert(PushBackVehicleReceipt.class);
     }
 
     private void innerBoardingControlReceipt(BoardingControlReceipt boardingControlReceipt) {
         boardingControlReceipts.add(boardingControlReceipt);
+        insert(BoardingControlReceipt.class);
     }
 
     private void innerFuelReceipt(FuelReceipt fuelReceipt) {
         fuelReceipts.add(fuelReceipt);
+        insert(FuelReceipt.class);
     }
 
     private void innerContainerLifterReceipt(ContainerLifterReceipt containerLifterReceipt) {
         containerLifterReceipts.add(containerLifterReceipt);
+        insert(ContainerLifterReceipt.class);
     }
 
     private void innerAirCargoPalletLifterReceipt(AirCargoPalletLifterReceipt airCargoPalletLifterReceipt) {
         airCargoPalletLifterReceipts.add(airCargoPalletLifterReceipt);
+        insert(AirCargoPalletLifterReceipt.class);
     }
 
     private void innerServiceVehicleWasteWaterTankReceipt(ServiceVehicleWasteWaterTankReceipt serviceVehicleWasteWaterTankReceipt) {
         serviceVehicleWasteWaterTankReceipts.add(serviceVehicleWasteWaterTankReceipt);
+        insert(ServiceVehicleFreshWaterReceipt.class);
     }
 
     private void innerServiceVehicleFreshWaterReceipt(ServiceVehicleFreshWaterReceipt serviceVehicleFreshWaterReceipt) {
         serviceVehicleFreshWaterReceipts.add(serviceVehicleFreshWaterReceipt);
+        insert(ServiceVehicleFreshWaterReceipt.class);
     }
 
     private void innerServiceVehicleOilReceipt(ServiceVehicleOilReceipt serviceVehicleOilReceipt) {
         serviceVehicleOilReceipts.add(serviceVehicleOilReceipt);
+        insert(ServiceVehicleOilReceipt.class);
     }
 
     private void innnerCustomsReceipt(CustomsReceipt customsReceipt) {
         customsReceipts.add(customsReceipt);
+        insert(CustomsReceipt.class);
     }
 
     private void innerFederalPoliceReceipt(FederalPoliceReceipt federalPoliceReceipt) {
         federalPoliceReceipts.add(federalPoliceReceipt);
+        insert(FederalPoliceReceipt.class);
     }
 
     private void innerSecurityCheckReceipt(SecurityCheckReceipt securityCheckReceipt) {
         securityCheckReceipts.add(securityCheckReceipt);
+        insert(SecurityCheckReceipt.class);
     }
 
     private void innerBaggageSortingUnitReceipt(BaggageSortingUnitReceipt baggageSortingUnitReceipt) {
         baggeSortingUnitReceipts.add(baggageSortingUnitReceipt);
+        insert(BaggageSortingUnitReceipt.class);
     }
 
     private void innerBulkyBaggageDeskReceipt(BulkyBaggageDeskReceipt bulkyBaggageDeskReceipt) {
         bulkyBaggageDeskReceipts.add(bulkyBaggageDeskReceipt);
+        insert(BulkyBaggageDeskReceipt.class);
     }
 
     private void innerCheckInDeskReceipt(CheckInDeskReceipt checkInReceipt) {
         checkInReceipts.add(checkInReceipt);
-        //factory.persistence.build().insert(CheckInDeskReceipts, checkInReceipt);
+        insert(CheckInDeskReceipt.class);
     }
 }
