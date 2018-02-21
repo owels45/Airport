@@ -96,7 +96,7 @@ public class Application {
         eventBus.post(new SkyTankingVehicleConnect(phase, airplane));
         eventBus.post(new SkyTankingVehiclePump(phase, airplane));
         eventBus.post(new SkyTankingVehiclePrint(phase, airplane));
-
+    }
 
     public void airCargoPalletLifterTask() {
 
