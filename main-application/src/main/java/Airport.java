@@ -43,6 +43,9 @@ public class Airport extends Subscriber {
     private Object skyTankingVehiclePort;
     private Object boardingControlPort;
     private Object pushBackVehiclePort;
+    private Object specialGoodRoboterPort;
+    private Object baggageVehiclePort;
+    private Object containerLifterPort;
 
 
     // TODO: 01.02.2018  HIER ALLE FACTORYS EINFÜGEN VON JEDEM TEAM SELBST!!!
@@ -56,12 +59,13 @@ public class Airport extends Subscriber {
         serviceVehicleNitrogenOxygenPort = ServiceVehicleNitrogenOxygenFactory.build();
         serviceVehicleFreshWaterPort = ServiceVehicleFreshWaterFactory.build();
         serviceVehicleWasteWaterTankPort = ServiceVehicleWasteWaterTankFactory.build();
-//        airCargoPalletLifterPort = AirCargoPalletLifterFactory.build();// TODO: 20.02.2018 Factory missing!!!
+        airCargoPalletLifterPort = AirCargoPalletLifterFactory.build();
 //        skyTankingVehiclePort = SkyTankingVehicleFactory.build(); // TODO: 20.02.2018 java.lang.ClassNotFoundException: main.SkyTankingVehicle
         boardingControlPort = BoardingControlFactory.build(); // TODO: 20.02.2018 Abhängigkeit zu CheckInDesk??
                                                               // TODO: 20.02.2018 Wird in BoardingControl benutzt, ist also Abhängigkeit
-                                                              //                  (in Maven als <dependency> hinzugefügt, um Dummy-Klassen
-                                                              //                   entfernen zu können, JAR bauen zu können und Komponente fertigzustellen)
+        specialGoodRoboterPort = SpecialGoodRoboterFactory.build();
+        baggageVehiclePort = BaggageVehicleFactory.build();
+        containerLifterPort = ContainerLifterFactory.build();                 entfernen zu können, JAR bauen zu können und Komponente fertigzustellen)
 //        pushBackVehiclePort = PushBackVehicleFactory.build(); // TODO: 20.02.2018 what the heck???
     }
 
