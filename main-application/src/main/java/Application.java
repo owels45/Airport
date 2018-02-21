@@ -23,7 +23,13 @@ import event.service_vehicle_oil.ServiceVehicleChangeFireExtinguisher;
 import event.service_vehicle_oil.ServiceVehicleEngineOilTankIncreaseLevel;
 import event.service_vehicle_oil.ServiceVehicleRefillDeIcingSystem;
 import event.service_vehicle_waster_water.ServiceVehiclePumpOut;
+
+import event.sky_tanking_vehicle.SkyTankingVehicleConnect;
+import event.sky_tanking_vehicle.SkyTankingVehiclePrint;
+import event.sky_tanking_vehicle.SkyTankingVehiclePump;
+
 import factory.GroundOperationsCenterFactory;
+
 import logging.LogEngine;
 
 import java.util.ArrayList;
@@ -85,13 +91,17 @@ public class Application {
         eventBus.post(new ServiceVehiclePumpOut(phase, airplane));
     }
 
+    public void tanking(Airplane airplane) {
+        String phase = "SkyTanking Vehicle";
+        eventBus.post(new SkyTankingVehicleConnect(phase, airplane));
+        eventBus.post(new SkyTankingVehiclePump(phase, airplane));
+        eventBus.post(new SkyTankingVehiclePrint(phase, airplane));
+
+
     public void airCargoPalletLifterTask() {
 
     }
 
-    public void tanking() {
-
-    }
 
     // TODO: Insert passenger list into allPassengers if passenger instances are available (either database or instantiation)
     public void boardingControl() {
