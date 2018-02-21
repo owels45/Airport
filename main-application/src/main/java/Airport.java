@@ -1,3 +1,4 @@
+import base.Baggage;
 import com.google.common.eventbus.Subscribe;
 
 import event.Subscriber;
@@ -9,6 +10,7 @@ import event.boarding_control.base.BoardingPass;
 import event.boarding_control.base.Passenger;
 import event.boarding_control.base.PassengerList;
 import event.boarding_control.base.Passport;
+import event.security_check.SecurityCheck;
 import event.service_vehicle_fresh_water.ServiceVehicleRefillFreshWater;
 import event.service_vehicle_nitrogen_oxygen.ServiceVehicleRefillNitrogenBottle;
 import event.service_vehicle_nitrogen_oxygen.ServiceVehicleRefillOxygenBottle;
@@ -46,6 +48,7 @@ public class Airport extends Subscriber {
     private Object specialGoodRoboterPort;
     private Object baggageVehiclePort;
     private Object containerLifterPort;
+    private Object scannerPort;
 
 
     // TODO: 01.02.2018  HIER ALLE FACTORYS EINFÜGEN VON JEDEM TEAM SELBST!!!
@@ -53,6 +56,7 @@ public class Airport extends Subscriber {
 //        checkInDeskPort = CheckInDeskFactory.build(); // TODO: 20.02.2018 Factory missing!!!
         baggageSortingUnitPort = BaggageSortingUnitFactory.build();
         securityCheckPort = SecurityCheckFactory.build();
+        scannerPort = ScannerFactory.build();
 //        federalPolicePort = FederalPoliceFactory.build();// TODO: 20.02.2018 Factory missing!!!
         customsPort = CustomsFactory.build();
         serviceVehicleOilPort = ServiceVehicleOilFactory.build();
@@ -295,4 +299,28 @@ public class Airport extends Subscriber {
         }
     }
 
+    @Subscribe
+    public void receive(SecurityCheck event) {
+        try {
+            Method scanMethod = this.securityCheckPort.getClass().getDeclaredMethod("scan", Baggage.class, Object.class, String.class);
+            for (Baggage bag : event.getBaggage()) {
+               scanMethod.invoke(this.securityCheckPort, bag, this.scannerPort, "glock");
+            }
+
+            scanMethod = this.securityCheckPort.getClass().getDeclaredMethod("scan", Passenger.class, Object.class, String.class);
+            for (base.Passenger passenger : event.getPassengers()) {
+                scanMethod.invoke(this.securityCheckPort, passenger, this.scannerPort, "glock");
+            }
+
+            Method getReceipt = this.securityCheckPort.getClass().getDeclaredMethod("getSecurityCheckReceipt");
+            Object result = getReceipt.invoke(this.securityCheckPort);
+
+            Method notifyGroundOperationsMethod = this.securityCheckPort.getClass().getDeclaredMethod("notifyGroundOperations", Object.class);
+            notifyGroundOperationsMethod.invoke(this.securityCheckPort, result);
+
+
+        } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException exc) {
+            exc.printStackTrace();
+        }
+    }
 }

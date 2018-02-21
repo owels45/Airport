@@ -18,6 +18,7 @@ import event.boarding_control.BoardingControlNotifyGroundOperations;
 import event.boarding_control.BoardingControlScanBoardingPass;
 import event.boarding_control.base.PassengerList;
 >>>>>>> master
+import event.security_check.SecurityCheck;
 import event.service_vehicle_fresh_water.ServiceVehicleRefillFreshWater;
 import event.service_vehicle_nitrogen_oxygen.ServiceVehicleRefillNitrogenBottle;
 import event.service_vehicle_nitrogen_oxygen.ServiceVehicleRefillOxygenBottle;
@@ -36,6 +37,7 @@ import factory.GroundOperationsCenterFactory;
 import logging.LogEngine;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Application {
 
@@ -59,6 +61,10 @@ public class Application {
     }
 
     public void securityCheck() {
+        // TODO: Use the real passengers and baggage.
+        List<Passenger> passengers = new ArrayList<Passenger>();
+        List<Baggage> baggage = new ArrayList<Baggage>();
+        eventBus.post(new SecurityCheck(passengers, baggage));
 
     }
 
