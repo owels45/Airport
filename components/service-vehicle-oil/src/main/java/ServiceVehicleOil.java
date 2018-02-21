@@ -4,6 +4,8 @@ public class ServiceVehicleOil {
 
     private int amountAPUOil = 1000;
     private int amountEngineOil = 1000;
+    private int lastRefillAPUOilAmount;
+    private int lastRefillEngineOilAmount;
 
     private static ServiceVehicleOil instance = new ServiceVehicleOil();
 
@@ -17,11 +19,11 @@ public class ServiceVehicleOil {
         port = new Port();
     }
 
-    public String getVehicleType() {
-        return "ServiceVehicle: Oil";
-    }
-
     public class Port implements IServiceVehicleOil {
+
+        public String getVehicleType() {
+            return "ServiceVehicle: Oil";
+        }
 
         public int increaseLevelOfAPUOilTank(Object apuOilTankPort) {
             return innerMethodIncreaseLevelOfAPUOilTank(apuOilTankPort);
@@ -39,20 +41,19 @@ public class ServiceVehicleOil {
             return innerMethodRefill(deIcingSystemPort);
         }
 
-        public void notifyGroundOperations(ServiceVehicleOilReceipt serviceVehicleOilReceipt) {
-            innerMethodNotifyGroundOperations(serviceVehicleOilReceipt);
+        public void notifyGroundOperations(Object groundOperationCenterPort) {
+            innerMethodNotifyGroundOperations(groundOperationCenterPort);
         }
 
     }
 
     private int innerMethodIncreaseLevelOfAPUOilTank(Object apuOilTankPort) {
         try {
-            System.out.println("test");
-            Method increaseLevel = apuOilTankPort.getClass().getDeclaredMethod("increaseLevel", Integer.class);
+            Method increaseLevel = apuOilTankPort.getClass().getDeclaredMethod("increaseLevel", int.class);
             int currentValue = (Integer) increaseLevel.invoke(apuOilTankPort, 0);
-            currentValue = (Integer) increaseLevel.invoke(apuOilTankPort, 10 - currentValue);
-            amountAPUOil -= currentValue;
-            return currentValue;
+            lastRefillAPUOilAmount = (Integer) increaseLevel.invoke(apuOilTankPort, 10 - currentValue) - currentValue;
+            amountAPUOil -= lastRefillAPUOilAmount;
+            return lastRefillAPUOilAmount;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -61,11 +62,11 @@ public class ServiceVehicleOil {
 
     private int innerMethodIncreaseLevelOfEngineOilTank(Object engineOilTankPort) {
         try {
-            Method increaseLevel = engineOilTankPort.getClass().getDeclaredMethod("increaseLevel", Integer.class);
+            Method increaseLevel = engineOilTankPort.getClass().getDeclaredMethod("increaseLevel", int.class);
             int currentValue = (Integer) increaseLevel.invoke(engineOilTankPort, 0);
-            currentValue = (Integer) increaseLevel.invoke(engineOilTankPort, 10 - currentValue);
-            amountAPUOil -= currentValue;
-            return currentValue;
+            lastRefillEngineOilAmount = (Integer) increaseLevel.invoke(engineOilTankPort, 10 - currentValue) - currentValue;
+            amountAPUOil -= lastRefillEngineOilAmount;
+            return lastRefillEngineOilAmount;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -92,8 +93,13 @@ public class ServiceVehicleOil {
         return -1;
     }
 
-    private void innerMethodNotifyGroundOperations(ServiceVehicleOilReceipt serviceVehicleOilReceipt) {
-
+    private void innerMethodNotifyGroundOperations(Object groundOperationCenterPort) {
+        try {
+            Method notifyGroundOperations = groundOperationCenterPort.getClass().getDeclaredMethod("receive", ServiceVehicleOilReceipt.class);
+            notifyGroundOperations.invoke(groundOperationCenterPort, new ServiceVehicleOilReceipt(lastRefillAPUOilAmount, lastRefillEngineOilAmount));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

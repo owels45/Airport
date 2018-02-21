@@ -5,6 +5,7 @@ import base.BaggageIdentificationTag;
 import base.PassengerList;
 import com.google.common.eventbus.EventBus;
 import event.Subscriber;
+import event.service_vehicle_fresh_water.ServiceVehicleFreshWaterNotifyGroundOperations;
 import event.baggage_sorting.BaggageSorting;
 import event.boarding_control.BoardingControlCallPassengers;
 import event.boarding_control.BoardingControlInspectPassports;
@@ -18,13 +19,16 @@ import event.pushback_vehicle.PushBackVehicleDisconnect;
 import event.pushback_vehicle.PushBackVehiclePushBack;
 import event.security_check.SecurityCheck;
 import event.service_vehicle_fresh_water.ServiceVehicleRefillFreshWater;
+import event.service_vehicle_nitrogen_oxygen.ServiceVehicleNitrogenOxygenNotifyGroundOperations;
 import event.service_vehicle_nitrogen_oxygen.ServiceVehicleRefillNitrogenBottle;
 import event.service_vehicle_nitrogen_oxygen.ServiceVehicleRefillOxygenBottle;
+import event.service_vehicle_oil.*;
+import event.service_vehicle_waste_water.ServiceVehiclePumpOut;
+import event.service_vehicle_waste_water.ServiceVehicleWasteWaterNotifyGroundOperations;
 import event.service_vehicle_oil.ServiceVehicleAPUOilTankIncreaseLevel;
 import event.service_vehicle_oil.ServiceVehicleChangeFireExtinguisher;
 import event.service_vehicle_oil.ServiceVehicleEngineOilTankIncreaseLevel;
 import event.service_vehicle_oil.ServiceVehicleRefillDeIcingSystem;
-import event.service_vehicle_waster_water.ServiceVehiclePumpOut;
 import event.sky_tanking_vehicle.SkyTankingVehicleConnect;
 import event.sky_tanking_vehicle.SkyTankingVehiclePrint;
 import event.sky_tanking_vehicle.SkyTankingVehiclePump;
@@ -85,19 +89,23 @@ public class Application {
         eventBus.post(new CustomsScan(phase, baggage));
     }
 
-    public void serviceVehicleTasks(Airplane airplane) {
+    private void serviceVehicleTasks(Airplane airplane, Object groundOperationCenterPort) {
         String phase = "Service Vehicle";
         eventBus.post(new ServiceVehicleAPUOilTankIncreaseLevel(phase, airplane));
         eventBus.post(new ServiceVehicleEngineOilTankIncreaseLevel(phase, airplane));
         eventBus.post(new ServiceVehicleChangeFireExtinguisher(phase, airplane));
         eventBus.post(new ServiceVehicleRefillDeIcingSystem(phase, airplane));
+        eventBus.post(new ServiceVehicleOilNotifyGroundOperations(phase, groundOperationCenterPort));
 
         eventBus.post(new ServiceVehicleRefillFreshWater(phase, airplane));
+        eventBus.post(new ServiceVehicleFreshWaterNotifyGroundOperations(phase, groundOperationCenterPort));
 
         eventBus.post(new ServiceVehicleRefillNitrogenBottle(phase, airplane));
         eventBus.post(new ServiceVehicleRefillOxygenBottle(phase, airplane));
+        eventBus.post(new ServiceVehicleNitrogenOxygenNotifyGroundOperations(phase, groundOperationCenterPort));
 
         eventBus.post(new ServiceVehiclePumpOut(phase, airplane));
+        eventBus.post(new ServiceVehicleWasteWaterNotifyGroundOperations(phase, groundOperationCenterPort));
     }
 
     public void tanking(Airplane airplane) {
@@ -136,7 +144,7 @@ public class Application {
 //        federalPolice();
 //        customs();
 //        customs();
-//        serviceVehicleTasks(airplane);
+//        serviceVehicleTasks(airplane, GroundOperationsCenterFactory.build());
 //        airCargoPalletLifterTask();
 //        tanking();
 //        boardingControl();

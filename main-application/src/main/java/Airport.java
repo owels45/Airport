@@ -7,6 +7,7 @@ import base.PassengerList;
 
 import com.google.common.eventbus.Subscribe;
 import event.Subscriber;
+import event.service_vehicle_fresh_water.ServiceVehicleFreshWaterNotifyGroundOperations;
 import event.baggage_sorting.BaggageSorting;
 import event.boarding_control.BoardingControlCallPassengers;
 import event.boarding_control.BoardingControlInspectPassports;
@@ -14,14 +15,21 @@ import event.boarding_control.BoardingControlNotifyGroundOperations;
 import event.boarding_control.BoardingControlScanBoardingPass;
 import event.security_check.SecurityCheck;
 import event.service_vehicle_fresh_water.ServiceVehicleRefillFreshWater;
+import event.service_vehicle_nitrogen_oxygen.ServiceVehicleNitrogenOxygenNotifyGroundOperations;
 import event.service_vehicle_nitrogen_oxygen.ServiceVehicleRefillNitrogenBottle;
 import event.service_vehicle_nitrogen_oxygen.ServiceVehicleRefillOxygenBottle;
 import event.service_vehicle_oil.ServiceVehicleAPUOilTankIncreaseLevel;
 import event.service_vehicle_oil.ServiceVehicleChangeFireExtinguisher;
 import event.service_vehicle_oil.ServiceVehicleEngineOilTankIncreaseLevel;
 import event.service_vehicle_oil.ServiceVehicleRefillDeIcingSystem;
-import event.service_vehicle_waster_water.ServiceVehiclePumpOut;
 import factory.*;
+import event.service_vehicle_oil.*;
+import event.service_vehicle_waste_water.ServiceVehiclePumpOut;
+import event.service_vehicle_waste_water.ServiceVehicleWasteWaterNotifyGroundOperations;
+import factory.ServiceVehicleFreshWaterFactory;
+import factory.ServiceVehicleNitrogenOxygenFactory;
+import factory.ServiceVehicleOilFactory;
+import factory.ServiceVehicleWasteWaterTankFactory;
 import logging.LogEngine;
 
 import java.lang.reflect.InvocationTargetException;
@@ -226,6 +234,58 @@ public class Airport extends Subscriber {
 
                 LogEngine.instance.write("+");
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Subscribe
+    public void receive(ServiceVehicleOilNotifyGroundOperations event) {
+        try {
+            Method notifyGroundOperations = serviceVehicleOilPort.getClass().getDeclaredMethod("notifyGroundOperations", Object.class);
+            notifyGroundOperations.invoke(serviceVehicleOilPort, event.getGroundOperationCenterPort());
+            LogEngine.instance.write("ServiceVehicleOil: Notifying the groundoperations center...");
+
+            LogEngine.instance.write("+");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Subscribe
+    public void receive(ServiceVehicleNitrogenOxygenNotifyGroundOperations event) {
+        try {
+            Method notifyGroundOperations = serviceVehicleNitrogenOxygenPort.getClass().getDeclaredMethod("notifyGroundOperations", Object.class);
+            notifyGroundOperations.invoke(serviceVehicleNitrogenOxygenPort, event.getGroundOperationCenterPort());
+            LogEngine.instance.write("ServiceVehicleNitrogenOxygen: Notifying the groundoperations center...");
+
+            LogEngine.instance.write("+");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Subscribe
+    public void receive(ServiceVehicleWasteWaterNotifyGroundOperations event) {
+        try {
+            Method notifyGroundOperations = serviceVehicleWasteWaterTankPort.getClass().getDeclaredMethod("notifyGroundOperations", Object.class);
+            notifyGroundOperations.invoke(serviceVehicleWasteWaterTankPort, event.getGroundOperationCenterPort());
+            LogEngine.instance.write("ServiceVehicleWasteWater: Notifying the groundoperations center...");
+
+            LogEngine.instance.write("+");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Subscribe
+    public void receive(ServiceVehicleFreshWaterNotifyGroundOperations event) {
+        try {
+            Method notifyGroundOperations = serviceVehicleFreshWaterPort.getClass().getDeclaredMethod("notifyGroundOperations", Object.class);
+            notifyGroundOperations.invoke(serviceVehicleFreshWaterPort, event.getGroundOperationCenterPort());
+            LogEngine.instance.write("ServiceVehicleFreshWater: Notifying the groundoperations center...");
+
+            LogEngine.instance.write("+");
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -1,6 +1,6 @@
 interface IServiceVehicleFreshWater {
 
     int refill(Object potableWaterTankPort);
-    void notifyGroundOperations(ServiceVehicleFreshWaterReceipt serviceVehicleFreshWaterReceipt);
+    void notifyGroundOperations(Object groundOperationCenterPort);
 
 }
