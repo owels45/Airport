@@ -1,6 +1,9 @@
+<<<<<<< HEAD
+=======
 import base.Baggage;
 import base.Passenger;
 
+>>>>>>> master
 import java.util.ArrayList;
 
 public class FederalPoliceReceipt {
