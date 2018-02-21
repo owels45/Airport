@@ -39,6 +39,10 @@ public class Database {
             innerMethodinitTables();
         }
 
+        public void closeDatabase(){
+            shutdown();
+        }
+
         public ArrayList<Baggage> getAllBaggages() {
             return innerMethodGetAllBaggages();
         }

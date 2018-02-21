@@ -7,6 +7,7 @@ import java.util.ArrayList;
 public interface IDatabase{
     void initBaggage();
     void initTables();
+    void closeDatabase();
     ArrayList<Baggage> getAllBaggages();
     void addBaggageIdentificationTag(BaggageIdentificationTag baggageIdentificationTag);
     BaggageIdentificationTag getBaggageIdentificationTag(Baggage baggage);
