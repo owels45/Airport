@@ -1,3 +1,5 @@
+
+
 public class CheckInDeskReceipt {
     public CheckInDeskReceipt(String flight, Source source, Destination destination, String date, String boardingTime, String gate, int numberOfPassengersFirstClass, int numberOfPassengersBusinessClass, int numberOfPassengersEconomyClass, int numberOfBaggage) {
         this.flight = flight;

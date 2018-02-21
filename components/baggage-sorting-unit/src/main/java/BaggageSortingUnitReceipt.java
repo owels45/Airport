@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Receipt for the sorted baggage.
@@ -28,14 +29,14 @@ public class BaggageSortingUnitReceipt {
      *
      * @param containerList The container list.
      */
-    public void setContainerList(ArrayList<Container> containerList) {
+    public void setContainerList(List<Container> containerList) {
         this.containerList = containerList;
     }
 
     /**
      * The container list.
      */
-    private ArrayList<Container> containerList;
+    private List<Container> containerList;
     /**
      * The number of first class baggage.
      */
@@ -142,7 +143,7 @@ public class BaggageSortingUnitReceipt {
      *
      * @return The list of containers.
      */
-    public ArrayList<Container> getContainerList() {
+    public List<Container> getContainerList() {
         return containerList;
     }
 

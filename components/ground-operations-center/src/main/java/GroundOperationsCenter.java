@@ -1,6 +1,5 @@
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import SupportClasses.*;
 
 public class GroundOperationsCenter {
 
@@ -84,6 +83,7 @@ public class GroundOperationsCenter {
     private void innerServiceVehicleNitrogenOxygenReceipt(ServiceVehicleNitrogenOxygenReceipt serviceVehicleNitrogenOxygenReceipt) {
         serviceVehicleNitrogenOxygenReceipts.add(serviceVehicleNitrogenOxygenReceipt);
         insert(ServiceVehicleFreshWaterReceipt.class);
+
     }
 
     private void innerPushBackVehicleReceipt(PushBackVehicleReceipt pushBackVehicleReceipt) {

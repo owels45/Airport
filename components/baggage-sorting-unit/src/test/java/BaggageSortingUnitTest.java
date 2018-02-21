@@ -2,6 +2,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class BaggageSortingUnitTest {
@@ -98,7 +99,7 @@ public class BaggageSortingUnitTest {
     }
 
     private boolean AssertContainers(BaggageSortingUnitReceipt receipt) {
-        ArrayList<Container> containers = receipt.getContainerList();
+        List<Container> containers = receipt.getContainerList();
 
         int firstClassContainerCount  = this.getContainerCountForCategory(containers, ContainerCategory.First);
         int businessClassContainerCount  = this.getContainerCountForCategory(containers, ContainerCategory.Business);
@@ -111,7 +112,7 @@ public class BaggageSortingUnitTest {
         return true;
     }
 
-    private int getContainerCountForCategory(ArrayList<Container> containers, ContainerCategory category) {
+    private int getContainerCountForCategory(List<Container> containers, ContainerCategory category) {
         int counter = 0;
         for (Container container : containers ) {
             if (container.getCategory() == category) { counter++; }
