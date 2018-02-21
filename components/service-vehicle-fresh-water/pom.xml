@@ -16,7 +16,7 @@
                 <version>2.3.2</version>
                 <configuration>
                     <finalName>serviceVehicleFreshWater</finalName>
-                    <outputDirectory>../</outputDirectory>
+                    <outputDirectory>../../main-application/components</outputDirectory>
                 </configuration>
             </plugin>
         </plugins>

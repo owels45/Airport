@@ -1,3 +1,8 @@
+<<<<<<< HEAD:components/ground-operations-center/src/main/java/AirCargoPalletLifterReceipt.java
+=======
+package SupportClasses;
+
+>>>>>>> master:components/ground-operations-center/src/main/java/SupportClasses/AirCargoPalletLifterReceipt.java
 import java.util.ArrayList;
 
 public class AirCargoPalletLifterReceipt {

@@ -1,4 +1,8 @@
+<<<<<<< HEAD:components/ground-operations-center/src/main/java/CustomsReceipt.java
 
+=======
+package SupportClasses;
+>>>>>>> master:components/ground-operations-center/src/main/java/SupportClasses/CustomsReceipt.java
 
 import java.util.ArrayList;
 

@@ -24,4 +24,3 @@ public class AirCargoPalletLifterReceipt {
     public void setAirCargoPalletList(ArrayList<AirCargoPallet> airCargoPalletList) {
         this.airCargoPalletList = airCargoPalletList;
     }
-}
