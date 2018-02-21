@@ -41,11 +41,11 @@ public class ServiceVehicleNitrogenOxygen {
 
     private int innerMethodRefillNitrogenBottle(Object nitrogenBottlePort) {
         try {
-            Method refillNitrogen = nitrogenBottlePort.getClass().getDeclaredMethod("refill");
-            int currentValue = (Integer) refillNitrogen.invoke(nitrogenBottlePort);
-            amountNitrogen -= currentValue;
-            lastRefillNitrogenAmount = currentValue;
-            return currentValue;
+            Method refillNitrogen = nitrogenBottlePort.getClass().getDeclaredMethod("refill", int.class);
+            int currentValue = (Integer) refillNitrogen.invoke(nitrogenBottlePort, 0);
+            lastRefillNitrogenAmount = (Integer) refillNitrogen.invoke(nitrogenBottlePort, 250 - currentValue) - currentValue;
+            amountNitrogen -= lastRefillNitrogenAmount;
+            return lastRefillNitrogenAmount;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -54,11 +54,11 @@ public class ServiceVehicleNitrogenOxygen {
 
     private int innerMethodRefillOxygenBottle(Object oxygenBottlePort) {
         try {
-            Method refillOxygen = oxygenBottlePort.getClass().getDeclaredMethod("refill");
-            int currentValue = (Integer) refillOxygen.invoke(oxygenBottlePort);
+            Method refillOxygen = oxygenBottlePort.getClass().getDeclaredMethod("refill", int.class);
+            int currentValue = (Integer) refillOxygen.invoke(oxygenBottlePort, 0);
+            lastRefillOxygenAmount = (Integer) refillOxygen.invoke(oxygenBottlePort, 100 - currentValue) - currentValue;
             amountOxygen -= currentValue;
-            lastRefillOxygenAmount = currentValue;
-            return currentValue;
+            return lastRefillOxygenAmount;
         } catch (Exception e) {
             e.printStackTrace();
         }

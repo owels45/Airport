@@ -35,11 +35,11 @@ public class ServiceVehicleFreshWater {
 
     private int innerMethodRefill(Object potableWaterTankPort) {
         try {
-            Method refillFreshWater = potableWaterTankPort.getClass().getDeclaredMethod("refill");
-            int currentValue = (Integer) refillFreshWater.invoke(potableWaterTankPort);
+            Method refillFreshWater = potableWaterTankPort.getClass().getDeclaredMethod("refill", int.class);
+            int currentValue = (Integer) refillFreshWater.invoke(potableWaterTankPort, 0);
+            lastRefillAmount = (Integer) refillFreshWater.invoke(potableWaterTankPort, 1000 - currentValue) - currentValue;
             amountFreshWater -= currentValue;
-            lastRefillAmount = currentValue;
-            return currentValue;
+            return lastRefillAmount;
         } catch (Exception e) {
             e.printStackTrace();
         }

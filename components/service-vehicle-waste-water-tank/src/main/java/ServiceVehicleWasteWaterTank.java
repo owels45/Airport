@@ -35,11 +35,12 @@ public class ServiceVehicleWasteWaterTank {
 
     private int innerMethodPumpOut(Object wasteWaterTankPort){
         try {
+            Method currentWasteWaterAmount = wasteWaterTankPort.getClass().getDeclaredMethod("add", int.class);
+            lastWasteWaterAmount = (Integer) currentWasteWaterAmount.invoke(wasteWaterTankPort, 0);
             Method pumpOut = wasteWaterTankPort.getClass().getDeclaredMethod("pumpOut");
-            int currentValue = (Integer) pumpOut.invoke(wasteWaterTankPort);
-            amountWasteWater += currentValue;
-            lastWasteWaterAmount = currentValue;
-            return currentValue;
+            pumpOut.invoke(wasteWaterTankPort);
+            amountWasteWater += lastWasteWaterAmount;
+            return lastWasteWaterAmount;
         } catch (Exception e) {
             e.printStackTrace();
         }

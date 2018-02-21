@@ -54,7 +54,6 @@
     </build>
 
     <modules>
-        <module>main-application</module>
         <module>components/check-in-desk</module>
         <module>components/bulky-baggage-desk</module>
         <module>components/scanner</module>
@@ -75,5 +74,6 @@
         <module>components/push-back-vehicle</module>
         <module>components/ground-operations-center</module>
         <module>components/base</module>
+        <module>main-application</module>
     </modules>
 </project>
