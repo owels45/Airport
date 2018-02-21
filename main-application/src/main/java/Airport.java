@@ -1,14 +1,15 @@
+import base.Baggage;
+import base.Destination;
 import com.google.common.eventbus.Subscribe;
 
 import event.Subscriber;
+import event.baggage_sorting.BaggageSorting;
 import event.boarding_control.BoardingControlCallPassengers;
 import event.boarding_control.BoardingControlInspectPassports;
 import event.boarding_control.BoardingControlNotifyGroundOperations;
 import event.boarding_control.BoardingControlScanBoardingPass;
-import event.boarding_control.base.BoardingPass;
-import event.boarding_control.base.Passenger;
-import event.boarding_control.base.PassengerList;
-import event.boarding_control.base.Passport;
+import event.boarding_control.base.*;
+import event.security_check.SecurityCheck;
 import event.service_vehicle_fresh_water.ServiceVehicleRefillFreshWater;
 import event.service_vehicle_nitrogen_oxygen.ServiceVehicleRefillNitrogenBottle;
 import event.service_vehicle_nitrogen_oxygen.ServiceVehicleRefillOxygenBottle;
@@ -27,6 +28,7 @@ import logging.LogEngine;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Airport extends Subscriber {
 
@@ -46,6 +48,8 @@ public class Airport extends Subscriber {
     private Object specialGoodRoboterPort;
     private Object baggageVehiclePort;
     private Object containerLifterPort;
+    private Object scannerPort;
+    private Object groundOperationPort;
 
 
     // TODO: 01.02.2018  HIER ALLE FACTORYS EINFÜGEN VON JEDEM TEAM SELBST!!!
@@ -53,6 +57,7 @@ public class Airport extends Subscriber {
 //        checkInDeskPort = CheckInDeskFactory.build(); // TODO: 20.02.2018 Factory missing!!!
         baggageSortingUnitPort = BaggageSortingUnitFactory.build();
         securityCheckPort = SecurityCheckFactory.build();
+        scannerPort = ScannerFactory.build();
 //        federalPolicePort = FederalPoliceFactory.build();// TODO: 20.02.2018 Factory missing!!!
         customsPort = CustomsFactory.build();
         serviceVehicleOilPort = ServiceVehicleOilFactory.build();
@@ -67,6 +72,7 @@ public class Airport extends Subscriber {
         baggageVehiclePort = BaggageVehicleFactory.build();
         containerLifterPort = ContainerLifterFactory.build();                 entfernen zu können, JAR bauen zu können und Komponente fertigzustellen)
 //        pushBackVehiclePort = PushBackVehicleFactory.build(); // TODO: 20.02.2018 what the heck???
+        this.groundOperationPort = GroundOperationsCenterFactory.build();
     }
 
     // TODO: 01.02.2018  HIER DIE GANZEN SUBSCRIBE METHODEN VON JEDEM TEAM SELBST!!!
@@ -295,4 +301,55 @@ public class Airport extends Subscriber {
         }
     }
 
+    @Subscribe
+    public void receive(SecurityCheck event) {
+        try {
+            LogEngine.instance.write("--- Starting security check");
+            Method scanMethod = this.securityCheckPort.getClass().getDeclaredMethod("scan", Baggage.class, Object.class, String.class);
+
+            LogEngine.instance.write("--- Security check: scan baggage");
+            for (Baggage bag : event.getBaggage()) {
+               scanMethod.invoke(this.securityCheckPort, bag, this.scannerPort, "glock");
+            }
+
+            scanMethod = this.securityCheckPort.getClass().getDeclaredMethod("scan", Passenger.class, Object.class, String.class);
+            LogEngine.instance.write("--- Security check: scan passengers");
+            for (base.Passenger passenger : event.getPassengers()) {
+                scanMethod.invoke(this.securityCheckPort, passenger, this.scannerPort, "glock");
+            }
+
+            Method getReceipt = this.securityCheckPort.getClass().getDeclaredMethod("getSecurityCheckReceipt");
+            LogEngine.instance.write("--- Security check: notify ground operations");
+            Object result = getReceipt.invoke(this.securityCheckPort);
+
+            Method notifyGroundOperationsMethod = this.securityCheckPort.getClass().getDeclaredMethod("notifyGroundOperations", Object.class);
+            notifyGroundOperationsMethod.invoke(this.securityCheckPort, result);
+
+
+        } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException exc) {
+            exc.printStackTrace();
+        }
+    }
+
+    @Subscribe
+    public void receive(BaggageSorting event) {
+        try {
+            LogEngine.instance.write("--- Baggage Sorting");
+            Method executeBaggageSortingMethod = this.baggageSortingUnitPort.getClass().getDeclaredMethod("execute", String.class
+            , Destination.class, List.class, List.class, List.class);
+
+            Object result = executeBaggageSortingMethod.invoke(this.baggageSortingUnitPort, event.getBaggageVehicleTargetPosition()
+            , event.getDestination(), event.getBaggage(), event.getBaggageVehicles(), event.getBaggageTags());
+
+            BaggageSortingUnitReceipt receipt = (BaggageSortingUnitReceipt) result;
+
+            LogEngine.instance.write("--- Baggage Sorting: Notify Ground Operations");
+            Method notifyGroundOperationMethod = this.groundOperationPort.getClass().getDeclaredMethod("receive", BaggageSortingUnitReceipt.class);
+            notifyGroundOperationMethod.invoke(this.groundOperationPort, receipt);
+
+
+        } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException exc) {
+            exc.printStackTrace();
+        }
+    }
 }
