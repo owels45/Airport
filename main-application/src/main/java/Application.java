@@ -26,7 +26,6 @@ import event.service_vehicle_oil.ServiceVehicleAPUOilTankIncreaseLevel;
 import event.service_vehicle_oil.ServiceVehicleChangeFireExtinguisher;
 import event.service_vehicle_oil.ServiceVehicleEngineOilTankIncreaseLevel;
 import event.service_vehicle_oil.ServiceVehicleRefillDeIcingSystem;
-import event.service_vehicle_waster_water.ServiceVehiclePumpOut;
 import event.sky_tanking_vehicle.SkyTankingVehicleConnect;
 import event.sky_tanking_vehicle.SkyTankingVehiclePrint;
 import event.sky_tanking_vehicle.SkyTankingVehiclePump;
@@ -87,7 +86,7 @@ public class Application {
 
     }
 
-    public void serviceVehicleTasks(Airplane airplane, Object groundOperationCenterPort) {
+    private void serviceVehicleTasks(Airplane airplane, Object groundOperationCenterPort) {
         String phase = "Service Vehicle";
         eventBus.post(new ServiceVehicleAPUOilTankIncreaseLevel(phase, airplane));
         eventBus.post(new ServiceVehicleEngineOilTankIncreaseLevel(phase, airplane));
@@ -142,7 +141,7 @@ public class Application {
 //        federalPolice();
 //        customs();
 //        customs();
-//        serviceVehicleTasks(airplane);
+//        serviceVehicleTasks(airplane, GroundOperationsCenterFactory.build());
 //        airCargoPalletLifterTask();
 //        tanking();
 //        boardingControl();
