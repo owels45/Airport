@@ -112,8 +112,11 @@ public class Application {
         eventBus.post(new BoardingControlNotifyGroundOperations(allPassengers, GroundOperationsCenterFactory.build()));
     }
 
-    public void pushBack() {
-
+    public void pushBack(Airplane airplane) {
+        String phase = "PushBack Vehicle";
+        eventBus.post(new PushBackVehicleConnect(phase, airplane));
+        eventBus.post(new PushBackVehiclePushBack(phase, airplane));
+        eventBus.post(new PushBackVehicleDisconnect(phase, airplane));
     }
 
 
