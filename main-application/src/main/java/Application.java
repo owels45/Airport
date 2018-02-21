@@ -1,13 +1,8 @@
-import base.Airplane;
-import base.Baggage;
-import base.BoardingPass;
-import base.Invoice;
-import base.Passenger;
-import base.Passport;
-import base.SpecialGood;
+import base.*;
 import com.google.common.eventbus.EventBus;
 import event.Subscriber;
 <<<<<<< HEAD
+import event.baggage_sorting.BaggageSorting;
 import event.customs.CustomsScan;
 import event.customs.CustomsVerify;
 import event.federal_police.*;
@@ -57,7 +52,14 @@ public class Application {
     }
 
     public void baggageSorting() {
+        // TODO Use real data
+        String targetPosition = "";
+        Destination destination = Destination.CPT;
+        List<Baggage> baggages = new ArrayList<Baggage>();
+        List<Object> baggageVehicles = new ArrayList<Object>();
+        List<BaggageIdentificationTag> baggageTags = new ArrayList<BaggageIdentificationTag>();
 
+        eventBus.post(new BaggageSorting(targetPosition, destination, baggages, baggageVehicles, baggageTags));
     }
 
     public void securityCheck() {
