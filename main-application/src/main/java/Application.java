@@ -1,18 +1,18 @@
-import base.*;
+import base.Airplane;
 import com.google.common.eventbus.EventBus;
 import event.Subscriber;
-<<<<<<< HEAD
 import event.baggage_sorting.BaggageSorting;
-import event.customs.CustomsScan;
-import event.customs.CustomsVerify;
-import event.federal_police.*;
-=======
 import event.boarding_control.BoardingControlCallPassengers;
 import event.boarding_control.BoardingControlInspectPassports;
 import event.boarding_control.BoardingControlNotifyGroundOperations;
 import event.boarding_control.BoardingControlScanBoardingPass;
 import event.boarding_control.base.PassengerList;
->>>>>>> master
+import event.customs.CustomsScan;
+import event.customs.CustomsVerify;
+import event.federal_police.*;
+import event.pushback_vehicle.PushBackVehicleConnect;
+import event.pushback_vehicle.PushBackVehicleDisconnect;
+import event.pushback_vehicle.PushBackVehiclePushBack;
 import event.security_check.SecurityCheck;
 import event.service_vehicle_fresh_water.ServiceVehicleRefillFreshWater;
 import event.service_vehicle_nitrogen_oxygen.ServiceVehicleRefillNitrogenBottle;
@@ -22,13 +22,10 @@ import event.service_vehicle_oil.ServiceVehicleChangeFireExtinguisher;
 import event.service_vehicle_oil.ServiceVehicleEngineOilTankIncreaseLevel;
 import event.service_vehicle_oil.ServiceVehicleRefillDeIcingSystem;
 import event.service_vehicle_waster_water.ServiceVehiclePumpOut;
-
 import event.sky_tanking_vehicle.SkyTankingVehicleConnect;
 import event.sky_tanking_vehicle.SkyTankingVehiclePrint;
 import event.sky_tanking_vehicle.SkyTankingVehiclePump;
-
 import factory.GroundOperationsCenterFactory;
-
 import logging.LogEngine;
 
 import java.util.ArrayList;
@@ -46,7 +43,6 @@ public class Application {
         eventBus.register(subscriber);
     }
 
-    // TODO: 01.02.2018  einzelne Methoden für jedes Event schreiben
     public void checkIn() {
 
     }
@@ -54,23 +50,22 @@ public class Application {
     public void baggageSorting() {
         // TODO Use real data
         String targetPosition = "";
-        Destination destination = Destination.CPT;
-        List<Baggage> baggages = new ArrayList<Baggage>();
-        List<Object> baggageVehicles = new ArrayList<Object>();
-        List<BaggageIdentificationTag> baggageTags = new ArrayList<BaggageIdentificationTag>();
-
+        base.Destination destination = base.Destination.CPT;
+        List<base.Baggage> baggages = new ArrayList<>();
+        List<Object> baggageVehicles = new ArrayList<>();
+        List<base.BaggageIdentificationTag> baggageTags = new ArrayList<>();
         eventBus.post(new BaggageSorting(targetPosition, destination, baggages, baggageVehicles, baggageTags));
     }
 
     public void securityCheck() {
         // TODO: Use the real passengers and baggage.
-        List<Passenger> passengers = new ArrayList<Passenger>();
-        List<Baggage> baggage = new ArrayList<Baggage>();
+        List<base.Passenger> passengers = new ArrayList<>();
+        List<base.Baggage> baggage = new ArrayList<>();
         eventBus.post(new SecurityCheck(passengers, baggage));
 
     }
 
-    public void federalPolice(Passport passport, Passenger passenger, SpecialGood specialGood, Baggage baggage) {
+    public void federalPolice(base.Passport passport, base.Passenger passenger, base.SpecialGood specialGood, base.Baggage baggage) {
         String phase = "Federal Police";
         eventBus.post(new FederalPoliceVerify(phase, passport));
         eventBus.post(new FederalPoliceInspectWeapon(phase, specialGood));
@@ -80,7 +75,7 @@ public class Application {
         eventBus.post(new FederalPoliceKeepSafe(phase, baggage));
     }
 
-    public void customsTasks(Passport passport, BoardingPass boardingPass, Invoice invoice, Baggage baggage) {
+    public void customs(base.Passport passport, base.BoardingPass boardingPass, base.Invoice invoice, base.Baggage baggage) {
         String phase = "Customs";
         eventBus.post(new CustomsVerify(phase, passport, boardingPass, invoice ));
         eventBus.post(new CustomsScan(phase, baggage));
@@ -112,7 +107,6 @@ public class Application {
     public void airCargoPalletLifterTask() {
 
     }
-
 
     // TODO: Insert passenger list into allPassengers if passenger instances are available (either database or instantiation)
     public void boardingControl() {

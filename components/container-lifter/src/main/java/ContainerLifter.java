@@ -7,7 +7,7 @@ public class ContainerLifter {
 
     public ContainerLifter() {port =new Port();}
 
-    public static ContainerLifter getinstance() {
+    public static ContainerLifter getInstance() {
         return instance;
     }
 
