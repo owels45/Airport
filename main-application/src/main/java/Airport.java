@@ -89,7 +89,7 @@ public class Airport extends Subscriber {
         baggageVehiclePort = BaggageVehicleFactory.build();
         containerLifterPort = ContainerLifterFactory.build();
 //        pushBackVehiclePort = PushBackVehicleFactory.build(); // TODO: 20.02.2018 what the heck???
-//        groundOperationsPort = GroundOperationsCenterFactory.build(); // TODO: 20.02.2018 what the heck???
+        groundOperationsPort = GroundOperationsCenterFactory.build();
     }
 
     // TODO: 01.02.2018  HIER DIE GANZEN SUBSCRIBE METHODEN VON JEDEM TEAM SELBST!!!

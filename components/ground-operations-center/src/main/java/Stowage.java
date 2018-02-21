@@ -21,8 +21,8 @@ public class Stowage {
         this.containerList = containerList;
     }
 
-    public Stowage() {
-
+    public Stowage(ArrayList<Container> containerList) {
+        this.containerList = containerList;
     }
 
     @Override
