@@ -25,7 +25,7 @@ public class SpecialGoodRoboter {
 
 
 
-    public static SpecialGoodRoboter getinstance() {return instance;}
+    public static SpecialGoodRoboter getInstance() {return instance;}
 
     public class Port implements ISpecialGoodRoboter{
 

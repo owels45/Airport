@@ -1,5 +1,3 @@
-
-
 public enum SpecialGoodType {
     Bike,
     DangerousGoods,

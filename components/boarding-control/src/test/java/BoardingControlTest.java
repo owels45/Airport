@@ -14,10 +14,10 @@ public class BoardingControlTest {
         BoardingControl boardingControl = BoardingControl.getInstance();
         boardingControlPort = boardingControl.port;
 
-        passengerList = new PassengerList(new ArrayList<Passenger>());
+        passengerList = new PassengerList(new ArrayList<>());
         for (int i = 0; i < 100; i++) {
             passengerList.getPassengerList().add(new Passenger("Max Mustermann", "content", "04.01.1995",
-                    "Example Street", "74822", "Mosbach", CitizenshipCode.DEU, Gender.Female,
+                    "Example Street", "74821", "Mosbach", CitizenshipCode.DEU, Gender.Female,
                     null, null, null));
         }
     }

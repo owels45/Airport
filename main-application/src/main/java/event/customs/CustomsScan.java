@@ -1,6 +1,6 @@
 package event.customs;
 
-import base.Baggage;
+import base.*;
 
 public class CustomsScan {
     private String phase;

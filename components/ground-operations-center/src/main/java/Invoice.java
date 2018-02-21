@@ -1,5 +1,3 @@
-
-
 public class Invoice {
 
     private String date;
