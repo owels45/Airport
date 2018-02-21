@@ -1,4 +1,7 @@
+<<<<<<< HEAD
+=======
 
+>>>>>>> master
 import java.util.ArrayList;
 
 public class CustomsReceipt {
@@ -14,4 +17,8 @@ public class CustomsReceipt {
         this.numberOfPassportVerified = numberOfPassportVerified;
 
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> master
