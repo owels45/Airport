@@ -4,6 +4,7 @@ import base.Destination;
 import base.Passenger;
 import base.Passport;
 import base.PassengerList;
+import base.BaggageSortingUnitReceipt;
 
 import com.google.common.eventbus.Subscribe;
 import event.Subscriber;
