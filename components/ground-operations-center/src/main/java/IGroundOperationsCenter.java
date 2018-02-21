@@ -1,5 +1,3 @@
-import SupportClasses.*;
-
 public interface IGroundOperationsCenter {
   void receive(CheckInDeskReceipt checkInReceipt);
   void receive(BulkyBaggageDeskReceipt bulkyBaggageDeskReceipt);

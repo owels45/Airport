@@ -1,4 +1,4 @@
-import base.Airplane;
+import base.*;
 import com.google.common.eventbus.EventBus;
 import event.Subscriber;
 import event.boarding_control.BoardingControlCallPassengers;
@@ -6,6 +6,9 @@ import event.boarding_control.BoardingControlInspectPassports;
 import event.boarding_control.BoardingControlNotifyGroundOperations;
 import event.boarding_control.BoardingControlScanBoardingPass;
 import event.boarding_control.base.PassengerList;
+import event.customs.CustomsScan;
+import event.customs.CustomsVerify;
+import event.federal_police.*;
 import event.service_vehicle_fresh_water.ServiceVehicleRefillFreshWater;
 import event.service_vehicle_nitrogen_oxygen.ServiceVehicleRefillNitrogenBottle;
 import event.service_vehicle_nitrogen_oxygen.ServiceVehicleRefillOxygenBottle;
@@ -44,11 +47,20 @@ public class Application {
 
     }
 
-    public void federalPolice() {
-
+    public void federalPolice(Passport passport, Passenger passenger, SpecialGood specialGood, Baggage baggage) {
+        String phase = "Federal Police";
+        eventBus.post(new FederalPoliceVerify(phase, passport));
+        eventBus.post(new FederalPoliceInspectWeapon(phase, specialGood));
+        eventBus.post(new FederalPoliceInspectMunition(phase, specialGood));
+        eventBus.post(new FederalPoliceScan(phase, passport));
+        eventBus.post(new FederalPoliceArrest(phase, passenger));
+        eventBus.post(new FederalPoliceKeepSafe(phase, baggage));
     }
 
-    public void customs() {
+    public void customs(Passport passport, BoardingPass boardingPass, Invoice invoice, Baggage baggage) {
+        String phase = "Customs";
+        eventBus.post(new CustomsVerify(phase, passport, boardingPass, invoice ));
+        eventBus.post(new CustomsScan(phase, baggage));
 
     }
 
