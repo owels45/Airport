@@ -408,6 +408,7 @@ public class Airport extends Subscriber {
     @Subscribe
     public void receive(BaggageSorting event) {
         try {
+            // TODO: LogEngine is commented out, because it throws exceptions during a test.
             //LogEngine.instance.write("--- Baggage Sorting");
             Method executeBaggageSortingMethod = this.baggageSortingUnitPort.getClass().getDeclaredMethod("execute",
                     String.class , Destination.class, java.util.List.class, java.util.List.class, java.util.List.class);
