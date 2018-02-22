@@ -1,5 +1,3 @@
-
-
 public class ReadingDevice {
 
     public ReadingDevice() {

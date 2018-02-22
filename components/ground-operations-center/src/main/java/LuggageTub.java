@@ -1,5 +1,3 @@
-
-
 public class LuggageTub {
 
     private Baggage baggage;

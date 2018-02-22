@@ -1,13 +1,13 @@
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class MobileHandHeldScanner {
     private BaggageSortingUnit baggageSortingUnit;
     private DestinationBox destinationBox;
     private ContainerType containerType;
-    // TODO: wird das Feld container gebraucht?
     private Container container;
-    private ArrayList<BaggageIdentificationTag> baggageIdentificationTagList;
+    private List<BaggageIdentificationTag> baggageIdentificationTagList;
     private Roboter roboter;
 
 
@@ -62,7 +62,7 @@ public class MobileHandHeldScanner {
         return null;
     }
 
-    public MobileHandHeldScanner(ContainerType containerType, BaggageSortingUnit baggageSortingUnit, ArrayList<BaggageIdentificationTag> baggageIdentificationTagList) {
+    public MobileHandHeldScanner(ContainerType containerType, BaggageSortingUnit baggageSortingUnit, List<BaggageIdentificationTag> baggageIdentificationTagList) {
         this.containerType = containerType;
         this.baggageSortingUnit = baggageSortingUnit;
         this.roboter = new Roboter();

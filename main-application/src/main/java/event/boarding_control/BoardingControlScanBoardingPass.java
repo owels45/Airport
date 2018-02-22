@@ -1,6 +1,6 @@
 package event.boarding_control;
 
-import event.boarding_control.base.PassengerList;
+import base.PassengerList;
 
 public class BoardingControlScanBoardingPass {
     private PassengerList passengers;

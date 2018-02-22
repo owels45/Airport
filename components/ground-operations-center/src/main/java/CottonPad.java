@@ -1,5 +1,3 @@
-
-
 public class CottonPad {
     private String surface;
 

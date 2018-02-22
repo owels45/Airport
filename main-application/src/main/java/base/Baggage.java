@@ -1,5 +1,4 @@
 package base;
-
 public class Baggage {
 
     private String id;
