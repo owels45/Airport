@@ -1,26 +1,28 @@
+package base;
+
 public class LuggageTub {
 
-    private Baggage baggage;
-    private Destination destination;
+    private base.Baggage baggage;
+    private base.Destination destination;
 
-    public LuggageTub(Baggage baggage, Destination destination) {
+    public LuggageTub(base.Baggage baggage, base.Destination destination) {
         this.baggage = baggage;
         this.destination = destination;
     }
 
-    public Baggage getBaggage() {
+    public base.Baggage getBaggage() {
         return baggage;
     }
 
-    public void setBaggage(Baggage baggage) {
+    public void setBaggage(base.Baggage baggage) {
         this.baggage = baggage;
     }
 
-    public Destination getDestination() {
+    public base.Destination getDestination() {
         return destination;
     }
 
-    public void setDestination(Destination destination) {
+    public void setDestination(base.Destination destination) {
         this.destination = destination;
     }
 

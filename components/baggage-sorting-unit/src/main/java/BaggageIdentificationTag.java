@@ -1,22 +1,24 @@
+package base;
+
 public class BaggageIdentificationTag {
 
     private String id;
-    private BoardingPass boardingPass;
-    private Carrier carrier;
+    private base.BoardingPass boardingPass;
+    private base.Carrier carrier;
     private int sequence;
     private String via01 = "N/A";
     private String via02 = "N/A";
     private String via03 = "N/A";
-    private Baggage baggage;
-    private SpecialGood specialGood;
+    private base.Baggage baggage;
+    private base.SpecialGood specialGood;
     private boolean isLocal;
     private boolean isTransfer;
     private boolean isTransferFirst;
     private String barCode;
 
-    public BaggageIdentificationTag(String id, BoardingPass boardingPass, Carrier carrier,
+    public BaggageIdentificationTag(String id, base.BoardingPass boardingPass, base.Carrier carrier,
                                     int sequence, String via01, String via02, String via03,
-                                    Baggage baggage, SpecialGood specialGood, boolean isLocal,
+                                    base.Baggage baggage, base.SpecialGood specialGood, boolean isLocal,
                                     boolean isTransfer, boolean isTransferFirst, String barCode) {
         this.id = id;
         this.boardingPass = boardingPass;
@@ -37,11 +39,11 @@ public class BaggageIdentificationTag {
         return id;
     }
 
-    public BoardingPass getBoardingPass() {
+    public base.BoardingPass getBoardingPass() {
         return boardingPass;
     }
 
-    public Carrier getCarrier() {
+    public base.Carrier getCarrier() {
         return carrier;
     }
 
@@ -61,11 +63,11 @@ public class BaggageIdentificationTag {
         return via03;
     }
 
-    public Baggage getBaggage() {
+    public base.Baggage getBaggage() {
         return baggage;
     }
 
-    public SpecialGood getSpecialGood() {
+    public base.SpecialGood getSpecialGood() {
         return specialGood;
     }
 
@@ -90,11 +92,11 @@ public class BaggageIdentificationTag {
         this.id = id;
     }
 
-    public void setBoardingPass(BoardingPass boardingPass) {
+    public void setBoardingPass(base.BoardingPass boardingPass) {
         this.boardingPass = boardingPass;
     }
 
-    public void setCarrier(Carrier carrier) {
+    public void setCarrier(base.Carrier carrier) {
         this.carrier = carrier;
     }
 
@@ -114,11 +116,11 @@ public class BaggageIdentificationTag {
         this.via03 = via03;
     }
 
-    public void setBaggage(Baggage baggage) {
+    public void setBaggage(base.Baggage baggage) {
         this.baggage = baggage;
     }
 
-    public void setSpecialGood(SpecialGood specialGood) {
+    public void setSpecialGood(base.SpecialGood specialGood) {
         this.specialGood = specialGood;
     }
 

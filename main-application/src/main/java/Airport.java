@@ -1,13 +1,17 @@
+import base.*;
+
 import base.Baggage;
+import base.BaggageSortingUnitReceipt;
 import base.BoardingPass;
 import base.Destination;
 import base.Passenger;
-import base.Passport;
 import base.PassengerList;
-import base.BaggageSortingUnitReceipt;
-
+import base.Passport;
 import com.google.common.eventbus.Subscribe;
 import event.Subscriber;
+import event.pushback_vehicle.PushBackVehicleConnect;
+import event.pushback_vehicle.PushBackVehicleDisconnect;
+import event.pushback_vehicle.PushBackVehiclePushBack;
 import event.service_vehicle_fresh_water.ServiceVehicleFreshWaterNotifyGroundOperations;
 import event.baggage_sorting.BaggageSorting;
 import event.boarding_control.BoardingControlCallPassengers;
@@ -404,16 +408,17 @@ public class Airport extends Subscriber {
     @Subscribe
     public void receive(BaggageSorting event) {
         try {
-            LogEngine.instance.write("--- Baggage Sorting");
-            Method executeBaggageSortingMethod = this.baggageSortingUnitPort.getClass().getDeclaredMethod("execute", String.class
-            , Destination.class, List.class, List.class, List.class);
+            // TODO: LogEngine is commented out, because it throws exceptions during a test.
+            //LogEngine.instance.write("--- Baggage Sorting");
+            Method executeBaggageSortingMethod = this.baggageSortingUnitPort.getClass().getDeclaredMethod("execute",
+                    String.class , Destination.class, java.util.List.class, java.util.List.class, java.util.List.class);
 
             Object result = executeBaggageSortingMethod.invoke(this.baggageSortingUnitPort, event.getBaggageVehicleTargetPosition()
             , event.getDestination(), event.getBaggage(), event.getBaggageVehicles(), event.getBaggageTags());
 
             BaggageSortingUnitReceipt receipt = (BaggageSortingUnitReceipt) result;
 
-            LogEngine.instance.write("--- Baggage Sorting: Notify Ground Operations");
+            //LogEngine.instance.write("--- Baggage Sorting: Notify Ground Operations");
             Method notifyGroundOperationMethod = this.groundOperationsPort.getClass().getDeclaredMethod("receive", BaggageSortingUnitReceipt.class);
             notifyGroundOperationMethod.invoke(this.groundOperationsPort, receipt);
 

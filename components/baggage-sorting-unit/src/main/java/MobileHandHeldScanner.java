@@ -1,13 +1,20 @@
+import base.*;
+import base.Baggage;
+import base.BaggageIdentificationTag;
+import base.Container;
+import base.ContainerCategory;
+import base.ContainerType;
+import base.DestinationBox;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class MobileHandHeldScanner {
     private BaggageSortingUnit baggageSortingUnit;
     private DestinationBox destinationBox;
     private ContainerType containerType;
     private Container container;
-    private List<BaggageIdentificationTag> baggageIdentificationTagList;
+    private List<base.BaggageIdentificationTag> baggageIdentificationTagList;
     private Roboter roboter;
 
 

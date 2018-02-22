@@ -1,10 +1,12 @@
+package base;
+
 public class Passport {
     private String id;
     private String picture;
     private String visa = "N/A";
-    private Passenger passenger;
+    private base.Passenger passenger;
 
-    public Passport(String id, String picture, String visa, Passenger passenger) {
+    public Passport(String id, String picture, String visa, base.Passenger passenger) {
         this.id = id;
         this.picture = picture;
         this.visa = visa;
@@ -35,11 +37,11 @@ public class Passport {
         this.visa = visa;
     }
 
-    public Passenger getPassenger() {
+    public base.Passenger getPassenger() {
         return passenger;
     }
 
-    public void setPassenger(Passenger passenger) {
+    public void setPassenger(base.Passenger passenger) {
         this.passenger = passenger;
     }
 

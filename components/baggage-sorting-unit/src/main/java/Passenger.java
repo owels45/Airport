@@ -1,3 +1,5 @@
+package base;
+
 import java.util.ArrayList;
 
 public class Passenger {
@@ -7,13 +9,13 @@ public class Passenger {
     private String street;
     private String postCode;
     private String city;
-    private CitizenshipCode citizenshipCode;
-    private Gender gender;
-    private Passport passport;
-    private ArrayList<Baggage> baggageList;
-    private BoardingPass boardingPass;
+    private base.CitizenshipCode citizenshipCode;
+    private base.Gender gender;
+    private base.Passport passport;
+    private ArrayList<base.Baggage> baggageList;
+    private base.BoardingPass boardingPass;
 
-    public Passenger(String name, String content, String birthDate, String street, String postCode, String city, CitizenshipCode citizenshipCode, Gender gender, Passport passport, ArrayList<Baggage> baggageList, BoardingPass boardingPass) {
+    public Passenger(String name, String content, String birthDate, String street, String postCode, String city, base.CitizenshipCode citizenshipCode, base.Gender gender, base.Passport passport, ArrayList<base.Baggage> baggageList, base.BoardingPass boardingPass) {
         this.name = name;
         this.content = content;
         this.birthDate = birthDate;
@@ -75,43 +77,43 @@ public class Passenger {
         this.city = city;
     }
 
-    public CitizenshipCode getCitizenshipCode() {
+    public base.CitizenshipCode getCitizenshipCode() {
         return citizenshipCode;
     }
 
-    public void setCitizenshipCode(CitizenshipCode citizenshipCode) {
+    public void setCitizenshipCode(base.CitizenshipCode citizenshipCode) {
         this.citizenshipCode = citizenshipCode;
     }
 
-    public Gender getGender() {
+    public base.Gender getGender() {
         return gender;
     }
 
-    public void setGender(Gender gender) {
+    public void setGender(base.Gender gender) {
         this.gender = gender;
     }
 
-    public Passport getPassport() {
+    public base.Passport getPassport() {
         return passport;
     }
 
-    public void setPassport(Passport passport) {
+    public void setPassport(base.Passport passport) {
         this.passport = passport;
     }
 
-    public ArrayList<Baggage> getBaggageList() {
+    public ArrayList<base.Baggage> getBaggageList() {
         return baggageList;
     }
 
-    public void setBaggageList(ArrayList<Baggage> baggageList) {
+    public void setBaggageList(ArrayList<base.Baggage> baggageList) {
         this.baggageList = baggageList;
     }
 
-    public BoardingPass getBoardingPass() {
+    public base.BoardingPass getBoardingPass() {
         return boardingPass;
     }
 
-    public void setBoardingPass(BoardingPass boardingPass) {
+    public void setBoardingPass(base.BoardingPass boardingPass) {
         this.boardingPass = boardingPass;
     }
 

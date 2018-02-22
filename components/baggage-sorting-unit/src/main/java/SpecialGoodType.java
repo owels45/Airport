@@ -1,3 +1,5 @@
+package base;
+
 public enum SpecialGoodType {
     Bike,
     DangerousGoods,

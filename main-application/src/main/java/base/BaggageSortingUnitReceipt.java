@@ -1,11 +1,12 @@
 package base;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class BaggageSortingUnitReceipt {
 
     private DestinationBox destinationBox;
-    private ArrayList<Container> containerList;
+    private List<Container> containerList;
     private int numberOfBaggageFirstClass;
     private int numberOfBaggageBusinessClass;
     private int numberOfBaggageEconomyClass;
@@ -29,7 +30,7 @@ public class BaggageSortingUnitReceipt {
         return destinationBox;
     }
 
-    public ArrayList<Container> getContainerList() {
+    public List<Container> getContainerList() {
         return containerList;
     }
 
@@ -57,5 +58,47 @@ public class BaggageSortingUnitReceipt {
         return numberOfContainerEconomyClass;
     }
 
+    public void setNumberOfBaggageFirstClass(int numberOfBaggageFirstClass) {
+        this.numberOfBaggageFirstClass = numberOfBaggageFirstClass;
+    }
 
+    /**
+     * Set the number of business baggage.
+     *
+     * @param numberOfBaggageBusinessClass The number to set.
+     */
+    public void setNumberOfBaggageBusinessClass(int numberOfBaggageBusinessClass) {
+        this.numberOfBaggageBusinessClass = numberOfBaggageBusinessClass;
+    }
+
+    /**
+     * Set the number of economy class baggage.
+     *
+     * @param numberOfBaggageEconomyClass The number to set.
+     */
+    public void setNumberOfBaggageEconomyClass(int numberOfBaggageEconomyClass) {
+        this.numberOfBaggageEconomyClass = numberOfBaggageEconomyClass;
+    }
+
+    public void increaseNumberOfContainerFirstClass() {
+        numberOfContainerFirstClass++;
+    }
+
+    /**
+     * Increase the number of business class containers.
+     */
+    public void increaseNumberOfContainerBusinessClass() {
+        numberOfContainerBusinessClass++;
+    }
+
+    /**
+     * Increase the number of economy class containers.
+     */
+    public void increaseNumberOfContainerEconomyClass() {
+        numberOfContainerEconomyClass++;
+    }
+
+    public void setContainerList(List<Container> containerList) {
+        this.containerList = containerList;
+    }
 }
