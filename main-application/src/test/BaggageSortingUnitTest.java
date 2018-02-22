@@ -1,5 +1,11 @@
+import event.baggage_sorting.BaggageSorting;
 import org.junit.Assert;
 import org.junit.Test;
+import base.Baggage;
+import base.BaggageType;
+import base.BaggageIdentificationTag;
+import base.Destination;
+import base.TicketClass;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,46 +14,7 @@ import java.util.List;
 public class BaggageSortingUnitTest {
 
     @Test
-    public void BaggageSortingUnitTest_Drop_BaggageIsInLuggage() {
-        BaggageSortingUnit unit = BaggageSortingUnit.getInstance();
-
-        Baggage baggage = new Baggage("1", 1.0, BaggageType.Normal);
-        LuggageTub luggageTub = new LuggageTub(null, Destination.CPT);
-        unit.drop(luggageTub, baggage);
-
-        Assert.assertEquals("LuggageTub should contain baggage", baggage, luggageTub.getBaggage());
-    }
-
-    @Test
-    public void BaggageSortingUnitTest_throwOff_BaggageIsInBox() {
-        BaggageSortingUnit unit = BaggageSortingUnit.getInstance();
-        DestinationBox box = new DestinationBox();
-        box.setBaggegeList(new ArrayList<Baggage>());
-
-        Baggage firstBaggage = new Baggage("1", 1.0, BaggageType.Normal);
-        Baggage secondBaggage = new Baggage("2", 2.0, BaggageType.Normal);
-
-        LuggageTub luggageTub = new LuggageTub(null, Destination.CPT);
-        luggageTub.setBaggage(firstBaggage);
-        unit.throwOff(luggageTub, box);
-
-        LuggageTub secondTub = new LuggageTub(null, Destination.CPT);
-        secondTub.setBaggage(secondBaggage);
-        unit.throwOff(secondTub, box);
-
-        ArrayList<Baggage> baggage = box.getBaggegeList();
-
-        Assert.assertEquals("Baggage count should be correct", 2, baggage.size());
-        Assert.assertEquals("Baggage should be correct", firstBaggage, baggage.get(0));
-        Assert.assertEquals("Baggage should be correct", secondBaggage, baggage.get(1));
-    }
-
-
-    @Test
     public void BaggageSortingUnitTest_loadDestinationBoxIntoContainers() {
-
-        BaggageSortingUnit.Port port = BaggageSortingUnit.getInstance().port;
-
         ArrayList<Baggage> firstClassBaggages = this.getTestBaggageTestData(0, 45);
         ArrayList<Baggage> businessClassBaggages = this.getTestBaggageTestData(96, 75);
         ArrayList<Baggage> economyClassBaggages = this.getTestBaggageTestData(171, 51);
@@ -74,13 +41,14 @@ public class BaggageSortingUnitTest {
         combinedTags.addAll(premiumEconomyClassTags);
 
 
+        BaggageSorting baggageSorting = new BaggageSorting("K20", Destination.CPT, combinedBaggage, vehicles, combinedTags);
+
+        Airport airport = new Airport();
+        airport.build();
+
+        airport.receive(baggageSorting);
+
         BaggageSortingUnitReceipt receipt = null;
-        try {
-            receipt = port.execute("K20", Destination.CPT, combinedBaggage
-                    ,vehicles, combinedTags);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
 
         //First class:
@@ -130,7 +98,7 @@ public class BaggageSortingUnitTest {
     private ArrayList<BaggageIdentificationTag> createBaggageTagsForBaggage(ArrayList<Baggage> baggageList, TicketClass ticketClass) {
         ArrayList<BaggageIdentificationTag> tags = new ArrayList<BaggageIdentificationTag>();
         for (Baggage bagggage : baggageList ) {
-            tags.add(new TestBaggageIdentificationTag(bagggage.getId(), new TestBoardingPass(bagggage.getId(),ticketClass)));
+            tags.add(new TestBaggageIdentificationTag(bagggage.getId(), new TestBoardingPass(bagggage.getId(), ticketClass)));
         }
         return tags;
     }

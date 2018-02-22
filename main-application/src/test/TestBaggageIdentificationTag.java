@@ -1,3 +1,5 @@
+import base.BaggageIdentificationTag;
+import base.Carrier;
 
 public class TestBaggageIdentificationTag extends BaggageIdentificationTag {
     public TestBaggageIdentificationTag(String id, TestBoardingPass testBoardingPass) {

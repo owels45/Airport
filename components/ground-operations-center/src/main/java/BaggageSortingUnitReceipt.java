@@ -28,7 +28,7 @@ public class BaggageSortingUnitReceipt {
         return destinationBox;
     }
 
-    public ArrayList<Container> getContainerList() {
+    public List<Container> getContainerList() {
         return containerList;
     }
 

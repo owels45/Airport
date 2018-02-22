@@ -408,16 +408,16 @@ public class Airport extends Subscriber {
     @Subscribe
     public void receive(BaggageSorting event) {
         try {
-            LogEngine.instance.write("--- Baggage Sorting");
+            //LogEngine.instance.write("--- Baggage Sorting");
             Method executeBaggageSortingMethod = this.baggageSortingUnitPort.getClass().getDeclaredMethod("execute", String.class
-            , Destination.class, List.class, List.class, List.class);
+            , base.Destination.class, List.class, List.class, List.class);
 
             Object result = executeBaggageSortingMethod.invoke(this.baggageSortingUnitPort, event.getBaggageVehicleTargetPosition()
             , event.getDestination(), event.getBaggage(), event.getBaggageVehicles(), event.getBaggageTags());
 
             BaggageSortingUnitReceipt receipt = (BaggageSortingUnitReceipt) result;
 
-            LogEngine.instance.write("--- Baggage Sorting: Notify Ground Operations");
+            //LogEngine.instance.write("--- Baggage Sorting: Notify Ground Operations");
             Method notifyGroundOperationMethod = this.groundOperationsPort.getClass().getDeclaredMethod("receive", BaggageSortingUnitReceipt.class);
             notifyGroundOperationMethod.invoke(this.groundOperationsPort, receipt);
 
