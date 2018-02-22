@@ -1,3 +1,5 @@
+import base.Destination;
+
 public class TestBoardingPass extends BoardingPass {
     public TestBoardingPass(String id, TicketClass ticketClass) {
 

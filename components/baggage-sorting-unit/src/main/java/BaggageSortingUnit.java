@@ -1,3 +1,5 @@
+import base.Destination;
+
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,3 +1,5 @@
+import base.Destination;
+
 public class LuggageTub {
 
     private Baggage baggage;
