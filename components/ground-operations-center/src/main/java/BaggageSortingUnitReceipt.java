@@ -1,9 +1,10 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class BaggageSortingUnitReceipt {
 
     private DestinationBox destinationBox;
-    private ArrayList<Container> containerList;
+    private List<Container> containerList;
     private int numberOfBaggageFirstClass;
     private int numberOfBaggageBusinessClass;
     private int numberOfBaggageEconomyClass;
@@ -55,5 +56,7 @@ public class BaggageSortingUnitReceipt {
         return numberOfContainerEconomyClass;
     }
 
-
+    public void setContainerList(List<Container> containerList) {
+        this.containerList = containerList;
+    }
 }
