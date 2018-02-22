@@ -1,19 +1,21 @@
+package base;
+
 public class BoardingPass {
 
     private String id;
-    private Carrier carrier;
+    private base.Carrier carrier;
     private String flight;
-    private Passenger passenger;
-    private TicketClass ticketClass;
-    private Source source;
-    private Destination destination;
+    private base.Passenger passenger;
+    private base.TicketClass ticketClass;
+    private base.Source source;
+    private base.Destination destination;
     private String date;
     private String gate;
     private String boardingTime;
     private String seat;
 
-    public BoardingPass(String id, Carrier carrier, String flight, Passenger passenger,
-                        TicketClass ticketClass, Source source, Destination destination,
+    public BoardingPass(String id, base.Carrier carrier, String flight, base.Passenger passenger,
+                        base.TicketClass ticketClass, base.Source source, base.Destination destination,
                         String date, String gate, String boardingTime, String seat) {
         this.id = id;
         this.carrier = carrier;
@@ -32,7 +34,7 @@ public class BoardingPass {
         return id;
     }
 
-    public Carrier getCarrier() {
+    public base.Carrier getCarrier() {
         return carrier;
     }
 
@@ -40,19 +42,19 @@ public class BoardingPass {
         return flight;
     }
 
-    public Passenger getPassenger() {
+    public base.Passenger getPassenger() {
         return passenger;
     }
 
-    public TicketClass getTicketClass() {
+    public base.TicketClass getTicketClass() {
         return ticketClass;
     }
 
-    public Source getSource() {
+    public base.Source getSource() {
         return source;
     }
 
-    public Destination getDestination() {
+    public base.Destination getDestination() {
         return destination;
     }
 
@@ -76,7 +78,7 @@ public class BoardingPass {
         this.id = id;
     }
 
-    public void setCarrier(Carrier carrier) {
+    public void setCarrier(base.Carrier carrier) {
         this.carrier = carrier;
     }
 
@@ -84,19 +86,19 @@ public class BoardingPass {
         this.flight = flight;
     }
 
-    public void setPassenger(Passenger passenger) {
+    public void setPassenger(base.Passenger passenger) {
         this.passenger = passenger;
     }
 
-    public void setTicketClass(TicketClass ticketClass) {
+    public void setTicketClass(base.TicketClass ticketClass) {
         this.ticketClass = ticketClass;
     }
 
-    public void setSource(Source source) {
+    public void setSource(base.Source source) {
         this.source = source;
     }
 
-    public void setDestination(Destination destination) {
+    public void setDestination(base.Destination destination) {
         this.destination = destination;
     }
 

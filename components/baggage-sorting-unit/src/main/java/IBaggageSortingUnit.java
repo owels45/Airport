@@ -1,3 +1,6 @@
+import base.Baggage;
+import base.BaggageIdentificationTag;
+import base.BaggageSortingUnitReceipt;
 import base.Destination;
 
 import java.util.List;

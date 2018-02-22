@@ -1,4 +1,14 @@
+import base.*;
+import base.Baggage;
+import base.BaggageIdentificationTag;
+import base.BaggageSortingUnitReceipt;
+import base.BaggageType;
+import base.Container;
+import base.ContainerCategory;
 import base.Destination;
+import base.DestinationBox;
+import base.LuggageTub;
+import base.TicketClass;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -129,7 +139,7 @@ public class BaggageSortingUnitTest {
     }
 
     private ArrayList<BaggageIdentificationTag> createBaggageTagsForBaggage(ArrayList<Baggage> baggageList, TicketClass ticketClass) {
-        ArrayList<BaggageIdentificationTag> tags = new ArrayList<BaggageIdentificationTag>();
+        ArrayList<BaggageIdentificationTag> tags = new ArrayList<base.BaggageIdentificationTag>();
         for (Baggage bagggage : baggageList ) {
             tags.add(new TestBaggageIdentificationTag(bagggage.getId(), new TestBoardingPass(bagggage.getId(),ticketClass)));
         }

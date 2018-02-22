@@ -14,7 +14,7 @@ import java.util.List;
 public class BaggageSortingUnitTest {
 
     @Test
-    public void BaggageSortingUnitTest_loadDestinationBoxIntoContainers() {
+    public void BaggageSortingUnitTest_AirportReceive() {
         ArrayList<Baggage> firstClassBaggages = this.getTestBaggageTestData(0, 45);
         ArrayList<Baggage> businessClassBaggages = this.getTestBaggageTestData(96, 75);
         ArrayList<Baggage> economyClassBaggages = this.getTestBaggageTestData(171, 51);
@@ -47,45 +47,6 @@ public class BaggageSortingUnitTest {
         airport.build();
 
         airport.receive(baggageSorting);
-
-        BaggageSortingUnitReceipt receipt = null;
-
-
-        //First class:
-        Assert.assertEquals("Should contain one container for first class", 1 , receipt.getNumberOfContainerFirstClass());
-        Assert.assertEquals("Should contain first class baggage", 45 , receipt.getNumberOfBaggageFirstClass());
-
-        // Business:
-        Assert.assertEquals("Should contain two container for business class", 2 , receipt.getNumberOfContainerBusinessClass());
-        Assert.assertEquals("Should contain business class baggage", 75 , receipt.getNumberOfBaggageBusinessClass());
-
-        // Economy:
-        Assert.assertEquals("Should contain two container for economy class", 3 , receipt.getNumberOfContainerEconomyClass());
-        Assert.assertEquals("Should contain economy class baggage", 106 , receipt.getNumberOfBaggageEconomyClass());
-
-        Assert.assertTrue("Containers should be correct" ,this.AssertContainers(receipt));
-    }
-
-    private boolean AssertContainers(BaggageSortingUnitReceipt receipt) {
-        List<Container> containers = receipt.getContainerList();
-
-        int firstClassContainerCount  = this.getContainerCountForCategory(containers, ContainerCategory.First);
-        int businessClassContainerCount  = this.getContainerCountForCategory(containers, ContainerCategory.Business);
-        int economyClassContainerCount  = this.getContainerCountForCategory(containers, ContainerCategory.Economy);
-
-        Assert.assertEquals("Correct number of containers should be in the receipt", 6, containers.size());
-        Assert.assertEquals("Correct number of first class containers should be in the receipt", 1, firstClassContainerCount);
-        Assert.assertEquals("Correct number of business class containers should be in the receipt", 2, businessClassContainerCount);
-        Assert.assertEquals("Correct number of economy class containers should be in the receipt", 3, economyClassContainerCount);
-        return true;
-    }
-
-    private int getContainerCountForCategory(List<Container> containers, ContainerCategory category) {
-        int counter = 0;
-        for (Container container : containers ) {
-            if (container.getCategory() == category) { counter++; }
-        }
-        return counter;
     }
 
     private ArrayList<Object> generateBaggageVehicles(int size) {

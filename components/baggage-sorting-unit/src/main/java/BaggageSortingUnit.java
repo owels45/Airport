@@ -1,4 +1,13 @@
+import base.Baggage;
+import base.BaggageIdentificationTag;
+import base.BaggageSortingUnitReceipt;
+import base.Container;
+import base.ContainerCategory;
+import base.ContainerProfile;
+import base.ContainerType;
 import base.Destination;
+import base.DestinationBox;
+import base.LuggageTub;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +26,7 @@ public class BaggageSortingUnit {
     private String position;
     private List<LuggageTub> luggageTubList;
     private DestinationBox destinationBox;
-    private List<Container> emptyContainerList;
+    private List<base.Container> emptyContainerList;
     private List<Container> filledContainerList;
     private Roboter roboter;
     private List<Object> baggageVehicleList;

@@ -1,3 +1,5 @@
+package base;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +11,7 @@ public class BaggageSortingUnitReceipt {
     /**
      * The destination box.
      */
-    private DestinationBox destinationBox;
+    private base.DestinationBox destinationBox;
 
     /**
      * The number of first class containers.
@@ -29,14 +31,14 @@ public class BaggageSortingUnitReceipt {
      *
      * @param containerList The container list.
      */
-    public void setContainerList(List<Container> containerList) {
+    public void setContainerList(List<base.Container> containerList) {
         this.containerList = containerList;
     }
 
     /**
      * The container list.
      */
-    private List<Container> containerList;
+    private List<base.Container> containerList;
     /**
      * The number of first class baggage.
      */
@@ -117,7 +119,7 @@ public class BaggageSortingUnitReceipt {
      * @param numberOfContainerBusinessClass The number of business class containers.
      * @param numberOfContainerEconomyClass The number of economy class containers.
      */
-    public BaggageSortingUnitReceipt (DestinationBox destinationBox, ArrayList<Container> containerList, int numberOfBaggageFirstClass, int numberOfBaggageBusinessClass, int numberOfBaggageEconomyClass
+    public BaggageSortingUnitReceipt (base.DestinationBox destinationBox, ArrayList<base.Container> containerList, int numberOfBaggageFirstClass, int numberOfBaggageBusinessClass, int numberOfBaggageEconomyClass
         , int numberOfContainerFirstClass, int numberOfContainerBusinessClass, int numberOfContainerEconomyClass) {
         this.destinationBox = destinationBox;
         this.containerList = containerList;
@@ -134,7 +136,7 @@ public class BaggageSortingUnitReceipt {
      *
      * @return The destination box.
      */
-    public DestinationBox getDestinationBox() {
+    public base.DestinationBox getDestinationBox() {
         return destinationBox;
     }
 
@@ -143,7 +145,7 @@ public class BaggageSortingUnitReceipt {
      *
      * @return The list of containers.
      */
-    public List<Container> getContainerList() {
+    public List<base.Container> getContainerList() {
         return containerList;
     }
 

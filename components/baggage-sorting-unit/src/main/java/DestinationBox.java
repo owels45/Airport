@@ -1,12 +1,14 @@
+package base;
+
 import java.util.ArrayList;
 
 public class DestinationBox {
 
     private String barCode;
-    private ArrayList<Baggage> baggageList;
+    private ArrayList<base.Baggage> baggageList;
 
     public DestinationBox() {
-        this.baggageList = new ArrayList<Baggage>();
+        this.baggageList = new ArrayList<base.Baggage>();
     }
 
     public String getBarCode() {
@@ -17,11 +19,11 @@ public class DestinationBox {
         this.barCode = barCode;
     }
 
-    public ArrayList<Baggage> getBaggegeList() {
+    public ArrayList<base.Baggage> getBaggegeList() {
         return baggageList;
     }
 
-    public void setBaggegeList(ArrayList<Baggage> baggegeList) {
+    public void setBaggegeList(ArrayList<base.Baggage> baggegeList) {
         this.baggageList = baggegeList;
     }
 

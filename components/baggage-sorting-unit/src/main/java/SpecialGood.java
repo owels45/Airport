@@ -1,15 +1,17 @@
-public class SpecialGood {
-    private SpecialGoodType specialGoodType;
+package base;
 
-    public SpecialGood(SpecialGoodType specialGoodType) {
+public class SpecialGood {
+    private base.SpecialGoodType specialGoodType;
+
+    public SpecialGood(base.SpecialGoodType specialGoodType) {
         this.specialGoodType = specialGoodType;
     }
 
-    public SpecialGoodType getSpecialGoodType() {
+    public base.SpecialGoodType getSpecialGoodType() {
         return specialGoodType;
     }
 
-    public void setSpecialGoodType(SpecialGoodType specialGoodType) {
+    public void setSpecialGoodType(base.SpecialGoodType specialGoodType) {
         this.specialGoodType = specialGoodType;
     }
 
