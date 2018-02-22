@@ -89,7 +89,7 @@ public class Airport extends Subscriber {
 
         baggageVehiclePort = BaggageVehicleFactory.build();
         containerLifterPort = ContainerLifterFactory.build();
-//        pushBackVehiclePort = PushBackVehicleFactory.build(); // TODO: 20.02.2018 what the heck???
+        pushBackVehiclePort = PushBackVehicleFactory.build();
         groundOperationsPort = GroundOperationsCenterFactory.build();
     }
 
@@ -417,6 +417,94 @@ public class Airport extends Subscriber {
             Method notifyGroundOperationMethod = this.groundOperationsPort.getClass().getDeclaredMethod("receive", BaggageSortingUnitReceipt.class);
             notifyGroundOperationMethod.invoke(this.groundOperationsPort, receipt);
 
+
+        } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException exc) {
+            exc.printStackTrace();
+        }
+    }
+    
+    @Subscribe
+    public void receive(PushBackVehicleConnect event) {
+        try {
+            LogEngine.instance.write("--- PushBackVehicle gets connected");
+
+            Method lightsOnMethod = this.pushBackVehiclePort.getClass().getDeclaredMethod("setFlashingLightOn", Boolean.TYPE);
+            lightsOnMethod.invoke(this.pushBackVehiclePort, true);
+            LogEngine.instance.write("Flashing Light is on");
+
+            Method connectMethod = this.pushBackVehiclePort.getClass().getDeclaredMethod("connect", Airplane.class);
+            connectMethod.invoke(this.pushBackVehiclePort, event.getAirplane());
+            LogEngine.instance.write("PushBack Vehicle is connected to " + event.getAirplane());
+
+            Method steeringPinMethod = this.pushBackVehiclePort.getClass().getDeclaredMethod("setSteeringPin", Boolean.TYPE);
+            steeringPinMethod.invoke(this.pushBackVehiclePort, true);
+            LogEngine.instance.write("Steering Pin is set now");
+
+            LogEngine.instance.write("--- PushBack Vehicle is connected");
+
+        } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException exc) {
+            exc.printStackTrace();
+        }
+    }
+
+    @Subscribe
+    public void receive(PushBackVehiclePushBack event) {
+        try {
+            LogEngine.instance.write("--- Airplane is getting pushed back");
+
+            Method upMethod = this.pushBackVehiclePort.getClass().getDeclaredMethod("up", Boolean.TYPE);
+            upMethod.invoke(this.pushBackVehiclePort, true);
+            LogEngine.instance.write("PushBack Vehicle is up now");
+
+            Method forwardMethod = this.pushBackVehiclePort.getClass().getDeclaredMethod("forward", Integer.TYPE);
+            int forward = (int) forwardMethod.invoke(this.pushBackVehiclePort, 10);
+            LogEngine.instance.write("PushBack Vehicle moves forwards with " + forward + "mph");
+
+            Method leftMethod = this.pushBackVehiclePort.getClass().getDeclaredMethod("turnLeft", Integer.TYPE);
+            int left = (int) leftMethod.invoke(this.pushBackVehiclePort, 5);
+            LogEngine.instance.write("PushBack Vehicle moves left with " + left + "mph");
+
+            Method rightMethod = this.pushBackVehiclePort.getClass().getDeclaredMethod("turnRight", Integer.TYPE);
+            int right = (int) rightMethod.invoke(this.pushBackVehiclePort, 10);
+            LogEngine.instance.write("PushBack Vehicle moves right with " + right + "mph");
+
+            Method backwardMethod = this.pushBackVehiclePort.getClass().getDeclaredMethod("backward", Integer.TYPE);
+            int backward = (int) backwardMethod.invoke(this.pushBackVehiclePort, 10);
+            LogEngine.instance.write("PushBack Vehicle moves backwards with " + backward + "mph");
+
+            Method stopMethod = this.pushBackVehiclePort.getClass().getDeclaredMethod("stop", Integer.TYPE);
+            stopMethod.invoke(this.pushBackVehiclePort, 0);
+            LogEngine.instance.write("PushBack Vehicle has stopped now");
+
+            Method downMethod = this.pushBackVehiclePort.getClass().getDeclaredMethod("down", Boolean.TYPE);
+            downMethod.invoke(this.pushBackVehiclePort, false);
+            LogEngine.instance.write("PushBack Vehicle is down now");
+
+            LogEngine.instance.write("--- Airplane is pushed back");
+
+        } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException exc) {
+            exc.printStackTrace();
+        }
+    }
+
+    @Subscribe
+    public void receive(PushBackVehicleDisconnect event) {
+        try {
+            LogEngine.instance.write("--- PushBack Vehicle gets disconnected");
+
+            Method steeringPinMethod = this.pushBackVehiclePort.getClass().getDeclaredMethod("removeSteeringPin", Boolean.TYPE);
+            steeringPinMethod.invoke(this.pushBackVehiclePort, false);
+            LogEngine.instance.write("Steering Pin is removec now");
+
+            Method disconnectMethod = this.pushBackVehiclePort.getClass().getDeclaredMethod("disconnect", Airplane.class);
+            disconnectMethod.invoke(this.pushBackVehiclePort, event.getAirplane());
+            LogEngine.instance.write("PushBack Vehicle is disconnected from " + event.getAirplane());
+
+            Method lightsOffMethod = this.pushBackVehiclePort.getClass().getDeclaredMethod("setFlashingLightOff", Boolean.TYPE);
+            lightsOffMethod.invoke(this.pushBackVehiclePort, true);
+            LogEngine.instance.write("Flashing Light is off");
+
+            LogEngine.instance.write("--- PushBack Vehicle is disconnected");
 
         } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException exc) {
             exc.printStackTrace();
