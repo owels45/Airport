@@ -20,11 +20,10 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>2.3.2</version>
+                <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <finalName>ground-operations-center</finalName>
-                    <outputDirectory>../../main-application/components</outputDirectory>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
         </plugins>
@@ -35,11 +34,6 @@
             <artifactId>junit</artifactId>
             <version>4.12</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>de.dhbw.mosbach.ai.se</groupId>
-            <artifactId>service-vehicle-nitrogen-oxygen</artifactId>
-            <version>1.0.0</version>
         </dependency>
     </dependencies>
 </project>

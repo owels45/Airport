@@ -1,4 +1,3 @@
-
 public enum BaggageType {
     Bulky,
     BulkyCrew,

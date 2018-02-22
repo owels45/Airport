@@ -1,5 +1,3 @@
-
-
 public class BaggageIdentificationTag {
 
     private String id;
