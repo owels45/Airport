@@ -1,10 +1,12 @@
+package base;
+
 public class Baggage {
 
     private String id;
     private double weight;
-    private BaggageType baggageType;
+    private base.BaggageType baggageType;
 
-    public Baggage(String id, double weight, BaggageType baggageType) {
+    public Baggage(String id, double weight, base.BaggageType baggageType) {
         this.id = id;
         this.weight = weight;
         this.baggageType = baggageType;
@@ -18,7 +20,7 @@ public class Baggage {
         return weight;
     }
 
-    public BaggageType getBaggageType() {
+    public base.BaggageType getBaggageType() {
         return baggageType;
     }
 
@@ -30,7 +32,7 @@ public class Baggage {
         this.weight = weight;
     }
 
-    public void setBaggageType(BaggageType baggageType) {
+    public void setBaggageType(base.BaggageType baggageType) {
         this.baggageType = baggageType;
     }
 

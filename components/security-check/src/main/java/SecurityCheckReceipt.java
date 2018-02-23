@@ -1,14 +1,16 @@
+package base;
+
 import java.util.ArrayList;
 
 public class SecurityCheckReceipt {
     /**
      * The Employee.
      */
-    private Employee employee;
+    private base.Employee employee;
     /**
      * The Cotton Pads.
      */
-    private ArrayList<CottonPad> cottonPads;
+    private ArrayList<base.CottonPad> cottonPads;
     /**
      * The Number of Passengers Scanned.
      */
@@ -34,7 +36,7 @@ public class SecurityCheckReceipt {
      * @param numberOfBaggageScanned The Number of Bags Scanned.
      * @param numberOfDangerousBaggage The Number of Dangerous Bags.
      */
-    public SecurityCheckReceipt(Employee employee, ArrayList<CottonPad> cottonPads, int numberOfPassengerScanned, int numberOfPassengerScannedExplosivesTraceDetector, int numberOfBaggageScanned, int numberOfDangerousBaggage) {
+    public SecurityCheckReceipt(base.Employee employee, ArrayList<base.CottonPad> cottonPads, int numberOfPassengerScanned, int numberOfPassengerScannedExplosivesTraceDetector, int numberOfBaggageScanned, int numberOfDangerousBaggage) {
         this.employee = employee;
         this.cottonPads = cottonPads;
         this.numberOfPassengerScanned = numberOfPassengerScanned;
@@ -70,14 +72,14 @@ public class SecurityCheckReceipt {
      * Get the Employee.
      * @return The Employee.
      */
-    public Employee getEmployee() {
+    public base.Employee getEmployee() {
         return employee;
     }
     /**
      * Get The Cotton Pads.
      * @return The Cotton Pads.
      */
-    public ArrayList<CottonPad> getCottonPads() {
+    public ArrayList<base.CottonPad> getCottonPads() {
         return cottonPads;
     }
     /**

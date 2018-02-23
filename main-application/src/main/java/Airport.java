@@ -378,26 +378,33 @@ public class Airport extends Subscriber {
     @Subscribe
     public void receive(SecurityCheck event) {
         try {
-            LogEngine.instance.write("--- Starting security check");
+            // TODO: LogEngine is commented out, because it throws exceptions during a test.
+            //LogEngine.instance.write("--- Starting security check");
             Method scanMethod = this.securityCheckPort.getClass().getDeclaredMethod("scan", Baggage.class, Object.class, String.class);
 
-            LogEngine.instance.write("--- Security check: scan baggage");
+            //LogEngine.instance.write("--- Security check: scan baggage");
             for (Baggage bag : event.getBaggage()) {
-               scanMethod.invoke(this.securityCheckPort, bag, this.scannerPort, "glock");
+               if((Boolean) scanMethod.invoke(this.securityCheckPort, bag, this.scannerPort, "glock7")){
+                   //LogEngine.instance.write("--- Security check: Pattern glock7 found in Bag: " + bag.getId());
+               }
             }
 
             scanMethod = this.securityCheckPort.getClass().getDeclaredMethod("scan", Passenger.class, Object.class, String.class);
-            LogEngine.instance.write("--- Security check: scan passengers");
+            //LogEngine.instance.write("--- Security check: scan passengers");
             for (base.Passenger passenger : event.getPassengers()) {
-                scanMethod.invoke(this.securityCheckPort, passenger, this.scannerPort, "glock");
+                if((Boolean) scanMethod.invoke(this.securityCheckPort, passenger, this.scannerPort, "glock7")){
+                    //LogEngine.instance.write("--- Security check: Pattern glock7 found for Passenger: " + passenger.getName());
+                }
             }
 
             Method getReceipt = this.securityCheckPort.getClass().getDeclaredMethod("getSecurityCheckReceipt");
-            LogEngine.instance.write("--- Security check: notify ground operations");
-            Object result = getReceipt.invoke(this.securityCheckPort);
+            //LogEngine.instance.write("--- Security check: notify ground operations");
+            Object receipt = getReceipt.invoke(this.securityCheckPort);
 
-            Method notifyGroundOperationsMethod = this.securityCheckPort.getClass().getDeclaredMethod("notifyGroundOperations", Object.class);
-            notifyGroundOperationsMethod.invoke(this.securityCheckPort, result);
+            //Method notifyGroundOperationsMethod = this.securityCheckPort.getClass().getDeclaredMethod("notifyGroundOperations", Object.class);
+            //notifyGroundOperationsMethod.invoke(this.securityCheckPort, result);
+            Method notifyGroundOperationMethod = this.groundOperationsPort.getClass().getDeclaredMethod("receive", BaggageSortingUnitReceipt.class);
+            notifyGroundOperationMethod.invoke(this.groundOperationsPort, receipt);
 
 
         } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException exc) {
