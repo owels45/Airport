@@ -1,3 +1,6 @@
+import base.Baggage;
+import base.BaggageType;
+import base.Passenger;
 import org.junit.Assert;
 import org.junit.Test;
 
