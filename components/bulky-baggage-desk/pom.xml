@@ -17,6 +17,15 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <finalName>bulkyBaggageDesk</finalName>
+                    <outputDirectory>
+                        ../../main-application/components
+                    </outputDirectory>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
