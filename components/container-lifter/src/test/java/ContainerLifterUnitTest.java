@@ -14,4 +14,18 @@ public class ContainerLifterUnitTest {
 
     }
 
+    @Test
+    public void upTest(){
+        ContainerLifter containerLifter = new ContainerLifter();
+        Assertions.assertEquals(false,containerLifter.innerUp());
+
+    }
+
+    @Test
+    public void downTest(){
+        ContainerLifter containerLifter = new ContainerLifter();
+        Assertions.assertEquals(true,containerLifter.innerDown());
+
+    }
+
 }

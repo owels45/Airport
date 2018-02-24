@@ -1,6 +1,6 @@
 package section;
 
-// TODO: dummy class -> durch richtige Body Klasse ersetzen
+// TODO: base class -> durch richtige Body Klasse ersetzen
 
 import java.util.ArrayList;
 import java.lang.reflect.Method;

@@ -1,18 +1,15 @@
 import java.util.ArrayList;
 
 public class ContainerLifter {
-    private boolean isDown=true;
-
     private static ContainerLifter instance = new ContainerLifter();
-
     public Port port;
+    private boolean isDown=true;
 
     public ContainerLifter() {port =new Port();}
 
-    public static ContainerLifter getinstance() {
+    public static ContainerLifter getInstance() {
         return instance;
     }
-
 
     public boolean innerUp() {
         return !isDown;
@@ -34,7 +31,6 @@ public class ContainerLifter {
     public void innerNotifyGroundOperations(ContainerLifterReceipt containerLifterReceipt) {
 
     }
-
 
     public class Port implements IContainerLifter{
 
