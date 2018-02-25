@@ -1,5 +1,8 @@
 package base;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Container {
     private ContainerType type;
     private String id;
@@ -8,6 +11,7 @@ public class Container {
     private String barCodeIDCategory;
     private String qrCodeIDCategory;
     private int maximumNumberOfBaggages = 50;
+    private List<Baggage> baggage;
 
     public Container(ContainerType type, String id, ContainerCategory category, ContainerProfile profile, String barCodeIDCategory, String qrCodeIDECategory, int maximumNumberOfBaggages) {
         this.type = type;
@@ -86,5 +90,9 @@ public class Container {
                 ", qrCodeIDECategory='" + qrCodeIDCategory + '\'' +
                 ", maximumNumberOfBaggages=" + maximumNumberOfBaggages +
                 '}';
+    }
+
+    public void store(ArrayList<Baggage> baggages) {
+        this.baggage = baggages;
     }
 }

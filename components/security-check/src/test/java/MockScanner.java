@@ -1,3 +1,6 @@
+import base.Baggage;
+import base.Passenger;
+
 public class MockScanner {
 
     public boolean scan(Baggage baggage, String pattern) {

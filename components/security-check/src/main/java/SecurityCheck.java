@@ -1,3 +1,9 @@
+import base.Baggage;
+import base.CottonPad;
+import base.Employee;
+import base.Passenger;
+import base.SecurityCheckReceipt;
+
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
@@ -35,7 +41,6 @@ public class SecurityCheck {
         this.port = new Port();
 
     }
-    private Class scannerClass;
     /**
      * Returns the instance.
      * @return The instance of the component.

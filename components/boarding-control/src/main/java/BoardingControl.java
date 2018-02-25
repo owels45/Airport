@@ -5,7 +5,7 @@ public class BoardingControl {
     private static BoardingControl instance = new BoardingControl();
     public Port port;
 
-    private CheckInDesk.Port checkInDeskPort;
+    private Object checkInDeskPort;
     private PassengerList boardedPassengerList;
 
     private BoardingControl() {

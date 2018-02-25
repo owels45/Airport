@@ -1,21 +1,23 @@
+package base;
+
 import java.util.ArrayList;
 
 public class Container {
-    private ContainerType type;
+    private base.ContainerType type;
     private String id;
-    private ContainerCategory category;
-    private ContainerProfile profile;
+    private base.ContainerCategory category;
+    private base.ContainerProfile profile;
     private String barCodeIDCategory;
     private String qrCodeIDCategory;
     private int maximumNumberOfBaggages = 50;
 
-    public ArrayList<Baggage> getBaggage() {
+    public ArrayList<base.Baggage> getBaggage() {
         return baggage;
     }
 
-    private ArrayList<Baggage> baggage;
+    private ArrayList<base.Baggage> baggage;
 
-    public Container(ContainerType type, String id, ContainerCategory category, ContainerProfile profile, String barCodeIDCategory, String qrCodeIDECategory, int maximumNumberOfBaggages) {
+    public Container(base.ContainerType type, String id, base.ContainerCategory category, base.ContainerProfile profile, String barCodeIDCategory, String qrCodeIDECategory, int maximumNumberOfBaggages) {
         this.type = type;
         this.id = id;
         this.category = category;
@@ -23,14 +25,14 @@ public class Container {
         this.barCodeIDCategory = barCodeIDCategory;
         this.qrCodeIDCategory = qrCodeIDECategory;
         this.maximumNumberOfBaggages = maximumNumberOfBaggages;
-        this.baggage = new ArrayList<Baggage>();
+        this.baggage = new ArrayList<base.Baggage>();
     }
 
-    public ContainerType getType() {
+    public base.ContainerType getType() {
         return type;
     }
 
-    public void setType(ContainerType type) {
+    public void setType(base.ContainerType type) {
         this.type = type;
     }
 
@@ -42,19 +44,19 @@ public class Container {
         this.id = id;
     }
 
-    public ContainerCategory getCategory() {
+    public base.ContainerCategory getCategory() {
         return category;
     }
 
-    public void setCategory(ContainerCategory category) {
+    public void setCategory(base.ContainerCategory category) {
         this.category = category;
     }
 
-    public ContainerProfile getProfile() {
+    public base.ContainerProfile getProfile() {
         return profile;
     }
 
-    public void setProfile(ContainerProfile profile) {
+    public void setProfile(base.ContainerProfile profile) {
         this.profile = profile;
     }
 
@@ -95,7 +97,7 @@ public class Container {
                 '}';
     }
 
-    public void store(ArrayList<Baggage> baggages) {
+    public void store(ArrayList<base.Baggage> baggages) {
         this.baggage = baggages;
     }
 }

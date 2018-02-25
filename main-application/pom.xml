@@ -49,5 +49,10 @@
             <artifactId>customs</artifactId>
             <version>1.0.0</version>
         </dependency>
+        <dependency>
+            <groupId>de.dhbw.mosbach.ai.se</groupId>
+            <artifactId>baggage-sorting-unit</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 </project>

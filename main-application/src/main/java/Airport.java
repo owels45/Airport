@@ -1,12 +1,17 @@
+import base.*;
+
 import base.Baggage;
+import base.BaggageSortingUnitReceipt;
 import base.BoardingPass;
 import base.Destination;
 import base.Passenger;
-import base.Passport;
 import base.PassengerList;
-
+import base.Passport;
 import com.google.common.eventbus.Subscribe;
 import event.Subscriber;
+import event.pushback_vehicle.PushBackVehicleConnect;
+import event.pushback_vehicle.PushBackVehicleDisconnect;
+import event.pushback_vehicle.PushBackVehiclePushBack;
 import event.service_vehicle_fresh_water.ServiceVehicleFreshWaterNotifyGroundOperations;
 import event.baggage_sorting.BaggageSorting;
 import event.boarding_control.BoardingControlCallPassengers;
@@ -37,10 +42,6 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-//import factory.GroundOperationsCenterFactory;
-//import factory.ServiceVehicleOilFactory;
-//import factory.SkyTankingVehicleFactory;
-
 public class Airport extends Subscriber {
 
     private Object checkInDeskPort;
@@ -65,11 +66,11 @@ public class Airport extends Subscriber {
 
     // TODO: 01.02.2018  HIER ALLE FACTORYS EINFÜGEN VON JEDEM TEAM SELBST!!!
     public void build() {
-        checkInDeskPort = CheckInDeskFactory.build(); // TODO: 20.02.2018 Factory missing!!!
+        checkInDeskPort = CheckInDeskFactory.build();
         baggageSortingUnitPort = BaggageSortingUnitFactory.build();
         securityCheckPort = SecurityCheckFactory.build();
         scannerPort = ScannerFactory.build();
-        federalPolicePort = FederalPoliceFactory.build();// TODO: 20.02.2018 Factory missing!!!
+        federalPolicePort = FederalPoliceFactory.build();
         customsPort = CustomsFactory.build();
         serviceVehicleOilPort = ServiceVehicleOilFactory.build();
         serviceVehicleNitrogenOxygenPort = ServiceVehicleNitrogenOxygenFactory.build();
@@ -84,15 +85,13 @@ public class Airport extends Subscriber {
 //        at factory.SpecialGoodRoboterFactory.build(SpecialGoodRoboterFactory.java:18)
 //        at Airport.build(Airport.java:69)
 //        at Application.main(Application.java:148)
-//        specialGoodRoboterPort = SpecialGoodRoboterFactory.build();
+        specialGoodRoboterPort = SpecialGoodRoboterFactory.build();
 
         baggageVehiclePort = BaggageVehicleFactory.build();
         containerLifterPort = ContainerLifterFactory.build();
-//        pushBackVehiclePort = PushBackVehicleFactory.build(); // TODO: 20.02.2018 what the heck???
-//        groundOperationsPort = GroundOperationsCenterFactory.build(); // TODO: 20.02.2018 what the heck???
+//        pushBackVehiclePort = PushBackVehicleFactory.build(); //// TODO: 25.02.2018 für PushBackVehicle: ClassNotFoundException???
+        groundOperationsPort = GroundOperationsCenterFactory.build();
     }
-
-    // TODO: 01.02.2018  HIER DIE GANZEN SUBSCRIBE METHODEN VON JEDEM TEAM SELBST!!!
 
     @Subscribe
     public void receive(ServiceVehicleAPUOilTankIncreaseLevel event) {
@@ -373,26 +372,35 @@ public class Airport extends Subscriber {
     @Subscribe
     public void receive(SecurityCheck event) {
         try {
-            LogEngine.instance.write("--- Starting security check");
+            // TODO: LogEngine is commented out, because it throws exceptions during a test.
+            //LogEngine.instance.write("--- Starting security check");
             Method scanMethod = this.securityCheckPort.getClass().getDeclaredMethod("scan", Baggage.class, Object.class, String.class);
 
-            LogEngine.instance.write("--- Security check: scan baggage");
+            //LogEngine.instance.write("--- Security check: scan baggage");
             for (Baggage bag : event.getBaggage()) {
-               scanMethod.invoke(this.securityCheckPort, bag, this.scannerPort, "glock");
+               if((Boolean) scanMethod.invoke(this.securityCheckPort, bag, this.scannerPort, "glock7")){
+                   //LogEngine.instance.write("--- Security check: Pattern glock7 found in Bag: " + bag.getId());
+               }
             }
 
             scanMethod = this.securityCheckPort.getClass().getDeclaredMethod("scan", Passenger.class, Object.class, String.class);
-            LogEngine.instance.write("--- Security check: scan passengers");
+            //LogEngine.instance.write("--- Security check: scan passengers");
             for (base.Passenger passenger : event.getPassengers()) {
-                scanMethod.invoke(this.securityCheckPort, passenger, this.scannerPort, "glock");
+                if((Boolean) scanMethod.invoke(this.securityCheckPort, passenger, this.scannerPort, "glock7")){
+                    //LogEngine.instance.write("--- Security check: Pattern glock7 found for Passenger: " + passenger.getName());
+                }
             }
 
             Method getReceipt = this.securityCheckPort.getClass().getDeclaredMethod("getSecurityCheckReceipt");
-            LogEngine.instance.write("--- Security check: notify ground operations");
-            Object result = getReceipt.invoke(this.securityCheckPort);
+            //LogEngine.instance.write("--- Security check: notify ground operations");
+            Object receipt = getReceipt.invoke(this.securityCheckPort);
 
-            Method notifyGroundOperationsMethod = this.securityCheckPort.getClass().getDeclaredMethod("notifyGroundOperations", Object.class);
-            notifyGroundOperationsMethod.invoke(this.securityCheckPort, result);
+            //Method notifyGroundOperationsMethod = this.securityCheckPort.getClass().getDeclaredMethod("notifyGroundOperations", Object.class);
+            //notifyGroundOperationsMethod.invoke(this.securityCheckPort, result);
+
+            // TODO: 25.02.2018 doesn't find method??
+//            Method notifyGroundOperationMethod = this.groundOperationsPort.getClass().getDeclaredMethod("receive", BaggageSortingUnitReceipt.class);
+//            notifyGroundOperationMethod.invoke(this.groundOperationsPort, receipt);
 
 
         } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException exc) {
@@ -403,22 +411,255 @@ public class Airport extends Subscriber {
     @Subscribe
     public void receive(BaggageSorting event) {
         try {
-            LogEngine.instance.write("--- Baggage Sorting");
-            Method executeBaggageSortingMethod = this.baggageSortingUnitPort.getClass().getDeclaredMethod("execute", String.class
-            , Destination.class, List.class, List.class, List.class);
+            // TODO: LogEngine is commented out, because it throws exceptions during a test.
+//            LogEngine.instance.write("--- Baggage Sorting");
+            Method executeBaggageSortingMethod = this.baggageSortingUnitPort.getClass().getDeclaredMethod("execute",
+                    String.class , Destination.class, java.util.List.class, java.util.List.class, java.util.List.class);
 
             Object result = executeBaggageSortingMethod.invoke(this.baggageSortingUnitPort, event.getBaggageVehicleTargetPosition()
             , event.getDestination(), event.getBaggage(), event.getBaggageVehicles(), event.getBaggageTags());
 
             BaggageSortingUnitReceipt receipt = (BaggageSortingUnitReceipt) result;
 
-            LogEngine.instance.write("--- Baggage Sorting: Notify Ground Operations");
-            Method notifyGroundOperationMethod = this.groundOperationsPort.getClass().getDeclaredMethod("receive", BaggageSortingUnitReceipt.class);
-            notifyGroundOperationMethod.invoke(this.groundOperationsPort, receipt);
+//            LogEngine.instance.write("--- Baggage Sorting: Notify Ground Operations");
+// TODO: 23.02.2018   doesn't find method??           Method notifyGroundOperationMethod = this.groundOperationsPort.getClass().getDeclaredMethod("receive", BaggageSortingUnitReceipt.class);
+//            notifyGroundOperationMethod.invoke(this.groundOperationsPort, receipt);
 
 
         } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException exc) {
             exc.printStackTrace();
         }
+    }
+    
+    @Subscribe
+    public void receive(PushBackVehicleConnect event) {
+        try {
+            LogEngine.instance.write("--- PushBackVehicle gets connected");
+
+            Method lightsOnMethod = this.pushBackVehiclePort.getClass().getDeclaredMethod("setFlashingLightOn", Boolean.TYPE);
+            lightsOnMethod.invoke(this.pushBackVehiclePort, true);
+            LogEngine.instance.write("Flashing Light is on");
+
+            Method connectMethod = this.pushBackVehiclePort.getClass().getDeclaredMethod("connect", Airplane.class);
+            connectMethod.invoke(this.pushBackVehiclePort, event.getAirplane());
+            LogEngine.instance.write("PushBack Vehicle is connected to " + event.getAirplane());
+
+            Method steeringPinMethod = this.pushBackVehiclePort.getClass().getDeclaredMethod("setSteeringPin", Boolean.TYPE);
+            steeringPinMethod.invoke(this.pushBackVehiclePort, true);
+            LogEngine.instance.write("Steering Pin is set now");
+
+            LogEngine.instance.write("--- PushBack Vehicle is connected");
+
+        } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException exc) {
+            exc.printStackTrace();
+        }
+    }
+
+    @Subscribe
+    public void receive(PushBackVehiclePushBack event) {
+        try {
+            LogEngine.instance.write("--- Airplane is getting pushed back");
+
+            Method upMethod = this.pushBackVehiclePort.getClass().getDeclaredMethod("up", Boolean.TYPE);
+            upMethod.invoke(this.pushBackVehiclePort, true);
+            LogEngine.instance.write("PushBack Vehicle is up now");
+
+            Method forwardMethod = this.pushBackVehiclePort.getClass().getDeclaredMethod("forward", Integer.TYPE);
+            int forward = (int) forwardMethod.invoke(this.pushBackVehiclePort, 10);
+            LogEngine.instance.write("PushBack Vehicle moves forwards with " + forward + "mph");
+
+            Method leftMethod = this.pushBackVehiclePort.getClass().getDeclaredMethod("turnLeft", Integer.TYPE);
+            int left = (int) leftMethod.invoke(this.pushBackVehiclePort, 5);
+            LogEngine.instance.write("PushBack Vehicle moves left with " + left + "mph");
+
+            Method rightMethod = this.pushBackVehiclePort.getClass().getDeclaredMethod("turnRight", Integer.TYPE);
+            int right = (int) rightMethod.invoke(this.pushBackVehiclePort, 10);
+            LogEngine.instance.write("PushBack Vehicle moves right with " + right + "mph");
+
+            Method backwardMethod = this.pushBackVehiclePort.getClass().getDeclaredMethod("backward", Integer.TYPE);
+            int backward = (int) backwardMethod.invoke(this.pushBackVehiclePort, 10);
+            LogEngine.instance.write("PushBack Vehicle moves backwards with " + backward + "mph");
+
+            Method stopMethod = this.pushBackVehiclePort.getClass().getDeclaredMethod("stop", Integer.TYPE);
+            stopMethod.invoke(this.pushBackVehiclePort, 0);
+            LogEngine.instance.write("PushBack Vehicle has stopped now");
+
+            Method downMethod = this.pushBackVehiclePort.getClass().getDeclaredMethod("down", Boolean.TYPE);
+            downMethod.invoke(this.pushBackVehiclePort, false);
+            LogEngine.instance.write("PushBack Vehicle is down now");
+
+            LogEngine.instance.write("--- Airplane is pushed back");
+
+        } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException exc) {
+            exc.printStackTrace();
+        }
+    }
+
+    @Subscribe
+    public void receive(PushBackVehicleDisconnect event) {
+        try {
+            LogEngine.instance.write("--- PushBack Vehicle gets disconnected");
+
+            Method steeringPinMethod = this.pushBackVehiclePort.getClass().getDeclaredMethod("removeSteeringPin", Boolean.TYPE);
+            steeringPinMethod.invoke(this.pushBackVehiclePort, false);
+            LogEngine.instance.write("Steering Pin is removec now");
+
+            Method disconnectMethod = this.pushBackVehiclePort.getClass().getDeclaredMethod("disconnect", Airplane.class);
+            disconnectMethod.invoke(this.pushBackVehiclePort, event.getAirplane());
+            LogEngine.instance.write("PushBack Vehicle is disconnected from " + event.getAirplane());
+
+            Method lightsOffMethod = this.pushBackVehiclePort.getClass().getDeclaredMethod("setFlashingLightOff", Boolean.TYPE);
+            lightsOffMethod.invoke(this.pushBackVehiclePort, true);
+            LogEngine.instance.write("Flashing Light is off");
+
+            LogEngine.instance.write("--- PushBack Vehicle is disconnected");
+
+        } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException exc) {
+            exc.printStackTrace();
+        }
+    }
+
+    public Object getCheckInDeskPort() {
+        return checkInDeskPort;
+    }
+
+    public void setCheckInDeskPort(Object checkInDeskPort) {
+        this.checkInDeskPort = checkInDeskPort;
+    }
+
+    public Object getBaggageSortingUnitPort() {
+        return baggageSortingUnitPort;
+    }
+
+    public void setBaggageSortingUnitPort(Object baggageSortingUnitPort) {
+        this.baggageSortingUnitPort = baggageSortingUnitPort;
+    }
+
+    public Object getSecurityCheckPort() {
+        return securityCheckPort;
+    }
+
+    public void setSecurityCheckPort(Object securityCheckPort) {
+        this.securityCheckPort = securityCheckPort;
+    }
+
+    public Object getFederalPolicePort() {
+        return federalPolicePort;
+    }
+
+    public void setFederalPolicePort(Object federalPolicePort) {
+        this.federalPolicePort = federalPolicePort;
+    }
+
+    public Object getCustomsPort() {
+        return customsPort;
+    }
+
+    public void setCustomsPort(Object customsPort) {
+        this.customsPort = customsPort;
+    }
+
+    public Object getServiceVehicleOilPort() {
+        return serviceVehicleOilPort;
+    }
+
+    public void setServiceVehicleOilPort(Object serviceVehicleOilPort) {
+        this.serviceVehicleOilPort = serviceVehicleOilPort;
+    }
+
+    public Object getServiceVehicleNitrogenOxygenPort() {
+        return serviceVehicleNitrogenOxygenPort;
+    }
+
+    public void setServiceVehicleNitrogenOxygenPort(Object serviceVehicleNitrogenOxygenPort) {
+        this.serviceVehicleNitrogenOxygenPort = serviceVehicleNitrogenOxygenPort;
+    }
+
+    public Object getServiceVehicleFreshWaterPort() {
+        return serviceVehicleFreshWaterPort;
+    }
+
+    public void setServiceVehicleFreshWaterPort(Object serviceVehicleFreshWaterPort) {
+        this.serviceVehicleFreshWaterPort = serviceVehicleFreshWaterPort;
+    }
+
+    public Object getServiceVehicleWasteWaterTankPort() {
+        return serviceVehicleWasteWaterTankPort;
+    }
+
+    public void setServiceVehicleWasteWaterTankPort(Object serviceVehicleWasteWaterTankPort) {
+        this.serviceVehicleWasteWaterTankPort = serviceVehicleWasteWaterTankPort;
+    }
+
+    public Object getAirCargoPalletLifterPort() {
+        return airCargoPalletLifterPort;
+    }
+
+    public void setAirCargoPalletLifterPort(Object airCargoPalletLifterPort) {
+        this.airCargoPalletLifterPort = airCargoPalletLifterPort;
+    }
+
+    public Object getSkyTankingVehiclePort() {
+        return skyTankingVehiclePort;
+    }
+
+    public void setSkyTankingVehiclePort(Object skyTankingVehiclePort) {
+        this.skyTankingVehiclePort = skyTankingVehiclePort;
+    }
+
+    public Object getBoardingControlPort() {
+        return boardingControlPort;
+    }
+
+    public void setBoardingControlPort(Object boardingControlPort) {
+        this.boardingControlPort = boardingControlPort;
+    }
+
+    public Object getPushBackVehiclePort() {
+        return pushBackVehiclePort;
+    }
+
+    public void setPushBackVehiclePort(Object pushBackVehiclePort) {
+        this.pushBackVehiclePort = pushBackVehiclePort;
+    }
+
+    public Object getSpecialGoodRoboterPort() {
+        return specialGoodRoboterPort;
+    }
+
+    public void setSpecialGoodRoboterPort(Object specialGoodRoboterPort) {
+        this.specialGoodRoboterPort = specialGoodRoboterPort;
+    }
+
+    public Object getBaggageVehiclePort() {
+        return baggageVehiclePort;
+    }
+
+    public void setBaggageVehiclePort(Object baggageVehiclePort) {
+        this.baggageVehiclePort = baggageVehiclePort;
+    }
+
+    public Object getContainerLifterPort() {
+        return containerLifterPort;
+    }
+
+    public void setContainerLifterPort(Object containerLifterPort) {
+        this.containerLifterPort = containerLifterPort;
+    }
+
+    public Object getScannerPort() {
+        return scannerPort;
+    }
+
+    public void setScannerPort(Object scannerPort) {
+        this.scannerPort = scannerPort;
+    }
+
+    public Object getGroundOperationsPort() {
+        return groundOperationsPort;
+    }
+
+    public void setGroundOperationsPort(Object groundOperationsPort) {
+        this.groundOperationsPort = groundOperationsPort;
     }
 }

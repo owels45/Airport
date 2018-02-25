@@ -11,7 +11,7 @@ public class GroundOperationsCenterFactory {
         Object componentPort = null;
 
         try {
-            URL[] urls = {new File(Configuration.instance.commonPathToJavaArchive+Configuration.instance.fileSeparator+"ground-operations-center"+Configuration.instance.fileSeparator+"target"+Configuration.instance.fileSeparator+"ground-operations-center-1.0.0.jar").toURI().toURL()};
+            URL[] urls = {new File(Configuration.instance.commonPathToJavaArchive+Configuration.instance.fileSeparator+"ground-operations-center.jar").toURI().toURL()};
             URLClassLoader urlClassLoader = new URLClassLoader(urls, GroundOperationsCenterFactory.class.getClassLoader());
             Class GroundOperationsCenterClass = Class.forName("GroundOperationsCenter", true, urlClassLoader);
             Object GroundOperationsCenterInstance = GroundOperationsCenterClass.getMethod("getInstance", new Class[0]).invoke(null, new Object[0]);
