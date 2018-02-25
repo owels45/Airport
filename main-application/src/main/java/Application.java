@@ -121,6 +121,7 @@ public class Application {
 
     // TODO: Insert passenger list into allPassengers if passenger instances are available (either database or instantiation)
     public void boardingControl() {
+        // PassengerList allPassengers = database.getPassengerList();
         PassengerList allPassengers = new PassengerList(new ArrayList<>());
         eventBus.post(new BoardingControlCallPassengers(allPassengers));
         eventBus.post(new BoardingControlInspectPassports(allPassengers));
