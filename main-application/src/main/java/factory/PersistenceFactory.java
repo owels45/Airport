@@ -15,7 +15,7 @@ public class PersistenceFactory {
         try {
             URL[] urls = {new File(Configuration.instance.commonPathToJavaArchive + "/persistence.jar").toURI().toURL()};
             URLClassLoader urlClassLoader = new URLClassLoader(urls,PersistenceFactory.class.getClassLoader());
-            Class persistenceClass = Class.forName("Database", true, urlClassLoader);
+            Class persistenceClass = Class.forName("main.Database", true, urlClassLoader);
             Object persistenceInstance = persistenceClass.getMethod("getInstance", new Class[0]).invoke(null, new Object[0]);
             componentPort = persistenceClass.getDeclaredField("port").get(persistenceInstance);
         } catch (Exception e) {
