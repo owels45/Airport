@@ -10,8 +10,8 @@ public class BoardingControl {
 
     private BoardingControl() {
         port = new Port();
+        //// TODO: 23.02.2018 CheckInDesk muss das noch beheben!
         checkInDeskPort = CheckInDesk.getInstance().port;
-        // boardedPassengerList = dbManager.getPassengerList();
     }
 
     public static BoardingControl getInstance() {

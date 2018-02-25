@@ -33,6 +33,7 @@ import event.sky_tanking_vehicle.SkyTankingVehicleConnect;
 import event.sky_tanking_vehicle.SkyTankingVehiclePrint;
 import event.sky_tanking_vehicle.SkyTankingVehiclePump;
 import factory.GroundOperationsCenterFactory;
+import factory.PersistenceFactory;
 import logging.LogEngine;
 
 import java.util.ArrayList;
@@ -41,6 +42,7 @@ import java.util.List;
 public class Application {
 
     private EventBus eventBus;
+    private Object persistencePort;
 
     public Application() {
         eventBus = new EventBus();
@@ -51,7 +53,7 @@ public class Application {
     }
 
     public void checkIn() {
-
+        // TODO: 23.02.2018 CheckInDesk muss erst einmal eine funktionierende Klasse abliefern!!! Vorher kann die Applikation niemals laufen!
     }
 
     public void baggageSorting() {
@@ -138,10 +140,11 @@ public class Application {
 
 
     public void startSimulation(Airplane airplane) {
+        persistencePort = PersistenceFactory.build();
         //eigentlicher Ablauf der Simulation:
-//        checkIn();
-//        baggageSorting();
-//        securityCheck();
+        checkIn(); // TODO: 25.02.2018 siehe oben in Methode..
+        baggageSorting();
+        securityCheck();
 //        federalPolice();
 //        customs();
 //        customs();
@@ -149,7 +152,7 @@ public class Application {
 //        airCargoPalletLifterTask();
 //        tanking();
 //        boardingControl();
-//        pushBack(airplane);
+//        pushBack(airplane); // TODO: 22.02.2018 Team muss Factory reparieren!
     }
 
     public static void main(String... args) {
