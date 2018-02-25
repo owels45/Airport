@@ -10,7 +10,7 @@ public class BoardingControl {
 
     private BoardingControl() {
         port = new Port();
-        checkInDeskPort = CheckInDesk.getInstance().port;
+        checkInDeskPort = null;
         // boardedPassengerList = dbManager.getPassengerList();
     }
 
@@ -55,7 +55,7 @@ public class BoardingControl {
     private void innerNotifyGroundOperations(Object groundOperationPort) {
         try {
             Method method = groundOperationPort.getClass().getMethod("receive", BoardingControlReceipt.class);
-            method.invoke(groundOperationPort, new BoardingControlReceipt(boardedPassengerList));
+            method.invoke(groundOperationPort, new BoardingControlReceipt(checkInDeskPort, boardedPassengerList));
         } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException exc) {
             exc.printStackTrace();
         }
