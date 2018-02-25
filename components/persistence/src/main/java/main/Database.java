@@ -2,9 +2,7 @@ package main;
 
 import base.*;
 import engine.LogEngine;
-import javafx.scene.chart.PieChart;
 import sql.*;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.sql.*;

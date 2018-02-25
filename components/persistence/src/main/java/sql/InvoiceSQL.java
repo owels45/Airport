@@ -3,8 +3,6 @@ package sql;
 import base.*;
 import engine.LogEngine;
 import main.Database;
-import org.junit.experimental.theories.internal.ParameterizedAssertionError;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
