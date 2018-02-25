@@ -31,7 +31,6 @@ public class Database {
 
     public class Port implements IDatabase {
         public void initBaggage() {
-
             innerMethodInitBaggage();
         }
 
