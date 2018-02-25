@@ -53,7 +53,7 @@ public class Application {
     }
 
     public void checkIn() {
-        // TODO: 23.02.2018 CheckInDesk muss erst einmal eine funktionierende Klasse abliefern!!! Vorher kann die Applikation niemals laufen!
+        // TODO: 23.02.2018 CheckInDesk muss erst einmal eine funktionierende (Event-)Klasse abliefern!!! Vorher kann die Applikation niemals laufen!
     }
 
     public void baggageSorting() {
